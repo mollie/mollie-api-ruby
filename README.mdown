@@ -1,0 +1,92 @@
+![Mollie](http://www.mollie.nl/files/Mollie-Logo-Style-Small.png) 
+
+# Mollie API client for Ruby #
+
+Accepting [iDEAL](https://www.mollie.nl/betaaldiensten/ideal/), [Mister Cash](https://www.mollie.nl/betaaldiensten/mistercash/), [Creditcard](https://www.mollie.nl/betaaldiensten/creditcard/), [PayPal](https://www.mollie.nl/betaaldiensten/paypal/), and [paysafecard](https://www.mollie.nl/betaaldiensten/paysafecard/) online payments without fixed monthly costs or any punishing registration procedures. Just use the Mollie API to receive payments directly on your website.
+
+## Requirements ##
+To use the Mollie API client, the following things are required:
+
++ Get yourself a free [Mollie account](https://www.mollie.nl/aanmelden). No sign up costs.
++ Create a new [Website profile](https://www.mollie.nl/beheer/account/profielen/) to generate API keys (live and test mode) and setup your webhook.
++ Now you're ready to use the Mollie API client in test mode.
++ In order to accept payments in live mode, payment methods must be activated in your account. Follow [a few of steps](https://www.mollie.nl/beheer/diensten), and let us handle the rest.
++ This API client requires the [REST Client](https://github.com/rest-client/rest-client) and [JSON](https://rubygems.org/gems/json) gems.
+
+## Installation ##
+
+By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/).
+
+```
+	$ gem install mollie-api-ruby
+```
+
+You may also git checkout or [download all the files](https://github.com/mollie/mollie-api-ruby/archive/master.zip), and include the Mollie API client manually.
+
+## How to receive payments ##
+
+To successfully receive a payment, these steps should be implemented:
+
+1. Use the Mollie API client to create a payment with the requested amount, description and optionally, a payment method. It is important to specify a unique redirect URL where the customer is supposed to return to after the payment is completed.
+
+2. Immediately after the payment is completed, our platform will send an asynchronous request to the configured webhook to allow the payment details to be retrieved, so you know when exactly to start processing the customer's order.
+
+3. The customer returns, and should be satisfied to see that the order was paid and is now being processed.
+
+## Getting started ##
+
+Requiring the Mollie API Client.
+
+```ruby
+		require "Mollie/API/Client"
+```	
+
+Initializing the Mollie API client, and setting your API key.
+
+```ruby
+		mollie = Mollie::API::Client.new
+		mollie.setApiKey "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+```	
+
+Creating a new payment.
+	
+```ruby
+		payment = mollie.payments.create \
+			:amount      => 10.00,
+			:description => "My first API payment",
+			:redirectUrl => "https://webshop.example.org/order/12345/"
+```
+	
+Retrieving a payment.
+
+```ruby
+		payment = mollie.payments.get payment.id
+		
+		if payment.paid?
+			puts "Payment received."
+		end
+```
+
+## Examples ##
+
+The examples require [Sinatra](http://rubygems.org/gems/sinatra) so you will need to install that gem first. Afterwards simply run:
+
+```
+	$ cd mollie-api-ruby
+	$ ruby examples/app.rb
+```
+
+## License ##
+[BSD (Berkeley Software Distribution) License](http://www.opensource.org/licenses/bsd-license.php).
+Copyright (c) 2014, Mollie B.V.
+
+## Support ##
+Contact: [www.mollie.nl](http://www.mollie.nl) — info@mollie.nl — +31 20-612 88 55
+
++ [More information about iDEAL via Mollie](https://www.mollie.nl/betaaldiensten/ideal/)
++ [More information about Creditcard via Mollie](https://www.mollie.nl/betaaldiensten/creditcard/)
++ [More information about Mister Cash via Mollie](https://www.mollie.nl/betaaldiensten/mistercash/)
++ [More information about PayPal via Mollie](https://www.mollie.nl/betaaldiensten/paypal/)
++ [More information about paysafecard via Mollie](https://www.mollie.nl/betaaldiensten/paysafecard/)
+
+![Powered By Mollie](http://www.mollie.nl/images/badge-betaling-medium.png)

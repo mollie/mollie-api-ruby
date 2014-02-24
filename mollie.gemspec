@@ -12,7 +12,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = 'https://github.com/mollie/mollie-api-ruby'
   s.license = 'BSD'
 
-  s.add_dependency('rest-client', '~> 1.4')
+  s.add_dependency('rest-client', '~> 1.6')
   s.add_dependency('json', '~> 1.8')
 
   s.files = `git ls-files`.split("\n")

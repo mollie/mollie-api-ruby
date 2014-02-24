@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.license = 'BSD'
 
   s.add_dependency('rest-client', '~> 1.4')
-  s.add_dependency('json', '~> 1.8.1')
+  s.add_dependency('json', '~> 1.8')
 
   s.files = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")

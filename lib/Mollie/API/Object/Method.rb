@@ -2,11 +2,12 @@ module Mollie
 	module API
 		module Object
 			class Method < Base
-				IDEAL       = "ideal"
-				CREDITCARD  = "creditcard"
-				MISTERCASH  = "mistercash"
-				PAYPAL      = "paypal"
-				PAYSAFECARD = "paysafecard"
+				IDEAL        = "ideal"
+				CREDITCARD   = "creditcard"
+				MISTERCASH   = "mistercash"
+				BANKTRANSFER = "banktransfer"
+				PAYPAL       = "paypal"
+				PAYSAFECARD  = "paysafecard"
 
 				attr_accessor :id,
 				              :description,

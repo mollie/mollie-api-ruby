@@ -11,27 +11,32 @@ module Mollie
 				end
 
 				def create (data = {})
-					response = @client.performHttpCall "POST", getResourceName, nil, data
-					getResourceObject.new response
+					request("POST", 0, data)  { |response| newResourceObject(response) }
 				end
 
 				def get (id)
-					response = @client.performHttpCall "GET", getResourceName, id || 0
-					getResourceObject.new response
+					request("GET", id) 	  { |response| newResourceObject(response) }
 				end
 
 				def update (id, data = {})
-					response = @client.performHttpCall "POST", getResourceName, id || 0, data
-					getResourceObject.new response
+					request("POST", id, data) { |response| newResourceObject(response) }
 				end
 
 				def delete (id)
-					@client.performHttpCall "DELETE", getResourceName, id || 0
+					request("DELETE" id)
 				end
 
 				def all ()
-					response = @client.performHttpCall "GET", getResourceName
-					Mollie::API::Object::List.new response, getResourceObject
+					request("GET") 	{ |response| Mollie::API::Object::List.new response, getResourceObject }
+				end
+				
+				def newResourceObject(response)
+					getResourceObject.new response
+				end
+				
+				def request(method, id = 0, data = {})
+					response = @client.performHttpCall method, getResourceName, id, data
+					yield(response) if block_given?
 				end
 			end
 		end

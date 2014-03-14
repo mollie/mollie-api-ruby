@@ -4,27 +4,30 @@ require "rest_client"
 ["Exception",
 "Resource/Base",
 "Resource/Payments",
+"Resource/Payments/Refunds",
 "Resource/Issuers",
 "Resource/Methods",
 "Object/Base",
 "Object/List",
 "Object/Payment",
+"Object/Payment/Refund",
 "Object/Issuer",
 "Object/Method"].each {|file| require File.expand_path file, __dir__ }
 
 module Mollie
 	module API
 		class Client
-			CLIENT_VERSION = "1.0.1"
+			CLIENT_VERSION = "1.1.0"
 			API_ENDPOINT   = "https://api.mollie.nl"
 			API_VERSION    = "v1"
 
-			attr_reader :payments, :issuers, :methods
+			attr_reader :payments, :issuers, :methods, :refunds
 
 			def initialize ()
 				@payments = Mollie::API::Resource::Payments.new self
 				@issuers  = Mollie::API::Resource::Issuers.new self
 				@methods  = Mollie::API::Resource::Methods.new self
+				@refunds  = Mollie::API::Resource::Payments::Refunds.new self
 				
 				@api_endpoint    = API_ENDPOINT
 				@api_key         = ""
@@ -88,7 +91,12 @@ module Mollie
 					raise e if response[:error].nil?
 				end
 
-				raise Mollie::API::Exception.new response[:error][:message] unless response[:error].nil?
+				unless response[:error].nil?
+					exception       = Mollie::API::Exception.new response[:error][:message] 
+					exception.field = response[:error][:field] unless response[:error][:field].nil?
+					raise exception
+				end
+
 				response
 			end
 

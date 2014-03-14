@@ -9,7 +9,8 @@ examples = [
 	'3-return-page',
 	'4-ideal-payment',
 	'5-payments-history',
-	'6-list-activated-methods'
+	'6-list-activated-methods',
+	'7-refund-payment'
 ]
 
 get "/" do

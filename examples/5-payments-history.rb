@@ -20,7 +20,7 @@ begin
 	$response.body = "Your API key has #{payments.totalCount} payments, last #{payments.count}:<br>"
 
 	payments.each { |payment| 
-		$response.body << "&euro; #{payment.amount}, status: #{CGI.escapeHTML payment.status}<br>"
+		$response.body << "&euro; #{payment.amount}, status: #{CGI.escapeHTML payment.status} (#{CGI.escapeHTML payment.id})<br>"
 	}
 rescue Mollie::API::Exception => e
 	$response.body << "API call failed: " << (CGI.escapeHTML e.message)

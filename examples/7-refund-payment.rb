@@ -20,14 +20,14 @@ begin
 	#
 	# Refund the payment.
 	#
-	refund = mollie.refunds.with(payment).create
+	refund = mollie.payments_refunds.with(payment).create
 
 	$response.body << "The payment #{payment.id} is now refunded.<br>"
 
 	#
 	# Retrieve refunds on a payment.
 	#
-	refunds = mollie.refunds.with(payment).all
+	refunds = mollie.payments_refunds.with(payment).all
 
 	refunds.each { |refund|
 		$response.body << '<br> Refund date: ' << (CGI.escapeHTML refund.refundedDatetime)

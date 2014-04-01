@@ -1,7 +1,7 @@
 #
 # Example 2 - How to verify Mollie API Payments in a webhook.
 #
-require File.expand_path "../lib/Mollie/API/Client", __dir__
+require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
 
 begin 
 	#

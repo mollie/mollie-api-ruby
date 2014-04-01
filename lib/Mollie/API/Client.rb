@@ -12,7 +12,7 @@ require "rest_client"
 "Object/Payment",
 "Object/Payment/Refund",
 "Object/Issuer",
-"Object/Method"].each {|file| require File.expand_path file, __dir__ }
+"Object/Method"].each {|file| require File.expand_path file, File.dirname(__FILE__) }
 
 module Mollie
 	module API
@@ -57,7 +57,7 @@ module Mollie
 			def _getRestClient (request_url, request_headers)
 				RestClient::Resource.new request_url,
 					:headers     => request_headers,
-					:ssl_ca_file => (File.expand_path "cacert.pem", __dir__),
+					:ssl_ca_file => (File.expand_path "cacert.pem", File.dirname(__FILE__)),
 					:verify_ssl  => OpenSSL::SSL::VERIFY_PEER
 			end
 

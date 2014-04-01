@@ -1,7 +1,7 @@
 #
 # Example 1 - How to prepare a new payment with the Mollie API.
 #
-require File.expand_path "../lib/Mollie/API/Client", __dir__
+require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
 
 begin 
 	#

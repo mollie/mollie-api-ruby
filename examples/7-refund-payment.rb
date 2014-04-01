@@ -1,7 +1,7 @@
 #
 # Example 7 - How to refund a payment programmatically.
 #
-require File.expand_path "../lib/Mollie/API/Client", __dir__
+require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
 
 begin 
 	#

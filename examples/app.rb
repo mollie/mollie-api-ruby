@@ -30,13 +30,13 @@ examples.each { |example|
 	get "/#{example}" do
 		$request  = request
 		$response = response
-		load File.expand_path "#{example}.rb", __dir__
+		load File.expand_path "#{example}.rb", File.dirname(__FILE__)
 	end
 
 	post "/#{example}" do
 		$request  = request
 		$response = response
-		load File.expand_path "#{example}.rb", __dir__
+		load File.expand_path "#{example}.rb", File.dirname(__FILE__)
 	end
 }
 
@@ -45,14 +45,14 @@ examples.each { |example|
 #
 def database_write (order_id, status)
 	order_id = order_id.to_i
-	database = File.expand_path "orders/order-#{order_id}.txt", __dir__
+	database = File.expand_path "orders/order-#{order_id}.txt", File.dirname(__FILE__)
 
 	File.open(database, 'w') { |file| file.write status }
 end
 
 def database_read (order_id)
 	order_id = order_id.to_i
-	database = File.expand_path "orders/order-#{order_id}.txt", __dir__
+	database = File.expand_path "orders/order-#{order_id}.txt", File.dirname(__FILE__)
 
 	status = File.read(database) || "unknown order"
 end

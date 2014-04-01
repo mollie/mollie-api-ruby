@@ -1,7 +1,7 @@
 #
 # Example 4 - How to prepare an iDEAL payment with the Mollie API.
 #
-require File.expand_path "../lib/Mollie/API/Client", __dir__
+require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
 
 begin 
 	#

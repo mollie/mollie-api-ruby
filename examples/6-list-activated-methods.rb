@@ -1,7 +1,7 @@
 #
 # Example 6 - How to get the currently activated payment methods.
 #
-require File.expand_path "../lib/Mollie/API/Client", __dir__
+require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
 
 begin 
 	#

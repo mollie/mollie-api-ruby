@@ -11,6 +11,7 @@ spec = Gem::Specification.new do |s|
   s.email = ['info@mollie.nl']
   s.homepage = 'https://github.com/mollie/mollie-api-ruby'
   s.license = 'BSD'
+  s.required_ruby_version = '>= 1.9.2'
 
   s.add_dependency('rest-client', '~> 1.6')
   s.add_dependency('json', '~> 1.8')

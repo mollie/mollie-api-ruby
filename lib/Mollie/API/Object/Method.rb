@@ -8,7 +8,8 @@ module Mollie
 				BANKTRANSFER = "banktransfer"
 				PAYPAL       = "paypal"
 				PAYSAFECARD  = "paysafecard"
-				BITCOIN	     = "bitcoin"
+				BITCOIN      = "bitcoin"
+				SOFORT       = "sofort
 
 				attr_accessor :id,
 				              :description,

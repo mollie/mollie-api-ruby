@@ -16,7 +16,7 @@ module Mollie
 				              :method,
 				              :createdDatetime,
 				              :paidDatetime,
-				              :epiredDatetime,
+				              :expiredDatetime,
 				              :cancelledDatetime,
 				              :metadata,
 				              :details,

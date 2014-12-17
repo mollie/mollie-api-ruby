@@ -9,7 +9,7 @@ module Mollie
 				PAYPAL       = "paypal"
 				PAYSAFECARD  = "paysafecard"
 				BITCOIN      = "bitcoin"
-				SOFORT       = "sofort
+				SOFORT       = "sofort"
 
 				attr_accessor :id,
 				              :description,

@@ -6,7 +6,7 @@ module Mollie
           @client = client
         end
 
-        def getResourceName ()
+        def getResourceName
           self.class.name.downcase.split("::").slice(3..-1).join "/"
         end
 
@@ -32,7 +32,7 @@ module Mollie
           request "DELETE", id, {}
         end
 
-        def all ()
+        def all
           request("GET", nil, {}) { |response|
             Mollie::API::Object::List.new response, getResourceObject
           }

@@ -16,11 +16,11 @@ module Mollie
 				              :amount,
 				              :image
 
-				def getMinimumAmount ()
+				def getMinimumAmount
 					@amount.minimum
 				end
 
-				def getMaximumAmount ()
+				def getMaximumAmount
 					@amount.maximum
 				end
 			end

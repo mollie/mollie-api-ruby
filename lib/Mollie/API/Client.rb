@@ -23,7 +23,7 @@ module Mollie
 
       attr_reader :payments, :issuers, :methods, :payments_refunds
 
-      def initialize ()
+      def initialize
         @payments         = Mollie::API::Resource::Payments.new self
         @issuers          = Mollie::API::Resource::Issuers.new self
         @methods          = Mollie::API::Resource::Methods.new self
@@ -42,7 +42,7 @@ module Mollie
         @api_endpoint = api_endpoint.chomp "/"
       end
 
-      def getApiEndpoint ()
+      def getApiEndpoint
         @api_endpoint
       end
 
@@ -100,7 +100,7 @@ module Mollie
         response
       end
 
-      def getUname ()
+      def getUname
         `uname -a 2>/dev/null`.strip if RUBY_PLATFORM =~ /linux|darwin/i
       rescue Errno::ENOMEM
         "uname lookup failed"

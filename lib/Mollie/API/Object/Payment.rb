@@ -22,15 +22,15 @@ module Mollie
 				              :details,
 				              :links
 
-				def open? ()
+				def open?
 					@status == STATUS_OPEN
 				end
 
-				def paid? ()
+				def paid?
 					!@paidDatetime.nil?
 				end
 
-				def getPaymentUrl ()
+				def getPaymentUrl
 					@links && @links.paymentUrl
 				end
 			end

@@ -26,8 +26,20 @@ module Mollie
 					@status == STATUS_OPEN
 				end
 
+				def cancelled?
+					@status == STATUS_CANCELLED
+				end
+				
+				def expired?
+					@status == STATUS_EXPIRED
+				end
+
 				def paid?
 					!@paidDatetime.nil?
+				end
+				
+				def paidout?
+					@status == STATUS_PAIDOUT
 				end
 
 				def getPaymentUrl

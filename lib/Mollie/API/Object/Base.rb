@@ -2,7 +2,7 @@ module Mollie
   module API
     module Object
       class Base
-        def initialize (hash)
+        def initialize(hash)
           hash.each { |key, value|
             if value.respond_to? :each
               value = Base.new value

@@ -2,7 +2,7 @@ module Mollie
   module API
     module Resource
       class Base
-        def initialize (client)
+        def initialize(client)
           @client = client
         end
 
@@ -10,25 +10,25 @@ module Mollie
           self.class.name.downcase.split("::").slice(3..-1).join "/"
         end
 
-        def create (data = {})
+        def create(data = {})
           request("POST", nil, data) { |response|
             newResourceObject response
           }
         end
 
-        def get (id)
+        def get(id)
           request("GET", id, {}) { |response|
             newResourceObject response
           }
         end
 
-        def update (id, data = {})
+        def update(id, data = {})
           request("POST", id, data) { |response|
             newResourceObject response
           }
         end
 
-        def delete (id)
+        def delete(id)
           request "DELETE", id, {}
         end
 
@@ -38,11 +38,11 @@ module Mollie
           }
         end
 
-        def newResourceObject (response)
+        def newResourceObject(response)
           getResourceObject.new response
         end
 
-        def request (method, id = 0, data = {})
+        def request(method, id = 0, data = {})
           response = @client.performHttpCall method, getResourceName, id, data
 
           yield(response) if block_given?

@@ -38,7 +38,7 @@ module Mollie
         addVersionString OpenSSL::OPENSSL_VERSION.split(" ").slice(0, 2).join "/"
       end
 
-      def setApiEndpoint (api_endpoint)
+      def setApiEndpoint(api_endpoint)
         @api_endpoint = api_endpoint.chomp "/"
       end
 
@@ -46,22 +46,22 @@ module Mollie
         @api_endpoint
       end
 
-      def setApiKey (api_key)
+      def setApiKey(api_key)
         @api_key = api_key
       end
 
-      def addVersionString (version_string)
+      def addVersionString(version_string)
         @version_strings << (version_string.gsub /\s+/, "-")
       end
 
-      def _getRestClient (request_url, request_headers)
+      def _getRestClient(request_url, request_headers)
         RestClient::Resource.new request_url,
           :headers     => request_headers,
           :ssl_ca_file => (File.expand_path "cacert.pem", File.dirname(__FILE__)),
           :verify_ssl  => OpenSSL::SSL::VERIFY_PEER
       end
 
-      def performHttpCall (http_method, api_method, id = nil, http_body = nil)
+      def performHttpCall(http_method, api_method, id = nil, http_body = nil)
         request_headers = {
           :accept => :json,
           :authorization => "Bearer #{@api_key}",

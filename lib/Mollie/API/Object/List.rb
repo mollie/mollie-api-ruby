@@ -9,7 +9,7 @@ module Mollie
                       :count,
                       :data
 
-        def initialize (hash, classResourceObject)
+        def initialize(hash, classResourceObject)
           data        = hash[:data] || []
           hash[:data] = nil
           super hash
@@ -20,7 +20,7 @@ module Mollie
           }
         end
 
-        def each (&block)
+        def each(&block)
           @data.each { |object|
             if block_given?
               block.call object

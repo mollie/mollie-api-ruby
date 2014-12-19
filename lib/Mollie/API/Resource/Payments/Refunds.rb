@@ -16,7 +16,7 @@ module Mollie
             "payments/#{payment_id}/refunds"
           end
 
-          def with (payment)
+          def with(payment)
             @payment_id = payment.id
             self
           end

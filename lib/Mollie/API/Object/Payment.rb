@@ -22,15 +22,27 @@ module Mollie
 				              :details,
 				              :links
 
-				def open? ()
+				def open?
 					@status == STATUS_OPEN
 				end
 
-				def paid? ()
-					!@paidDatetime.nil?
+				def cancelled?
+					@status == STATUS_CANCELLED
+				end
+				
+				def expired?
+					@status == STATUS_EXPIRED
 				end
 
-				def getPaymentUrl ()
+				def paid?
+					!@paidDatetime.nil?
+				end
+				
+				def paidout?
+					@status == STATUS_PAIDOUT
+				end
+
+				def getPaymentUrl
 					@links && @links.paymentUrl
 				end
 			end

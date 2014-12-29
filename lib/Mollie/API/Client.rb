@@ -17,7 +17,7 @@ require "rest_client"
 module Mollie
   module API
     class Client
-      CLIENT_VERSION = "1.1.2"
+      CLIENT_VERSION = "1.1.3"
       API_ENDPOINT   = "https://api.mollie.nl"
       API_VERSION    = "v1"
 

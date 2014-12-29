@@ -92,7 +92,7 @@ module Mollie
         end
 
         unless response[:error].nil?
-          exception       = Mollie::API::Exception.new response[:error][:message]
+          exception = Mollie::API::Exception.new response[:error][:message]
           exception.field = response[:error][:field] unless response[:error][:field].nil?
           raise exception
         end

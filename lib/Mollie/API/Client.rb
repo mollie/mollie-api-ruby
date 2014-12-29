@@ -15,96 +15,96 @@ require "rest_client"
 "Object/Method"].each {|file| require File.expand_path file, File.dirname(__FILE__) }
 
 module Mollie
-	module API
-		class Client
-			CLIENT_VERSION = "1.1.2"
-			API_ENDPOINT   = "https://api.mollie.nl"
-			API_VERSION    = "v1"
+  module API
+    class Client
+      CLIENT_VERSION = "1.1.2"
+      API_ENDPOINT   = "https://api.mollie.nl"
+      API_VERSION    = "v1"
 
-			attr_reader :payments, :issuers, :methods, :payments_refunds
+      attr_reader :payments, :issuers, :methods, :payments_refunds
 
-			def initialize ()
-				@payments         = Mollie::API::Resource::Payments.new self
-				@issuers          = Mollie::API::Resource::Issuers.new self
-				@methods          = Mollie::API::Resource::Methods.new self
-				@payments_refunds = Mollie::API::Resource::Payments::Refunds.new self
-				
-				@api_endpoint    = API_ENDPOINT
-				@api_key         = ""
-				@version_strings = []
+      def initialize
+        @payments         = Mollie::API::Resource::Payments.new self
+        @issuers          = Mollie::API::Resource::Issuers.new self
+        @methods          = Mollie::API::Resource::Methods.new self
+        @payments_refunds = Mollie::API::Resource::Payments::Refunds.new self
 
-				addVersionString "Mollie/" << CLIENT_VERSION
-				addVersionString "Ruby/" << RUBY_VERSION
-				addVersionString OpenSSL::OPENSSL_VERSION.split(" ").slice(0, 2).join "/"
-			end
+        @api_endpoint    = API_ENDPOINT
+        @api_key         = ""
+        @version_strings = []
 
-			def setApiEndpoint (api_endpoint)
-				@api_endpoint = api_endpoint.chomp "/"
-			end
+        addVersionString "Mollie/" << CLIENT_VERSION
+        addVersionString "Ruby/" << RUBY_VERSION
+        addVersionString OpenSSL::OPENSSL_VERSION.split(" ").slice(0, 2).join "/"
+      end
 
-			def getApiEndpoint ()
-				@api_endpoint
-			end
+      def setApiEndpoint(api_endpoint)
+        @api_endpoint = api_endpoint.chomp "/"
+      end
 
-			def setApiKey (api_key)
-				@api_key = api_key
-			end
+      def getApiEndpoint
+        @api_endpoint
+      end
 
-			def addVersionString (version_string)
-				@version_strings << (version_string.gsub /\s+/, "-")
-			end
+      def setApiKey(api_key)
+        @api_key = api_key
+      end
 
-			def _getRestClient (request_url, request_headers)
-				RestClient::Resource.new request_url,
-					:headers     => request_headers,
-					:ssl_ca_file => (File.expand_path "cacert.pem", File.dirname(__FILE__)),
-					:verify_ssl  => OpenSSL::SSL::VERIFY_PEER
-			end
+      def addVersionString(version_string)
+        @version_strings << (version_string.gsub /\s+/, "-")
+      end
 
-			def performHttpCall (http_method, api_method, id = nil, http_body = nil)
-				request_headers = {
-					:accept => :json,
-					:authorization => "Bearer #{@api_key}",
-					:user_agent => @version_strings.join(" "),
-					"X-Mollie-Client-Info" => getUname
-				}
+      def _getRestClient(request_url, request_headers)
+        RestClient::Resource.new request_url,
+          :headers     => request_headers,
+          :ssl_ca_file => (File.expand_path "cacert.pem", File.dirname(__FILE__)),
+          :verify_ssl  => OpenSSL::SSL::VERIFY_PEER
+      end
 
-				if http_body.respond_to? :delete_if
-					http_body.delete_if { |k, v| v.nil? }
-				end
+      def performHttpCall(http_method, api_method, id = nil, http_body = nil)
+        request_headers = {
+          :accept => :json,
+          :authorization => "Bearer #{@api_key}",
+          :user_agent => @version_strings.join(" "),
+          "X-Mollie-Client-Info" => getUname
+        }
 
-				begin
-					request_url = "#{@api_endpoint}/#{API_VERSION}/#{api_method}/#{id}".chomp "/"
-					rest_client = _getRestClient request_url, request_headers
+        if http_body.respond_to? :delete_if
+          http_body.delete_if { |k, v| v.nil? }
+        end
 
-					case http_method
-					when "GET"
-						response = rest_client.get 
-					when "POST"
-						response = rest_client.post http_body
-					when "DELETE"
-						response = rest_client.delete
-					end
-					response = JSON.parse response, :symbolize_names => true
-				rescue RestClient::ExceptionWithResponse => e
-					response = JSON.parse e.response, :symbolize_names => true
-					raise e if response[:error].nil?
-				end
+        begin
+          request_url = "#{@api_endpoint}/#{API_VERSION}/#{api_method}/#{id}".chomp "/"
+          rest_client = _getRestClient request_url, request_headers
 
-				unless response[:error].nil?
-					exception       = Mollie::API::Exception.new response[:error][:message] 
-					exception.field = response[:error][:field] unless response[:error][:field].nil?
-					raise exception
-				end
+          case http_method
+          when "GET"
+            response = rest_client.get
+          when "POST"
+            response = rest_client.post http_body
+          when "DELETE"
+            response = rest_client.delete
+          end
+          response = JSON.parse response, :symbolize_names => true
+        rescue RestClient::ExceptionWithResponse => e
+          response = JSON.parse e.response, :symbolize_names => true
+          raise e if response[:error].nil?
+        end
 
-				response
-			end
+        unless response[:error].nil?
+          exception       = Mollie::API::Exception.new response[:error][:message]
+          exception.field = response[:error][:field] unless response[:error][:field].nil?
+          raise exception
+        end
 
-			def getUname ()
-				`uname -a 2>/dev/null`.strip if RUBY_PLATFORM =~ /linux|darwin/i
-			rescue Errno::ENOMEM
-				"uname lookup failed"
-			end
-		end
-	end
+        response
+      end
+
+      def getUname
+        `uname -a 2>/dev/null`.strip if RUBY_PLATFORM =~ /linux|darwin/i
+      rescue Errno::ENOMEM
+        "uname lookup failed"
+      end
+    end
+  end
 end

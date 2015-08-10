@@ -10,6 +10,7 @@ module Mollie
         PAYSAFECARD  = "paysafecard"
         BITCOIN      = "bitcoin"
         SOFORT       = "sofort"
+        BELFIUS      = "belfius"
 
         attr_accessor :id,
                       :description,

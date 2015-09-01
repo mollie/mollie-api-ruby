@@ -73,6 +73,7 @@ module Mollie
           http_body.delete_if { |k, v| v.nil? }
         end
 
+        http_code = nil
         begin
           request_url = "#{@api_endpoint}/#{API_VERSION}/#{api_method}/#{id}".chomp "/"
           rest_client = _getRestClient request_url, request_headers
@@ -87,12 +88,14 @@ module Mollie
           end
           response = JSON.parse response, :symbolize_names => true
         rescue RestClient::ExceptionWithResponse => e
+          http_code = e.http_code
           response = JSON.parse e.response, :symbolize_names => true
           raise e if response[:error].nil?
         end
 
         unless response[:error].nil?
           exception = Mollie::API::Exception.new response[:error][:message]
+          exception.code = http_code
           exception.field = response[:error][:field] unless response[:error][:field].nil?
           raise exception
         end

@@ -2,6 +2,7 @@ require "json"
 require "rest_client"
 
 ["Exception",
+"Client/Version",
 "Resource/Base",
 "Resource/Payments",
 "Resource/Payments/Refunds",
@@ -17,7 +18,6 @@ require "rest_client"
 module Mollie
   module API
     class Client
-      CLIENT_VERSION = "1.1.4"
       API_ENDPOINT   = "https://api.mollie.nl"
       API_VERSION    = "v1"
 

@@ -1,6 +1,6 @@
 $:.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
-require 'Mollie/API/Client'
+require 'Mollie/API/Client/Version'
 
 spec = Gem::Specification.new do |s|
   s.name = 'mollie-api-ruby'

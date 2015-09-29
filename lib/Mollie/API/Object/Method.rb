@@ -5,12 +5,13 @@ module Mollie
         IDEAL        = "ideal"
         CREDITCARD   = "creditcard"
         MISTERCASH   = "mistercash"
-        BANKTRANSFER = "banktransfer"
-        PAYPAL       = "paypal"
-        PAYSAFECARD  = "paysafecard"
-        BITCOIN      = "bitcoin"
         SOFORT       = "sofort"
+        BANKTRANSFER = "banktransfer"
+        DIRECTDEBIT  = "directdebit"
+        BITCOIN      = "bitcoin"
+        PAYPAL       = "paypal"
         BELFIUS      = "belfius"
+        PAYSAFECARD  = "paysafecard"
 
         attr_accessor :id,
                       :description,

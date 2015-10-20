@@ -2,16 +2,17 @@ module Mollie
   module API
     module Object
       class Method < Base
-        IDEAL        = "ideal"
-        CREDITCARD   = "creditcard"
-        MISTERCASH   = "mistercash"
-        SOFORT       = "sofort"
-        BANKTRANSFER = "banktransfer"
-        DIRECTDEBIT  = "directdebit"
-        BITCOIN      = "bitcoin"
-        PAYPAL       = "paypal"
-        BELFIUS      = "belfius"
-        PAYSAFECARD  = "paysafecard"
+        IDEAL             = "ideal"
+        CREDITCARD        = "creditcard"
+        MISTERCASH        = "mistercash"
+        SOFORT            = "sofort"
+        BANKTRANSFER      = "banktransfer"
+        DIRECTDEBIT       = "directdebit"
+        BITCOIN           = "bitcoin"
+        PAYPAL            = "paypal"
+        BELFIUS           = "belfius"
+        PAYSAFECARD       = "paysafecard"
+        PODIUMCADEAUKAART = "podiumcadeaukaart"
 
         attr_accessor :id,
                       :description,

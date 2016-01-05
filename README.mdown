@@ -18,7 +18,7 @@ To use the Mollie API client, the following things are required:
 By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/).
 
 ```
-	$ gem install mollie-api-ruby
+$ gem install mollie-api-ruby
 ```
 
 You may also git checkout or [download all the files](https://github.com/mollie/mollie-api-ruby/archive/master.zip), and include the Mollie API client manually.
@@ -38,33 +38,33 @@ To successfully receive a payment, these steps should be implemented:
 Requiring the Mollie API Client.
 
 ```ruby
-		require "Mollie/API/Client"
+require "Mollie/API/Client"
 ```
 
 Initializing the Mollie API client, and setting your API key.
 
 ```ruby
-		mollie = Mollie::API::Client.new
-		mollie.api_key = "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+mollie = Mollie::API::Client.new
+mollie.api_key = "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
 ```
 
 Creating a new payment.
 
 ```ruby
-		payment = mollie.payments.create \
-			:amount      => 10.00,
-			:description => "My first API payment",
-			:redirectUrl => "https://webshop.example.org/order/12345/"
+payment = mollie.payments.create \
+  :amount      => 10.00,
+  :description => "My first API payment",
+  :redirectUrl => "https://webshop.example.org/order/12345/"
 ```
 
 Retrieving a payment.
 
 ```ruby
-		payment = mollie.payments.get payment.id
+payment = mollie.payments.get payment.id
 
-		if payment.paid?
-			puts "Payment received."
-		end
+if payment.paid?
+  puts "Payment received."
+end
 ```
 
 ### Refunding payments ###
@@ -74,8 +74,8 @@ definitive. Refunds are only supported for iDEAL, credit card and Bank Transfer 
 be refunded through our API at the moment.
 
 ```ruby
-		payment = mollie.payments.get payment.id
-		refund  = mollie.payments_refunds.with(payment).create
+payment = mollie.payments.get payment.id
+refund  = mollie.payments_refunds.with(payment).create
 ```
 
 ## Examples ##
@@ -83,8 +83,8 @@ be refunded through our API at the moment.
 The examples require [Sinatra](http://rubygems.org/gems/sinatra) so you will need to install that gem first. Afterwards simply run:
 
 ```
-	$ cd mollie-api-ruby
-	$ ruby examples/app.rb
+$ cd mollie-api-ruby
+$ ruby examples/app.rb
 ```
 
 ## API documentation ##

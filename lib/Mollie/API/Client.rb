@@ -50,6 +50,8 @@ module Mollie
         @api_key = api_key
       end
 
+      alias_method :api_key=, :setApiKey
+
       def addVersionString(version_string)
         @version_strings << (version_string.gsub /\s+/, "-")
       end

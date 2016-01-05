@@ -45,6 +45,8 @@ module Mollie
         def getPaymentUrl
           @links && @links.paymentUrl
         end
+
+        alias_method :payment_url, :getPaymentUrl
       end
     end
   end

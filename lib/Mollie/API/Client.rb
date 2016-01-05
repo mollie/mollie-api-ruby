@@ -42,9 +42,13 @@ module Mollie
         @api_endpoint = api_endpoint.chomp "/"
       end
 
+      alias_method :api_endpoint=, :setApiEndpoint
+
       def getApiEndpoint
         @api_endpoint
       end
+
+      alias_method :api_endpoint, :getApiEndpoint
 
       def setApiKey(api_key)
         @api_key = api_key

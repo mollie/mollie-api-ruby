@@ -38,32 +38,33 @@ To successfully receive a payment, these steps should be implemented:
 Requiring the Mollie API Client.
 
 ```ruby
-require "Mollie/API/Client"
+require 'Mollie/API/Client'
 ```
 
 Initializing the Mollie API client, and setting your API key.
 
 ```ruby
 mollie = Mollie::API::Client.new
-mollie.api_key = "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+mollie.api_key = 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
 ```
 
 Creating a new payment.
 
 ```ruby
-payment = mollie.payments.create \
-  :amount      => 10.00,
-  :description => "My first API payment",
-  :redirectUrl => "https://webshop.example.org/order/12345/"
+payment = mollie.payments.create(
+  amount: 10.00,
+  description: 'My first API payment',
+  redirectUrl: 'https://webshop.example.org/order/12345/'
+)
 ```
 
 Retrieving a payment.
 
 ```ruby
-payment = mollie.payments.get payment.id
+payment = mollie.payments.get(payment.id)
 
 if payment.paid?
-  puts "Payment received."
+  puts 'Payment received.'
 end
 ```
 
@@ -74,7 +75,7 @@ definitive. Refunds are only supported for iDEAL, credit card and Bank Transfer 
 be refunded through our API at the moment.
 
 ```ruby
-payment = mollie.payments.get payment.id
+payment = mollie.payments.get(payment.id)
 refund  = mollie.payments_refunds.with(payment).create
 ```
 

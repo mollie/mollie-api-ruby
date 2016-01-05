@@ -1,4 +1,4 @@
-![Mollie](http://www.mollie.nl/files/Mollie-Logo-Style-Small.png) 
+![Mollie](http://www.mollie.nl/files/Mollie-Logo-Style-Small.png)
 
 # Mollie API client for Ruby #
 
@@ -39,29 +39,29 @@ Requiring the Mollie API Client.
 
 ```ruby
 		require "Mollie/API/Client"
-```	
+```
 
 Initializing the Mollie API client, and setting your API key.
 
 ```ruby
 		mollie = Mollie::API::Client.new
-```	
 		mollie.api_key = "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+```
 
 Creating a new payment.
-	
+
 ```ruby
 		payment = mollie.payments.create \
 			:amount      => 10.00,
 			:description => "My first API payment",
 			:redirectUrl => "https://webshop.example.org/order/12345/"
 ```
-	
+
 Retrieving a payment.
 
 ```ruby
 		payment = mollie.payments.get payment.id
-		
+
 		if payment.paid?
 			puts "Payment received."
 		end

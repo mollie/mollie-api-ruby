@@ -29,7 +29,7 @@ module Mollie
         def cancelled?
           @status == STATUS_CANCELLED
         end
-        
+
         def expired?
           @status == STATUS_EXPIRED
         end
@@ -37,7 +37,7 @@ module Mollie
         def paid?
           !@paidDatetime.nil?
         end
-        
+
         def paidout?
           @status == STATUS_PAIDOUT
         end

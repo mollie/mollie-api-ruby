@@ -4,12 +4,15 @@ require "rest_client"
 ["Exception",
 "Client/Version",
 "Resource/Base",
+"Resource/Customers",
+"Resource/Customers/Payments",
 "Resource/Payments",
 "Resource/Payments/Refunds",
 "Resource/Issuers",
 "Resource/Methods",
 "Object/Base",
 "Object/List",
+"Object/Customer",
 "Object/Payment",
 "Object/Payment/Refund",
 "Object/Issuer",
@@ -24,10 +27,12 @@ module Mollie
       attr_reader :payments, :issuers, :methods, :payments_refunds
 
       def initialize
-        @payments         = Mollie::API::Resource::Payments.new self
-        @issuers          = Mollie::API::Resource::Issuers.new self
-        @methods          = Mollie::API::Resource::Methods.new self
-        @payments_refunds = Mollie::API::Resource::Payments::Refunds.new self
+        @payments           = Mollie::API::Resource::Payments.new self
+        @issuers            = Mollie::API::Resource::Issuers.new self
+        @methods            = Mollie::API::Resource::Methods.new self
+        @payments_refunds   = Mollie::API::Resource::Payments::Refunds.new self
+        @customers          = Mollie::API::Resource::Customers.new self
+        @customers_payments = Mollie::API::Resource::Customers::Payments.new self
 
         @api_endpoint    = API_ENDPOINT
         @api_key         = ""

@@ -24,7 +24,7 @@ module Mollie
       API_ENDPOINT   = "https://api.mollie.nl"
       API_VERSION    = "v1"
 
-      attr_reader :payments, :issuers, :methods, :payments_refunds
+      attr_reader :payments, :issuers, :methods, :payments_refunds, :customers, :customers_payments
 
       def initialize
         @payments           = Mollie::API::Resource::Payments.new self

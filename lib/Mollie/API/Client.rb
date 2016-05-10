@@ -6,6 +6,7 @@ require "rest_client"
 "Resource/Base",
 "Resource/Customers",
 "Resource/Customers/Payments",
+"Resource/Customers/Mandates",
 "Resource/Payments",
 "Resource/Payments/Refunds",
 "Resource/Issuers",
@@ -13,6 +14,7 @@ require "rest_client"
 "Object/Base",
 "Object/List",
 "Object/Customer",
+"Object/Mandate",
 "Object/Payment",
 "Object/Payment/Refund",
 "Object/Issuer",
@@ -24,7 +26,7 @@ module Mollie
       API_ENDPOINT   = "https://api.mollie.nl"
       API_VERSION    = "v1"
 
-      attr_reader :payments, :issuers, :methods, :payments_refunds, :customers, :customers_payments
+      attr_reader :payments, :issuers, :methods, :payments_refunds, :customers, :customers_payments, :customers_mandates
 
       def initialize
         @payments           = Mollie::API::Resource::Payments.new self
@@ -33,6 +35,7 @@ module Mollie
         @payments_refunds   = Mollie::API::Resource::Payments::Refunds.new self
         @customers          = Mollie::API::Resource::Customers.new self
         @customers_payments = Mollie::API::Resource::Customers::Payments.new self
+        @customers_mandates = Mollie::API::Resource::Customers::Mandates.new self
 
         @api_endpoint    = API_ENDPOINT
         @api_key         = ""

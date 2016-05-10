@@ -7,6 +7,11 @@ module Mollie
         STATUS_EXPIRED   = "expired"
         STATUS_PAID      = "paid"
         STATUS_PAIDOUT   = "paidout"
+        STATUS_FAILED    = "failed"
+
+        RECURRINGTYPE_NONE      = nil
+        RECURRINGTYPE_FIRST     = "first"
+        RECURRINGTYPE_RECURRING = "recurring"
 
         attr_accessor :id,
                       :status,
@@ -18,6 +23,10 @@ module Mollie
                       :paidDatetime,
                       :expiredDatetime,
                       :cancelledDatetime,
+                      :customerId,
+                      :recurringType,
+                      :mandateId,
+                      :settlementId,
                       :metadata,
                       :details,
                       :links

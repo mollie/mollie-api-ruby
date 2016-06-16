@@ -5,6 +5,9 @@
 All notable changes to this project will be documented in this file.
 
 
+#### v1.4.0 - 2016-06-16
+  - Added Subscriptions API.
+
 #### v1.3.0 - 2016-04-14
   - Added Mandates API.
   - Added `recurringType` and `mandateId` to Payments API.

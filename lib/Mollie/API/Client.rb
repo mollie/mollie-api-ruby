@@ -7,6 +7,7 @@ require "rest_client"
 "Resource/Customers",
 "Resource/Customers/Payments",
 "Resource/Customers/Mandates",
+"Resource/Customers/Subscriptions",
 "Resource/Payments",
 "Resource/Payments/Refunds",
 "Resource/Issuers",
@@ -15,6 +16,7 @@ require "rest_client"
 "Object/List",
 "Object/Customer",
 "Object/Mandate",
+"Object/Subscription",
 "Object/Payment",
 "Object/Payment/Refund",
 "Object/Issuer",
@@ -26,16 +28,17 @@ module Mollie
       API_ENDPOINT   = "https://api.mollie.nl"
       API_VERSION    = "v1"
 
-      attr_reader :payments, :issuers, :methods, :payments_refunds, :customers, :customers_payments, :customers_mandates
+      attr_reader :payments, :issuers, :methods, :payments_refunds, :customers, :customers_payments, :customers_mandates, :customers_subscriptions
 
       def initialize
-        @payments           = Mollie::API::Resource::Payments.new self
-        @issuers            = Mollie::API::Resource::Issuers.new self
-        @methods            = Mollie::API::Resource::Methods.new self
-        @payments_refunds   = Mollie::API::Resource::Payments::Refunds.new self
-        @customers          = Mollie::API::Resource::Customers.new self
-        @customers_payments = Mollie::API::Resource::Customers::Payments.new self
-        @customers_mandates = Mollie::API::Resource::Customers::Mandates.new self
+        @payments                = Mollie::API::Resource::Payments.new self
+        @issuers                 = Mollie::API::Resource::Issuers.new self
+        @methods                 = Mollie::API::Resource::Methods.new self
+        @payments_refunds        = Mollie::API::Resource::Payments::Refunds.new self
+        @customers               = Mollie::API::Resource::Customers.new self
+        @customers_payments      = Mollie::API::Resource::Customers::Payments.new self
+        @customers_mandates      = Mollie::API::Resource::Customers::Mandates.new self
+        @customers_subscriptions = Mollie::API::Resource::Customers::Subscriptions.new self
 
         @api_endpoint    = API_ENDPOINT
         @api_key         = ""

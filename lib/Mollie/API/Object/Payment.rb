@@ -26,6 +26,7 @@ module Mollie
                       :customerId,
                       :recurringType,
                       :mandateId,
+                      :subscriptionId,
                       :settlementId,
                       :metadata,
                       :details,

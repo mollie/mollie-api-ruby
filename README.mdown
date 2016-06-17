@@ -45,7 +45,7 @@ Initializing the Mollie API client, and setting your API key.
 
 ```ruby
 mollie = Mollie::API::Client.new
-mollie.api_key = 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
+mollie.setApiKey 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
 ```
 
 Creating a new payment.

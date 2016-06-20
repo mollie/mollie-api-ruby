@@ -8,6 +8,7 @@ module Mollie
         STATUS_PAID      = "paid"
         STATUS_PAIDOUT   = "paidout"
         STATUS_FAILED    = "failed"
+        STATUS_REFUNDED  = "refunded"
 
         RECURRINGTYPE_NONE      = nil
         RECURRINGTYPE_FIRST     = "first"
@@ -50,6 +51,10 @@ module Mollie
 
         def paidout?
           @status == STATUS_PAIDOUT
+        end
+
+        def refunded?
+          @status == STATUS_REFUNDED
         end
 
         def getPaymentUrl

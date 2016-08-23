@@ -15,6 +15,7 @@ spec = Gem::Specification.new do |s|
 
   s.add_dependency('rest-client', '~> 1.8')
   s.add_dependency('json', '~> 1.8')
+  s.add_dependency('mime-types', '< 3')
 
   s.files = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")

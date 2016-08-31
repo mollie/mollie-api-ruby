@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.0'
 
   s.add_dependency('rest-client', '~> 2.0')
+  s.add_dependency('json', '~> 1.8')
 
   s.files = `git ls-files`.split("\n")
   s.test_files = Dir['test/**/*']

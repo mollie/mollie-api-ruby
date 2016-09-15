@@ -13,7 +13,7 @@ module Mollie
 
           def getResourceName
             customer_id = URI::encode(@parent_id)
-            "customers/#{parent_id}/subscriptions"
+            "customers/#{@parent_id}/subscriptions"
           end
 
           def with(customer)

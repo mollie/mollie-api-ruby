@@ -38,7 +38,7 @@ To successfully receive a payment, these steps should be implemented:
 Requiring the Mollie API Client.
 
 ```ruby
-require 'Mollie/API/Client'
+require 'mollie/api/client'
 ```
 
 Initializing the Mollie API client, and setting your API key.
@@ -54,7 +54,7 @@ Creating a new payment.
 payment = mollie.payments.create(
   amount: 10.00,
   description: 'My first API payment',
-  redirectUrl: 'https://webshop.example.org/order/12345/'
+  redirect_url: 'https://webshop.example.org/order/12345/'
 )
 ```
 

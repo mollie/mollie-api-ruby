@@ -7,11 +7,11 @@ module Mollie
         class Refunds < Base
           @payment_id = nil
 
-          def getResourceObject
+          def resource_object
             Mollie::API::Object::Payment::Refund
           end
 
-          def getResourceName
+          def resource_name
             payment_id = URI::encode(@payment_id)
             "payments/#{payment_id}/refunds"
           end

@@ -20,15 +20,15 @@ module Mollie
                       :amount,
                       :description,
                       :method,
-                      :createdDatetime,
-                      :paidDatetime,
-                      :expiredDatetime,
-                      :cancelledDatetime,
-                      :customerId,
-                      :recurringType,
-                      :mandateId,
-                      :subscriptionId,
-                      :settlementId,
+                      :created_datetime,
+                      :paid_datetime,
+                      :expired_datetime,
+                      :cancelled_datetime,
+                      :customer_id,
+                      :recurring_type,
+                      :mandate_id,
+                      :subscription_id,
+                      :settlement_id,
                       :metadata,
                       :details,
                       :links
@@ -46,7 +46,7 @@ module Mollie
         end
 
         def paid?
-          !@paidDatetime.nil?
+          !@paid_datetime.nil?
         end
 
         def paidout?
@@ -57,11 +57,9 @@ module Mollie
           @status == STATUS_REFUNDED
         end
 
-        def getPaymentUrl
-          @links && @links.paymentUrl
+        def payment_url
+          @links && @links.payment_url
         end
-
-        alias_method :payment_url, :getPaymentUrl
       end
     end
   end

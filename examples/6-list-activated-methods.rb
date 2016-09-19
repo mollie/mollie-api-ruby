@@ -1,7 +1,7 @@
 #
 # Example 6 - How to get the currently activated payment methods.
 #
-require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
+require File.expand_path "../lib/mollie/api/client", File.dirname(__FILE__)
 
 begin
   #
@@ -10,14 +10,14 @@ begin
   # See: https://www.mollie.nl/beheer/account/profielen/
   #
   mollie = Mollie::API::Client.new
-  mollie.setApiKey "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+  mollie.api_key =  "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
 
   #
   # Get the all the activated methods for this API key.
   #
   methods = mollie.methods.all
 
-  $response.body << "Your API key has #{methods.totalCount} activated payment methods:<br>"
+  $response.body << "Your API key has #{methods.total_count} activated payment methods:<br>"
 
   methods.each { |method|
     $response.body << '<div style="line-height:40px; vertical-align:top">'

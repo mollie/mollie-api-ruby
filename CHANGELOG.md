@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file.
 
 
+#### v2.0.0 - ?
+  - Refactor to a more ruby like library.
+    - all methods use underscores
+    - payloads to call api functions will be camel cased before sending
+    - getters and setters are now just attr_accessors and omit get and set
+
 #### v1.4.1 - 2016-06-20
   - Added `refunded?` method.
 

@@ -1,7 +1,7 @@
 #
 # Example 2 - How to verify Mollie API Payments in a webhook.
 #
-require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
+require File.expand_path "../lib/mollie/api/client", File.dirname(__FILE__)
 
 begin
   #
@@ -10,7 +10,7 @@ begin
   # See: https://www.mollie.nl/beheer/account/profielen/
   #
   mollie = Mollie::API::Client.new
-  mollie.setApiKey "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+  mollie.api_key =  "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
 
   #
   # Retrieve the payment's current state.

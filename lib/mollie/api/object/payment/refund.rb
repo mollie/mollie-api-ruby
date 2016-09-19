@@ -4,10 +4,10 @@ module Mollie
       class Payment
         class Refund < Base
           attr_accessor :id,
-                  :amountRefunded,
-                  :amountRemaining,
+                  :amount_refunded,
+                  :amount_remaining,
                   :payment,
-                  :refundedDatetime
+                  :refunded_datetime
         end
       end
     end

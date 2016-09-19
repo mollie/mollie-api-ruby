@@ -4,19 +4,19 @@ module Mollie
       class List < Base
         include Enumerable
 
-        attr_accessor :totalCount,
+        attr_accessor :total_count,
                       :offset,
                       :count,
                       :data
 
-        def initialize(hash, classResourceObject)
+        def initialize(hash, class_resource_object)
           data        = hash[:data] || []
           hash[:data] = nil
           super hash
 
           @data = []
           data.each { |hash|
-            @data << (classResourceObject.new hash)
+            @data << (class_resource_object.new hash)
           }
         end
 

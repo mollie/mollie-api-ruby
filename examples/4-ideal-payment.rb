@@ -1,7 +1,7 @@
 #
 # Example 4 - How to prepare an iDEAL payment with the Mollie API.
 #
-require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
+require File.expand_path "../lib/mollie/api/client", File.dirname(__FILE__)
 
 begin
   #
@@ -10,7 +10,7 @@ begin
   # See: https://www.mollie.nl/beheer/account/profielen/
   #
   mollie = Mollie::API::Client.new
-  mollie.setApiKey "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+  mollie.api_key =  "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
 
   #
   # First, let the customer pick the bank in a simple HTML form. This step is actually optional.
@@ -70,7 +70,7 @@ begin
     #
     # Send the customer off to complete the payment.
     #
-    $response.redirect payment.getPaymentUrl
+    $response.redirect payment.payment_url
   end
 rescue Mollie::API::Exception => e
   $response.body << "API call failed: " << (CGI.escapeHTML e.message)

@@ -11,7 +11,7 @@ To use the Mollie API client, the following things are required:
 + Create a new [Website profile](https://www.mollie.nl/beheer/account/profielen/) to generate API keys (live and test mode) and setup your webhook.
 + Now you're ready to use the Mollie API client in test mode.
 + In order to accept payments in live mode, payment methods must be activated in your account. Follow [a few of steps](https://www.mollie.nl/beheer/diensten), and let us handle the rest.
-+ This API client requires the [REST Client](https://github.com/rest-client/rest-client) and [JSON](https://rubygems.org/gems/json) gems.
++ This API client requires the [REST Client](https://github.com/rest-client/rest-client) (with [mime-types](https://github.com/mime-types/ruby-mime-types/) version <3) and  [JSON](https://rubygems.org/gems/json) gems.
 
 ## Installation ##
 

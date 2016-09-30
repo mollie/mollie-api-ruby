@@ -10,16 +10,16 @@ module Mollie
 
         attr_accessor :resource,
                       :id,
-                      :customerId,
+                      :customer_id,
                       :mode,
-                      :createdDatetime,
+                      :created_datetime,
                       :status,
                       :amount,
                       :times,
                       :interval,
                       :description,
                       :method,
-                      :cancelledDatetime
+                      :cancelled_datetime
       end
     end
   end

@@ -6,25 +6,25 @@ module Mollie
           @client = client
         end
 
-        def getResourceName
+        def resource_name
           self.class.name.downcase.split("::").slice(3..-1).join "/"
         end
 
         def create(data = {})
           request("POST", nil, data) { |response|
-            newResourceObject response
+            new_resource_object response
           }
         end
 
         def get(id)
           request("GET", id, {}) { |response|
-            newResourceObject response
+            new_resource_object response
           }
         end
 
         def update(id, data = {})
           request("POST", id, data) { |response|
-            newResourceObject response
+            new_resource_object response
           }
         end
 
@@ -34,16 +34,16 @@ module Mollie
 
         def all
           request("GET", nil, {}) { |response|
-            Mollie::API::Object::List.new response, getResourceObject
+            Mollie::API::Object::List.new response, resource_object
           }
         end
 
-        def newResourceObject(response)
-          getResourceObject.new response
+        def new_resource_object(response)
+          resource_object.new response
         end
 
         def request(method, id = 0, data = {})
-          response = @client.performHttpCall method, getResourceName, id, data
+          response = @client.perform_http_call method, resource_name, id, data
 
           yield(response) if block_given?
         end

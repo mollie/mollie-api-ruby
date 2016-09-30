@@ -9,9 +9,9 @@ module Mollie
                       :id,
                       :status,
                       :method,
-                      :customerId,
+                      :customer_id,
                       :details,
-                      :createdDatetime
+                      :created_datetime
 
         def valid?
           @status == STATUS_VALID

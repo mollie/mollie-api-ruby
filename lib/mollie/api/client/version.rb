@@ -1,7 +1,7 @@
 module Mollie
   module API
     class Client
-      CLIENT_VERSION = "1.4.1"
+      CLIENT_VERSION = "2.0.0"
     end
   end
 end

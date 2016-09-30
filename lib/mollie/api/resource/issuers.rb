@@ -2,7 +2,7 @@ module Mollie
   module API
     module Resource
       class Issuers < Base
-        def getResourceObject
+        def resource_object
           Mollie::API::Object::Issuer
         end
       end

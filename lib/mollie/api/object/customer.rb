@@ -8,8 +8,8 @@ module Mollie
                       :email,
                       :locale,
                       :metadata,
-                      :recentlyUsedMethods,
-                      :createdDatetime
+                      :recently_used_methods,
+                      :created_datetime
       end
     end
   end

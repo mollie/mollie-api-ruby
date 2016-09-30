@@ -4,16 +4,16 @@ module Mollie
   module API
     module Resource
       class Customers
-        class Mandates < Base
+        class Payments < Base
           @customer_id = nil
 
-          def getResourceObject
-            Mollie::API::Object::Mandate
+          def resource_object
+            Mollie::API::Object::Payment
           end
 
-          def getResourceName
+          def resource_name
             customer_id = URI::encode(@customer_id)
-            "customers/#{customer_id}/mandates"
+            "customers/#{customer_id}/payments"
           end
 
           def with(customer)

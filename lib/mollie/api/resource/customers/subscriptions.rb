@@ -7,12 +7,12 @@ module Mollie
         class Subscriptions < Base
           @parent_id = nil
 
-          def getResourceObject
+          def resource_object
             Mollie::API::Object::Subscription
           end
 
-          def getResourceName
-            customer_id = URI::encode(@parent_id)
+          def resource_name
+            parent_id = URI::encode(@parent_id)
             "customers/#{parent_id}/subscriptions"
           end
 

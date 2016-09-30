@@ -5,7 +5,7 @@
 All notable changes to this project will be documented in this file.
 
 
-#### v2.0.0 - ?
+#### 2.0.0 - ?
   - Refactor to a more ruby like library.
     - all methods use underscores
     - payloads to call api functions will be camel cased before sending

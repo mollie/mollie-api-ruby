@@ -19,4 +19,7 @@ Gem::Specification.new do |s|
 
   s.files = `git ls-files`.split("\n")
   s.test_files = Dir['test/**/*']
+
+  spec.add_development_dependency("rake")
+  spec.add_development_dependency("test-unit")
 end

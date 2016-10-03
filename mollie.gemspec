@@ -1,6 +1,6 @@
 $:.push File.expand_path('../lib', __FILE__)
 
-require 'Mollie/API/Client/Version'
+require 'mollie/api/client/version'
 
 Gem::Specification.new do |s|
   s.name = 'mollie-api-ruby'
@@ -19,4 +19,8 @@ Gem::Specification.new do |s|
 
   s.files = `git ls-files`.split("\n")
   s.test_files = Dir['test/**/*']
+
+  s.add_development_dependency("rake")
+  s.add_development_dependency("test-unit")
+  s.add_development_dependency("webmock")
 end

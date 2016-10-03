@@ -91,8 +91,6 @@ module Mollie
         request.add_field('User-Agent', @version_strings.join(" "))
         request.add_field('X-Mollie-Client-Info', uname)
 
-        puts request.inspect
-
         begin
           response = client.request(request)
         rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,

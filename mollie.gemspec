@@ -1,6 +1,6 @@
 $:.push File.expand_path('../lib', __FILE__)
 
-require 'Mollie/API/Client/Version'
+require 'mollie/api/client/version'
 
 Gem::Specification.new do |s|
   s.name = 'mollie-api-ruby'

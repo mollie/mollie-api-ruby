@@ -1,26 +1,29 @@
 require "json"
+require "time"
+require "ostruct"
+require "big_decimal"
 
 ["exception",
-"util",
-"client/version",
-"resource/base",
-"resource/customers",
-"resource/customers/payments",
-"resource/customers/mandates",
-"resource/customers/subscriptions",
-"resource/payments",
-"resource/payments/refunds",
-"resource/issuers",
-"resource/methods",
-"object/base",
-"object/list",
-"object/customer",
-"object/mandate",
-"object/subscription",
-"object/payment",
-"object/payment/refund",
-"object/issuer",
-"object/method"].each {|file| require File.expand_path file, File.dirname(__FILE__) }
+ "util",
+ "client/version",
+ "resource/base",
+ "resource/customers",
+ "resource/customers/payments",
+ "resource/customers/mandates",
+ "resource/customers/subscriptions",
+ "resource/payments",
+ "resource/payments/refunds",
+ "resource/issuers",
+ "resource/methods",
+ "object/base",
+ "object/list",
+ "object/customer",
+ "object/mandate",
+ "object/subscription",
+ "object/payment",
+ "object/payment/refund",
+ "object/issuer",
+ "object/method"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
 
 module Mollie
   module API

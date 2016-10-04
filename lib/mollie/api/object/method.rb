@@ -19,12 +19,20 @@ module Mollie
                       :amount,
                       :image
 
+        def normal_image
+          image['normal']
+        end
+
+        def bigger_image
+          image['bigger']
+        end
+
         def minimum_amount
-          @amount.minimum
+          amount['minimum']
         end
 
         def maximum_amount
-          @amount.maximum
+          amount['maximum']
         end
       end
     end

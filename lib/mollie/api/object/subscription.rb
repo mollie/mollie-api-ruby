@@ -22,23 +22,23 @@ module Mollie
                       :cancelled_datetime,
                       :links
 
-        def status_active?
+        def active?
           status == STATUS_ACTIVE
         end
 
-        def status_pending?
+        def pending?
           status == STATUS_PENDING
         end
 
-        def status_suspended?
+        def suspended?
           status == STATUS_SUSPENDED
         end
 
-        def status_cancelled?
+        def cancelled?
           status == STATUS_CANCELLED
         end
 
-        def status_completed?
+        def completed?
           status == STATUS_COMPLETED
         end
 
@@ -51,7 +51,7 @@ module Mollie
         end
 
         def amount=(amount)
-          @amount = amount.to_f
+          @amount = BigDecimal.new(amount)
         end
 
         def times=(times)

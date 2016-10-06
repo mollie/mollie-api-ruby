@@ -5,18 +5,17 @@ module Mollie
         STATUS_VALID   = "valid"
         STATUS_INVALID = "invalid"
 
-        attribute :resource,
-                  :id,
+        attribute :id,
                   :status,
                   :method,
                   :customer_id,
                   :details,
                   :created_datetime,
-                  :mandate_reference,
-                  :card_expiry_date
+                  :mandate_reference
 
-        def card_expiry_date=(card_expiry_date)
-          @card_expiry_date = Time.parse(card_expiry_date.to_s) rescue nil
+
+        def details=(details)
+          @details = OpenStruct.new(details) if details.is_a?(Hash)
         end
 
         def created_datetime=(created_datetime)

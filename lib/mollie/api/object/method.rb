@@ -28,11 +28,11 @@ module Mollie
         end
 
         def minimum_amount
-          amount['minimum']
+          BigDecimal.new(amount['minimum'])
         end
 
         def maximum_amount
-          amount['maximum']
+          BigDecimal.new(amount['maximum'])
         end
       end
     end

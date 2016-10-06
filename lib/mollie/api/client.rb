@@ -1,7 +1,7 @@
 require "json"
 require "time"
 require "ostruct"
-require "big_decimal"
+require "bigdecimal"
 
 ["exception",
  "util",

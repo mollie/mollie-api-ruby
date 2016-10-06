@@ -18,6 +18,10 @@ module Mollie
         def recently_used_methods=(methods)
           @recently_used_methods = Array(methods).map(&:to_s)
         end
+
+        def metadata=(metadata)
+          @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
+        end
       end
     end
   end

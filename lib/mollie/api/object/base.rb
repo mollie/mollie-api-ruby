@@ -2,15 +2,15 @@ module Mollie
   module API
     module Object
       class Base
-        def initialize(hash)
-          hash.each { |key, value|
-            if value.respond_to? :each
-              value = Base.new value
-            end
+        attr_reader :attributes
 
-            instance_variable_set "@#{key}", value
-            self.class.send :attr_accessor, key
-          }
+        def initialize(attributes)
+          @attributes = attributes
+          attributes.each do |key, value|
+            if self.respond_to?("#{key}=")
+              public_send("#{key}=", value)
+            end
+          end
         end
       end
     end

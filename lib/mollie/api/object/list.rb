@@ -10,24 +10,24 @@ module Mollie
                       :data
 
         def initialize(hash, class_resource_object)
-          data        = hash[:data] || []
-          hash[:data] = nil
+          data         = hash['data'] || []
+          hash['data'] = nil
           super hash
 
           @data = []
-          data.each { |hash|
+          data.each do |hash|
             @data << (class_resource_object.new hash)
-          }
+          end
         end
 
         def each(&block)
-          @data.each { |object|
+          @data.each do |object|
             if block_given?
               block.call object
             else
               yield object
             end
-          }
+          end
         end
       end
     end

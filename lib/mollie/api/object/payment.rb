@@ -15,50 +15,103 @@ module Mollie
         RECURRINGTYPE_RECURRING = "recurring"
 
         attr_accessor :id,
-                      :status,
                       :mode,
+                      :created_datetime,
+                      :status,
+                      :paid_datetime,
+                      :cancelled_datetime,
+                      :expired_datetime,
+                      :expiry_period,
                       :amount,
+                      :amount_refunded,
+                      :amount_remaining,
                       :description,
                       :method,
-                      :created_datetime,
-                      :paid_datetime,
-                      :expired_datetime,
-                      :cancelled_datetime,
+                      :metadata,
+                      :locale,
+                      :profile_id,
+                      :settlement_id,
                       :customer_id,
                       :recurring_type,
                       :mandate_id,
                       :subscription_id,
-                      :settlement_id,
-                      :metadata,
-                      :details,
-                      :links
+                      :links,
+                      :details
 
         def open?
-          @status == STATUS_OPEN
+          status == STATUS_OPEN
         end
 
         def cancelled?
-          @status == STATUS_CANCELLED
+          status == STATUS_CANCELLED
         end
 
         def expired?
-          @status == STATUS_EXPIRED
+          status == STATUS_EXPIRED
         end
 
         def paid?
-          !@paid_datetime.nil?
+          !!paid_datetime
         end
 
         def paidout?
-          @status == STATUS_PAIDOUT
+          status == STATUS_PAIDOUT
         end
 
         def refunded?
-          @status == STATUS_REFUNDED
+          status == STATUS_REFUNDED
+        end
+
+        def details=(details)
+          @details = OpenStruct.new(details) if details.is_a?(Hash)
+        end
+
+        def created_datetime=(created_datetime)
+          @created_datetime = Time.parse(created_datetime.to_s) rescue nil
+        end
+
+        def paid_datetime=(paid_datetime)
+          @paid_datetime = Time.parse(paid_datetime.to_s) rescue nil
+        end
+
+        def cancelled_datetime=(cancelled_datetime)
+          @cancelled_datetime = Time.parse(cancelled_datetime.to_s) rescue nil
+        end
+
+        def expired_datetime=(expired_datetime)
+          @expired_datetime = Time.parse(expired_datetime.to_s) rescue nil
+        end
+
+        def amount=(amount)
+          @amount = BigDecimal.new(amount) if amount
+        end
+
+        def amount_remaining=(amount_remaining)
+          @amount_remaining = BigDecimal.new(amount_remaining) if amount_remaining
+        end
+
+        def amount_refunded=(amount_refunded)
+          @amount_refunded = BigDecimal.new(amount_refunded) if amount_refunded
         end
 
         def payment_url
-          @links && @links.payment_url
+          links && links['payment_url']
+        end
+
+        def webhook_url
+          links && links['webhook_url']
+        end
+
+        def redirect_url
+          links && links['redirect_url']
+        end
+
+        def settlement
+          links && links['settlement']
+        end
+
+        def refunds
+          links && links['refunds']
         end
       end
     end

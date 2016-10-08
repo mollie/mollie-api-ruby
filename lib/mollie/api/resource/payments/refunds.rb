@@ -8,7 +8,7 @@ module Mollie
           @payment_id = nil
 
           def resource_object
-            Mollie::API::Object::Payment::Refund
+            Object::Payment::Refund
           end
 
           def resource_name
@@ -16,8 +16,8 @@ module Mollie
             "payments/#{payment_id}/refunds"
           end
 
-          def with(payment)
-            @payment_id = payment.id
+          def with(payment_or_id)
+            @payment_id = payment_or_id.is_a?(Object::Payment) ? payment_or_id.id : payment_or_id
             self
           end
         end

@@ -5,19 +5,19 @@ module Mollie
     module Resource
       class Customers
         class Subscriptions < Base
-          @parent_id = nil
+          @customer_id = nil
 
           def resource_object
-            Mollie::API::Object::Subscription
+            Object::Subscription
           end
 
           def resource_name
-            parent_id = URI::encode(@parent_id)
-            "customers/#{parent_id}/subscriptions"
+            customer_id = URI::encode(@customer_id)
+            "customers/#{customer_id}/subscriptions"
           end
 
-          def with(customer)
-            @parent_id = customer.id
+          def with(customer_or_id)
+            @customer_id = customer_or_id.is_a?(Object::Customer) ? customer_or_id.id : customer_or_id
             self
           end
         end

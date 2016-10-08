@@ -3,7 +3,7 @@ module Mollie
     module Resource
       class Issuers < Base
         def resource_object
-          Mollie::API::Object::Issuer
+          Object::Issuer
         end
       end
     end

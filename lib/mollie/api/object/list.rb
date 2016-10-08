@@ -7,27 +7,36 @@ module Mollie
         attr_accessor :total_count,
                       :offset,
                       :count,
+                      :links,
                       :data
 
-        def initialize(hash, class_resource_object)
-          data         = hash['data'] || []
-          hash['data'] = nil
-          super hash
+        def initialize(list_attributes, klass)
+          list_attributes['data'] ||= []
+          super list_attributes
 
-          @data = []
-          data.each do |hash|
-            @data << (class_resource_object.new hash)
+          @data = self.data.map do |attributes|
+            klass.new attributes
           end
         end
 
         def each(&block)
-          @data.each do |object|
-            if block_given?
-              block.call object
-            else
-              yield object
-            end
-          end
+          @data.each(&block)
+        end
+
+        def first_url
+          links && links['first']
+        end
+
+        def previous_url
+          links && links['previous']
+        end
+
+        def next_url
+          links && links['next']
+        end
+
+        def last_url
+          links && links['last']
         end
       end
     end

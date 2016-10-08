@@ -5,13 +5,13 @@ module Mollie
         STATUS_VALID   = "valid"
         STATUS_INVALID = "invalid"
 
-        attribute :id,
-                  :status,
-                  :method,
-                  :customer_id,
-                  :details,
-                  :created_datetime,
-                  :mandate_reference
+        attr_accessor :id,
+                      :status,
+                      :method,
+                      :customer_id,
+                      :details,
+                      :created_datetime,
+                      :mandate_reference
 
 
         def details=(details)

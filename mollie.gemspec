@@ -4,7 +4,7 @@ require 'mollie/api/client/version'
 
 Gem::Specification.new do |s|
   s.name = 'mollie-api-ruby'
-  s.version = Mollie::API::Client::CLIENT_VERSION
+  s.version = Mollie::API::Client::VERSION
   s.summary = 'Official Mollie API Client for Ruby'
   s.description = %(Accepting iDEAL, Bancontact/Mister Cash, SOFORT Banking,
                   Creditcard, SEPA Bank transfer, SEPA Direct debit, Bitcoin,

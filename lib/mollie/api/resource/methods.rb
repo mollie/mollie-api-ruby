@@ -3,7 +3,7 @@ module Mollie
     module Resource
       class Methods < Base
         def resource_object
-          Mollie::API::Object::Method
+          Object::Method
         end
       end
     end

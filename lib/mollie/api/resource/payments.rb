@@ -3,7 +3,7 @@ module Mollie
     module Resource
       class Payments < Base
         def resource_object
-          Mollie::API::Object::Payment
+          Object::Payment
         end
       end
     end

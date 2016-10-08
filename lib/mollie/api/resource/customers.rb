@@ -3,7 +3,7 @@ module Mollie
     module Resource
       class Customers < Base
         def resource_object
-          Mollie::API::Object::Customer
+          Object::Customer
         end
       end
     end

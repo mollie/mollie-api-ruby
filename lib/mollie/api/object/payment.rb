@@ -66,6 +66,10 @@ module Mollie
           @details = OpenStruct.new(details) if details.is_a?(Hash)
         end
 
+        def metadata=(metadata)
+          @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
+        end
+
         def created_datetime=(created_datetime)
           @created_datetime = Time.parse(created_datetime.to_s) rescue nil
         end
@@ -83,15 +87,15 @@ module Mollie
         end
 
         def amount=(amount)
-          @amount = BigDecimal.new(amount) if amount
+          @amount = BigDecimal.new(amount.to_s) if amount
         end
 
         def amount_remaining=(amount_remaining)
-          @amount_remaining = BigDecimal.new(amount_remaining) if amount_remaining
+          @amount_remaining = BigDecimal.new(amount_remaining.to_s) if amount_remaining
         end
 
         def amount_refunded=(amount_refunded)
-          @amount_refunded = BigDecimal.new(amount_refunded) if amount_refunded
+          @amount_refunded = BigDecimal.new(amount_refunded.to_s) if amount_refunded
         end
 
         def payment_url

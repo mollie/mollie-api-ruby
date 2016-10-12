@@ -28,8 +28,7 @@ module Mollie
 
       def test_perform_http_call_defaults
         stub_request(:any, "https://api.mollie.nl/v1/my-method")
-            .with(:headers => { 'Accept'          => '*/*',
-                                'Accept-Encoding' => 'application/json',
+            .with(:headers => { 'Accept'          => 'application/json',
                                 'Authorization'   => 'Bearer test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
                                 'User-Agent'      => 'Mollie-Ruby/2.0.0' })
             .to_return(:status => 200, :body => "{}", :headers => {})

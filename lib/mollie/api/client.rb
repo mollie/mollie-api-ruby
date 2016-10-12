@@ -70,9 +70,9 @@ module Mollie
             raise Mollie::API::Exception.new("Invalid HTTP Method: #{http_method}")
         end
 
-        request['Accept-Encoding'] = 'application/json'
+        request['Accept']        = 'application/json'
         request['Authorization'] = "Bearer #{@api_key}"
-        request['User-Agent'] = "Mollie-Ruby/#{VERSION}"
+        request['User-Agent']    = "Mollie-Ruby/#{VERSION}"
 
         begin
           response = client.request(request)

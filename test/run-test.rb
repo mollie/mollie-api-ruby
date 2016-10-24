@@ -2,8 +2,6 @@
 
 # From https://github.com/test-unit/test-unit/blob/master/test/run-test.rb
 
-$VERBOSE = true
-
 $KCODE = "utf8" unless "".respond_to?(:encoding)
 
 base_dir = File.expand_path(File.join(File.dirname(__FILE__), ".."))

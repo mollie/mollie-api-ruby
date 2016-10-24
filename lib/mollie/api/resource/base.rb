@@ -34,7 +34,7 @@ module Mollie
 
         def all
           request("GET", nil, {}) { |response|
-            Mollie::API::Object::List.new response, resource_object
+            Object::List.new response, resource_object
           }
         end
 

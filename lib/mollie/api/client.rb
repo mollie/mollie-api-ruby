@@ -36,7 +36,7 @@ module Mollie
                   :customers, :customers_payments, :customers_mandates, :customers_subscriptions,
                   :api_endpoint
 
-      def initialize
+      def initialize(api_key)
         @payments                = Mollie::API::Resource::Payments.new self
         @issuers                 = Mollie::API::Resource::Issuers.new self
         @methods                 = Mollie::API::Resource::Methods.new self
@@ -47,10 +47,10 @@ module Mollie
         @customers_subscriptions = Mollie::API::Resource::Customers::Subscriptions.new self
 
         @api_endpoint    = API_ENDPOINT
-        @api_key         = ""
+        @api_key         = api_key
         @version_strings = []
 
-        add_version_string "Mollie/" << CLIENT_VERSION
+        add_version_string "Mollie/" << VERSION
         add_version_string "Ruby/" << RUBY_VERSION
         add_version_string OpenSSL::OPENSSL_VERSION.split(" ").slice(0, 2).join "/"
       end
@@ -63,19 +63,8 @@ module Mollie
         @version_strings << (version_string.gsub /\s+/, "-")
       end
 
-      def client
-        return @client if defined? @client
-        uri                 = URI.parse(@api_endpoint)
-        @client             = Net::HTTP.new(uri.host, uri.port)
-        @client.use_ssl     = true
-        @client.verify_mode = OpenSSL::SSL::VERIFY_PEER
-        @client.ca_file     = (File.expand_path "cacert.pem", File.dirname(__FILE__))
-        @client
-      end
-
       def perform_http_call(http_method, api_method, id = nil, http_body = {})
-        path = "/#{API_VERSION}/#{api_method}/#{id}".chomp!('/')
-
+        path = "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
         case http_method
           when 'GET'
             request = Net::HTTP::Get.new(path)
@@ -89,10 +78,9 @@ module Mollie
             raise Mollie::API::Exception.new("Invalid HTTP Method: #{http_method}")
         end
 
-        request.add_field('Accept-Encoding', 'application/json')
-        request.add_field('Authorization', "Bearer #{@api_key}")
-        request.add_field('User-Agent', @version_strings.join(" "))
-        request.add_field('X-Mollie-Client-Info', uname)
+        request['Accept']        = 'application/json'
+        request['Authorization'] = "Bearer #{@api_key}"
+        request['User-Agent']    = @version_strings.join(" ")
 
         begin
           response = client.request(request)
@@ -116,10 +104,16 @@ module Mollie
         end
       end
 
-      def uname
-        `uname -a 2>/dev/null`.strip if RUBY_PLATFORM =~ /linux|darwin/i
-      rescue Errno::ENOMEM
-        "uname lookup failed"
+      private
+
+      def client
+        return @client if defined? @client
+        uri                 = URI.parse(@api_endpoint)
+        @client             = Net::HTTP.new(uri.host, uri.port)
+        @client.use_ssl     = true
+        @client.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        @client.ca_file     = (File.expand_path "cacert.pem", File.dirname(__FILE__))
+        @client
       end
     end
   end

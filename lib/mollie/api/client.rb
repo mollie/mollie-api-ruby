@@ -49,10 +49,18 @@ module Mollie
         @api_endpoint    = API_ENDPOINT
         @api_key         = api_key
         @version_strings = []
+
+        add_version_string "Mollie/" << VERSION
+        add_version_string "Ruby/" << RUBY_VERSION
+        add_version_string OpenSSL::OPENSSL_VERSION.split(" ").slice(0, 2).join "/"
       end
 
       def api_endpoint=(api_endpoint)
         @api_endpoint = api_endpoint.chomp "/"
+      end
+
+      def add_version_string(version_string)
+        @version_strings << (version_string.gsub /\s+/, "-")
       end
 
       def perform_http_call(http_method, api_method, id = nil, http_body = {})
@@ -72,7 +80,7 @@ module Mollie
 
         request['Accept']        = 'application/json'
         request['Authorization'] = "Bearer #{@api_key}"
-        request['User-Agent']    = "Mollie-Ruby/#{VERSION}"
+        request['User-Agent']    = @version_strings.join(" ")
 
         begin
           response = client.request(request)

@@ -30,7 +30,7 @@ module Mollie
         stub_request(:any, "https://api.mollie.nl/v1/my-method")
             .with(:headers => { 'Accept'          => 'application/json',
                                 'Authorization'   => 'Bearer test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
-                                'User-Agent'      => 'Mollie-Ruby/2.0.0' })
+                                'User-Agent'      => /^Mollie\/#{Mollie::API::Client::VERSION} Ruby\/#{RUBY_VERSION} OpenSSL\/.*$/ })
             .to_return(:status => 200, :body => "{}", :headers => {})
         client.perform_http_call("GET", "my-method", nil, {})
       end

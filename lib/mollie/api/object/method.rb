@@ -10,6 +10,7 @@ module Mollie
         DIRECTDEBIT       = "directdebit"
         BITCOIN           = "bitcoin"
         PAYPAL            = "paypal"
+        KBC               = "kbc"
         BELFIUS           = "belfius"
         PAYSAFECARD       = "paysafecard"
         PODIUMCADEAUKAART = "podiumcadeaukaart"

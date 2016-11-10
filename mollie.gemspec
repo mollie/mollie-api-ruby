@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.summary = 'Official Mollie API Client for Ruby'
   s.description = %(Accepting iDEAL, Bancontact/Mister Cash, SOFORT Banking,
                   Creditcard, SEPA Bank transfer, SEPA Direct debit, Bitcoin,
-                  PayPal, Belfius Direct Net, paysafecard and PODIUM Cadeaukaart
-                  online payments without fixed monthly costs or any punishing
-                  registration procedures.')
-  s.authors = ['Rick Wong']
+                  PayPal, KBC Payment Button, CBC Payment Button, Belfius Direct
+                  Net, paysafecard and PODIUM Cadeaukaart online payments without
+                  fixed monthly costs or any punishing registration procedures.')
+  s.authors = ['Mollie B.V.']
   s.email = ['info@mollie.nl']
   s.homepage = 'https://github.com/mollie/mollie-api-ruby'
   s.license = 'BSD'

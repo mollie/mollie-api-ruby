@@ -11,6 +11,11 @@ All notable changes to this project will be documented in this file.
     - payloads to call api functions will be camel cased before sending
     - getters and setters are now just attr_accessors and omit get and set
 
+#### v1.4.2 - 2016-10-19
+  - Added payment method KBC/CBC Payment Button
+  - Fixed an issue where the required `mime-types` dependency did not work correctly ([#32](https://github.com/mollie/mollie-api-ruby/pull/32)).
+  - Fixed an issue with customer subscriptions ([#35](https://github.com/mollie/mollie-api-ruby/pull/35)).
+
 #### v1.4.1 - 2016-06-20
   - Added `refunded?` method.
 

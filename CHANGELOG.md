@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file.
 
 
+#### 2.0.0 - 2016-11-10
+  - Refactor to a more ruby like library.
+    - all methods use underscores
+    - payloads to call api functions will be camel cased before sending
+    - getters and setters are now just attr_accessors and omit get and set
+
 #### v1.4.2 - 2016-10-19
   - Added payment method KBC/CBC Payment Button
   - Fixed an issue where the required `mime-types` dependency did not work correctly ([#32](https://github.com/mollie/mollie-api-ruby/pull/32)).

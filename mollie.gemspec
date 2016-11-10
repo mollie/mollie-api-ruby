@@ -1,24 +1,26 @@
-$:.unshift(File.join(File.dirname(__FILE__), 'lib'))
+$:.push File.expand_path('../lib', __FILE__)
 
-require 'Mollie/API/Client/Version'
+require 'mollie/api/client/version'
 
-spec = Gem::Specification.new do |s|
+Gem::Specification.new do |s|
   s.name = 'mollie-api-ruby'
-  s.version = Mollie::API::Client::CLIENT_VERSION
+  s.version = Mollie::API::Client::VERSION
   s.summary = 'Official Mollie API Client for Ruby'
-  s.description = 'Accepting iDEAL, Bancontact/Mister Cash, SOFORT Banking, Creditcard, SEPA Bank transfer, SEPA Direct debit, Bitcoin, PayPal, KBC Payment Button, CBC Payment Button, Belfius Direct Net, paysafecard and PODIUM Cadeaukaart online payments without fixed monthly costs or any punishing registration procedures.'
-  s.authors = ['Rick Wong']
+  s.description = %(Accepting iDEAL, Bancontact/Mister Cash, SOFORT Banking,
+                  Creditcard, SEPA Bank transfer, SEPA Direct debit, Bitcoin,
+                  PayPal, KBC Payment Button, CBC Payment Button, Belfius Direct
+                  Net, paysafecard and PODIUM Cadeaukaart online payments without
+                  fixed monthly costs or any punishing registration procedures.')
+  s.authors = ['Mollie B.V.']
   s.email = ['info@mollie.nl']
   s.homepage = 'https://github.com/mollie/mollie-api-ruby'
   s.license = 'BSD'
-  s.required_ruby_version = '>= 1.9.3'
-
-  s.add_dependency('rest-client', '~> 1.8')
-  s.add_dependency('json', '~> 1.8')
-  s.add_dependency('mime-types', '< 3')
+  s.required_ruby_version = '>= 2.0.0'
 
   s.files = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- test/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ['lib']
+  s.test_files = Dir['test/**/*']
+
+  s.add_development_dependency("rake")
+  s.add_development_dependency("test-unit")
+  s.add_development_dependency("webmock")
 end

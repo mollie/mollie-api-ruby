@@ -1,7 +1,7 @@
 #
 # Example 7 - How to refund a payment programmatically.
 #
-require File.expand_path "../lib/Mollie/API/Client", File.dirname(__FILE__)
+require File.expand_path "../lib/mollie/api/client", File.dirname(__FILE__)
 
 begin
   #
@@ -10,7 +10,7 @@ begin
   # See: https://www.mollie.nl/beheer/account/profielen/
   #
   mollie = Mollie::API::Client.new
-  mollie.setApiKey "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+  mollie.api_key =  "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
 
   #
   # Retrieve the payment you want to refund from the API.
@@ -30,9 +30,9 @@ begin
   refunds = mollie.payments_refunds.with(payment).all
 
   refunds.each { |refund|
-    $response.body << '<br> Refund date: ' << (CGI.escapeHTML refund.refundedDatetime)
-    $response.body << '<br> Refunded: &euro; ' << (CGI.escapeHTML refund.amountRefunded)
-    $response.body << '<br> Remaining: &euro; ' << (CGI.escapeHTML refund.amountRemaining)
+    $response.body << '<br> Refund date: ' << (CGI.escapeHTML refund.refunded_datetime)
+    $response.body << '<br> Refunded: &euro; ' << (CGI.escapeHTML refund.amount_refunded)
+    $response.body << '<br> Remaining: &euro; ' << (CGI.escapeHTML refund.amount_remaining)
     $response.body << '<br>'
   }
 rescue Mollie::API::Exception => e

@@ -4,6 +4,8 @@
 
 All notable changes to this project will be documented in this file.
 
+#### 2.0.1 - 2016-12-16
+  - Update bundled cacert.pem file. Follows Mozilla's recommendations on invalid certificates.
 
 #### 2.0.0 - 2016-11-10
   - Refactor to a more ruby like library.

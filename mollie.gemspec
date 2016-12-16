@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.email = ['info@mollie.nl']
   s.homepage = 'https://github.com/mollie/mollie-api-ruby'
   s.license = 'BSD'
-  s.required_ruby_version = '>= 2.0.1'
+  s.required_ruby_version = '>= 2.0.0'
 
   s.files = `git ls-files`.split("\n")
   s.test_files = Dir['test/**/*']

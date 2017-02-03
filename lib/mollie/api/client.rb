@@ -63,8 +63,10 @@ module Mollie
         @version_strings << (version_string.gsub /\s+/, "-")
       end
 
-      def perform_http_call(http_method, api_method, id = nil, http_body = {})
+      def perform_http_call(http_method, api_method, id = nil, http_body = {}, query = {})
         path = "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
+        path += "?#{URI.encode_www_form(query)}" if query.length > 0
+
         case http_method
           when 'GET'
             request = Net::HTTP::Get.new(path)

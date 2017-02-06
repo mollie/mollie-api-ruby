@@ -4,6 +4,9 @@
 
 All notable changes to this project will be documented in this file.
 
+#### 2.1.0 - 2017-02-06
+  - Add pagination support to resources ([#25](https://github.com/mollie/mollie-api-ruby/issues/25)).
+
 #### 2.0.1 - 2016-12-16
   - Update bundled cacert.pem file. Follows Mozilla's recommendations on invalid certificates.
 

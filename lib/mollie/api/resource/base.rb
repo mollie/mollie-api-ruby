@@ -32,8 +32,8 @@ module Mollie
           request "DELETE", id, {}
         end
 
-        def all
-          request("GET", nil, {}) { |response|
+        def all(offset = 0, limit = 50)
+          request("GET", nil, {}, { offset: offset, count: limit }) { |response|
             Object::List.new response, resource_object
           }
         end
@@ -42,8 +42,8 @@ module Mollie
           resource_object.new response
         end
 
-        def request(method, id = 0, data = {})
-          response = @client.perform_http_call method, resource_name, id, data
+        def request(method, id = 0, data = {}, query = {})
+          response = @client.perform_http_call method, resource_name, id, data, query
 
           yield(response) if block_given?
         end

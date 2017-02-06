@@ -68,7 +68,7 @@ module Mollie
         end
 
         def test_all
-          stub_request(:get, "https://api.mollie.nl/v1/testresource")
+          stub_request(:get, "https://api.mollie.nl/v1/testresource?count=50&offset=0")
               .to_return(:status => 200, :body => %{{"data":[{"id":"my-id"}]}}, :headers => {})
 
           client        = Client.new("test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM")

@@ -1,4 +1,4 @@
-![Mollie](http://www.mollie.nl/files/Mollie-Logo-Style-Small.png)
+![Mollie](https://www.mollie.nl/files/Mollie-Logo-Style-Small.png)
 
 # Mollie API client for Ruby #
 
@@ -53,9 +53,10 @@ Creating a new payment.
 
 ```ruby
 payment = mollie.payments.create(
-  amount: 10.00,
-  description: 'My first API payment',
-  redirect_url: 'https://webshop.example.org/order/12345/'
+  amount:       10.00,
+  description:  'My first API payment',
+  redirect_url: 'https://webshop.example.org/order/12345/',
+  webhook_url:  'https://webshop.example.org/mollie-webhook/'
 )
 ```
 
@@ -93,8 +94,8 @@ $ ruby examples/app.rb
 If you wish to learn more about our API, please visit the [Mollie Developer Portal](https://www.mollie.com/developer/). API Documentation is available in both Dutch and English.
 
 ## License ##
-[BSD (Berkeley Software Distribution) License](http://www.opensource.org/licenses/bsd-license.php).
-Copyright (c) 2014-2015, Mollie B.V.
+[BSD (Berkeley Software Distribution) License](https://opensource.org/licenses/bsd-license.php).
+Copyright (c) 2014-2017, Mollie B.V.
 
 ## Support ##
 Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20-612 88 55
@@ -110,5 +111,3 @@ Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20
 + [More information about KBC/CBC Payment Button via Mollie](https://www.mollie.com/kbccbc/)
 + [More information about Belfius Direct Net via Mollie](https://www.mollie.com/belfiusdirectnet/)
 + [More information about paysafecard via Mollie](https://www.mollie.com/paysafecard/)
-
-![Powered By Mollie](https://www.mollie.com/images/badge-betaling-medium.png)

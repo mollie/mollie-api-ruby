@@ -30,13 +30,15 @@ begin
   # Payment parameters:
   #   amount        Amount in EUROs. This example creates a € 10,- payment.
   #   description   Description of the payment.
-  #   redirectUrl   Redirect location. The customer will be redirected there after the payment.
+  #   redirect_url  Redirect location. The customer will be redirected there after the payment.
+  #   webhook_url   Webhook location, used to report when the payment changes state.
   #   metadata      Custom metadata that is stored with the payment.
   #
   payment = mollie.payments.create \
     :amount       => 10.00,
     :description  => "My first API payment",
-    :redirect_url  => "#{protocol}://#{hostname}:#{port}#{path}/3-return-page?order_id=#{order_id}",
+    :redirect_url => "#{protocol}://#{hostname}:#{port}#{path}/3-return-page?order_id=#{order_id}",
+    :webhook_url  => "#{protocol}://#{hostname}:#{port}#{path}/2-webhook-verification",
     :metadata     => {
       :order_id => order_id
     }

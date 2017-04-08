@@ -36,7 +36,7 @@ module Mollie
                   :customers, :customers_payments, :customers_mandates, :customers_subscriptions,
                   :api_endpoint
 
-      def initialize(api_key)
+      def initialize(api_key, options = {})
         @payments                = Mollie::API::Resource::Payments.new self
         @issuers                 = Mollie::API::Resource::Issuers.new self
         @methods                 = Mollie::API::Resource::Methods.new self
@@ -48,6 +48,7 @@ module Mollie
 
         @api_endpoint    = API_ENDPOINT
         @api_key         = api_key
+        @options         = options
         @version_strings = []
 
         add_version_string "Mollie/" << VERSION
@@ -82,7 +83,7 @@ module Mollie
 
         request['Accept']        = 'application/json'
         request['Authorization'] = "Bearer #{@api_key}"
-        request['User-Agent']    = @version_strings.join(" ")
+        request['User-Agent']    = @options[:user_agent] ? @options[:user_agent] : @version_strings.join(" ")
 
         begin
           response = client.request(request)

@@ -15,6 +15,7 @@ require "bigdecimal"
  "resource/payments/refunds",
  "resource/issuers",
  "resource/methods",
+ "resource/organizations",
  "object/base",
  "object/list",
  "object/customer",
@@ -23,7 +24,8 @@ require "bigdecimal"
  "object/payment",
  "object/payment/refund",
  "object/issuer",
- "object/method"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
+ "object/method",
+ "object/organization"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
 
 module Mollie
   module API

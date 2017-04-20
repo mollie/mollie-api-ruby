@@ -8,7 +8,7 @@ module Mollie
           @customer_id = nil
 
           def resource_object
-            Object::Mandate
+            Object::Customer::Mandate
           end
 
           def resource_name

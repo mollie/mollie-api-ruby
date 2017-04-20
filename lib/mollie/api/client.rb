@@ -23,8 +23,9 @@ require "bigdecimal"
  "object/base",
  "object/list",
  "object/customer",
+ "object/customer/mandate",
+ "object/customer/subscription",
  "object/issuer",
- "object/mandate",
  "object/method",
  "object/organization",
  "object/payment",
@@ -32,8 +33,7 @@ require "bigdecimal"
  "object/permission",
  "object/profile",
  "object/profile/apikey",
- "object/settlement",
- "object/subscription"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
+ "object/settlement"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
 
 module Mollie
   module API

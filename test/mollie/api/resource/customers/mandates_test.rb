@@ -6,7 +6,7 @@ module Mollie
       class Customers
         class MandatesTest < Test::Unit::TestCase
           def test_resource_object
-            assert_equal Object::Mandate, Mandates.new(nil).resource_object
+            assert_equal Object::Customer::Mandate, Mandates.new(nil).resource_object
           end
 
           def test_resource_name_and_with

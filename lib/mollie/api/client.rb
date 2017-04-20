@@ -45,19 +45,25 @@ module Mollie
       MODE_LIVE = "live"
 
       attr_accessor :api_key
-      attr_reader :payments, :issuers, :methods, :payments_refunds,
-                  :customers, :customers_payments, :customers_mandates, :customers_subscriptions,
+      attr_reader :customers, :customers_payments, :customers_mandates, :customers_subscriptions,
+                  :issuers, :methods, :organizations, :payments, :payments_refunds,
+                  :permissions, :profiles, :profiles_api_keys, :settlements,
                   :api_endpoint
 
       def initialize(api_key)
-        @payments                = Mollie::API::Resource::Payments.new self
-        @issuers                 = Mollie::API::Resource::Issuers.new self
-        @methods                 = Mollie::API::Resource::Methods.new self
-        @payments_refunds        = Mollie::API::Resource::Payments::Refunds.new self
         @customers               = Mollie::API::Resource::Customers.new self
         @customers_payments      = Mollie::API::Resource::Customers::Payments.new self
         @customers_mandates      = Mollie::API::Resource::Customers::Mandates.new self
         @customers_subscriptions = Mollie::API::Resource::Customers::Subscriptions.new self
+        @issuers                 = Mollie::API::Resource::Issuers.new self
+        @methods                 = Mollie::API::Resource::Methods.new self
+        @organizations           = Mollie::API::Resource::Organizations.new self
+        @payments                = Mollie::API::Resource::Payments.new self
+        @payments_refunds        = Mollie::API::Resource::Payments::Refunds.new self
+        @permissions             = Mollie::API::Resource::Permissions.new self
+        @profiles                = Mollie::API::Resource::Profiles.new self
+        @profiles_api_keys       = Mollie::API::Resource::Profiles::ApiKeys.new self
+        @settlements             = Mollie::API::Resource::Settlements.new self
 
         @api_endpoint    = API_ENDPOINT
         @api_key         = api_key

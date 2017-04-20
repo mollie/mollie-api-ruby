@@ -10,14 +10,19 @@ module Mollie
       def test_initialize
         assert_equal "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM", client.api_key
 
-        assert_kind_of Mollie::API::Resource::Payments, client.payments
-        assert_kind_of Mollie::API::Resource::Issuers, client.issuers
-        assert_kind_of Mollie::API::Resource::Methods, client.methods
-        assert_kind_of Mollie::API::Resource::Payments::Refunds, client.payments_refunds
         assert_kind_of Mollie::API::Resource::Customers, client.customers
         assert_kind_of Mollie::API::Resource::Customers::Payments, client.customers_payments
         assert_kind_of Mollie::API::Resource::Customers::Mandates, client.customers_mandates
         assert_kind_of Mollie::API::Resource::Customers::Subscriptions, client.customers_subscriptions
+        assert_kind_of Mollie::API::Resource::Issuers, client.issuers
+        assert_kind_of Mollie::API::Resource::Methods, client.methods
+        assert_kind_of Mollie::API::Resource::Organizations, client.organizations
+        assert_kind_of Mollie::API::Resource::Payments, client.payments
+        assert_kind_of Mollie::API::Resource::Payments::Refunds, client.payments_refunds
+        assert_kind_of Mollie::API::Resource::Permissions, client.permissions
+        assert_kind_of Mollie::API::Resource::Profiles, client.profiles
+        assert_kind_of Mollie::API::Resource::Profiles::ApiKeys, client.profiles_api_keys
+        assert_kind_of Mollie::API::Resource::Settlements, client.settlements
       end
 
       def test_setting_the_api_endpoint

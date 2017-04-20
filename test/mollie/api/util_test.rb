@@ -33,12 +33,13 @@ module Mollie
 
         result  = Util.nested_openstruct(payload)
 
-        assert result.is_a?(OpenStruct)
-        assert result.periods.is_a?(OpenStruct)
-        assert result.periods[:'2015'].is_a?(OpenStruct)
-        assert result.periods[:'2015'][:'11'].is_a?(OpenStruct)
-        assert result.periods[:'2015'][:'11'].revenue.is_a?(Array)
-        assert result.periods[:'2015'][:'11'].revenue[0].is_a?(OpenStruct)
+        assert_kind_of OpenStruct, result
+        assert_kind_of OpenStruct, result.periods
+        assert_kind_of OpenStruct, result.periods[:'2015']
+        assert_kind_of OpenStruct, result.periods[:'2015'][:'11']
+        assert_kind_of Array, result.periods[:'2015'][:'11'].revenue
+        assert_kind_of OpenStruct, result.periods[:'2015'][:'11'].revenue[0]
+
         assert_equal "iDEAL", result.periods[:'2015'][:'11'].revenue[0].description
       end
     end

@@ -18,6 +18,7 @@ require "bigdecimal"
  "resource/payments/refunds",
  "resource/permissions",
  "resource/profiles",
+ "resource/profiles/apikeys",
  "resource/settlements",
  "object/base",
  "object/list",
@@ -30,6 +31,7 @@ require "bigdecimal"
  "object/payment/refund",
  "object/permission",
  "object/profile",
+ "object/profile/apikey",
  "object/settlement",
  "object/subscription"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
 
@@ -38,6 +40,9 @@ module Mollie
     class Client
       API_ENDPOINT = "https://api.mollie.nl"
       API_VERSION  = "v1"
+
+      MODE_TEST = "test"
+      MODE_LIVE = "live"
 
       attr_accessor :api_key
       attr_reader :payments, :issuers, :methods, :payments_refunds,

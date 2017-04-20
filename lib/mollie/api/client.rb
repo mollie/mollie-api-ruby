@@ -8,24 +8,26 @@ require "bigdecimal"
  "client/version",
  "resource/base",
  "resource/customers",
- "resource/customers/payments",
  "resource/customers/mandates",
+ "resource/customers/payments",
  "resource/customers/subscriptions",
- "resource/payments",
- "resource/payments/refunds",
  "resource/issuers",
  "resource/methods",
  "resource/organizations",
+ "resource/payments",
+ "resource/payments/refunds",
+ "resource/permissions",
  "object/base",
  "object/list",
  "object/customer",
+ "object/issuer",
  "object/mandate",
- "object/subscription",
+ "object/method",
+ "object/organization",
  "object/payment",
  "object/payment/refund",
- "object/issuer",
- "object/method",
- "object/organization"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
+ "object/permission",
+ "object/subscription"].each { |file| require File.expand_path file, File.dirname(__FILE__) }
 
 module Mollie
   module API

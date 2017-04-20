@@ -36,6 +36,18 @@ module Mollie
         string.gsub!('/'.freeze, '::'.freeze)
         string
       end
+
+      def nested_openstruct(obj)
+        if obj.is_a?(Hash)
+          obj.each_with_object(OpenStruct.new) do |(key, value), openstructed|
+            openstructed[key] = nested_openstruct(value)
+          end
+        elsif obj.is_a?(Array)
+          obj.map { |v| nested_openstruct(v) }
+        else
+          obj
+        end
+      end
     end
   end
 end

@@ -6,7 +6,7 @@ module Mollie
       class Customers
         class SubscriptionsTest < Test::Unit::TestCase
           def test_resource_object
-            assert_equal Object::Subscription, Subscriptions.new(nil).resource_object
+            assert_equal Object::Customer::Subscription, Subscriptions.new(nil).resource_object
           end
 
           def test_resource_name_and_with

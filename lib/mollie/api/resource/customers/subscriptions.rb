@@ -8,7 +8,7 @@ module Mollie
           @customer_id = nil
 
           def resource_object
-            Object::Subscription
+            Object::Customer::Subscription
           end
 
           def resource_name

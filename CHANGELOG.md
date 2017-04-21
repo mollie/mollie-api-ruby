@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+#### 2.2.0 - 2017-04-21
+  - Add support for organizations, permissions, profiles, settlement and profiles/apikeys resources ([#54](https://github.com/mollie/mollie-api-ruby/issues/54)).
+  - Remove `jruby` from the build.
+
 #### 2.1.0 - 2017-02-06
   - Add pagination support to resources ([#25](https://github.com/mollie/mollie-api-ruby/issues/25)).
 

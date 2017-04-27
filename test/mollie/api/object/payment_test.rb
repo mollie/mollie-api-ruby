@@ -85,6 +85,11 @@ module Mollie
           assert Payment.new(paid_datetime: Time.now).paid?
           assert !Payment.new(paid_datetime: nil).paid?
         end
+
+        def test_status_failed
+          assert Payment.new(status: Payment::STATUS_FAILED).failed?
+          assert !Payment.new(status: Payment::STATUS_OPEN).failed?
+        end
       end
     end
   end

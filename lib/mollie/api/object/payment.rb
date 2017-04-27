@@ -62,6 +62,10 @@ module Mollie
           status == STATUS_REFUNDED
         end
 
+        def failed?
+          status == STATUS_FAILED
+        end
+
         def details=(details)
           @details = OpenStruct.new(details) if details.is_a?(Hash)
         end

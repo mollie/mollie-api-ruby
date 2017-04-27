@@ -88,7 +88,17 @@ module Mollie
 
         def test_status_failed
           assert Payment.new(status: Payment::STATUS_FAILED).failed?
-          assert !Payment.new(status: Payment::STATUS_OPEN).failed?
+          assert !Payment.new(status: 'not-failed').failed?
+        end
+
+        def test_status_pending
+          assert Payment.new(status: Payment::STATUS_PENDING).pending?
+          assert !Payment.new(status: 'not-pending').pending?
+        end
+
+        def test_status_charged_back
+          assert Payment.new(status: Payment::STATUS_CHARGED_BACK).charged_back?
+          assert !Payment.new(status: 'not-charged-back').charged_back?
         end
       end
     end

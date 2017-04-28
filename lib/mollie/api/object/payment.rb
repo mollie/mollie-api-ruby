@@ -2,13 +2,15 @@ module Mollie
   module API
     module Object
       class Payment < Base
-        STATUS_OPEN      = "open"
-        STATUS_CANCELLED = "cancelled"
-        STATUS_EXPIRED   = "expired"
-        STATUS_PAID      = "paid"
-        STATUS_PAIDOUT   = "paidout"
-        STATUS_FAILED    = "failed"
-        STATUS_REFUNDED  = "refunded"
+        STATUS_OPEN         = "open"
+        STATUS_CANCELLED    = "cancelled"
+        STATUS_EXPIRED      = "expired"
+        STATUS_PAID         = "paid"
+        STATUS_PAIDOUT      = "paidout"
+        STATUS_FAILED       = "failed"
+        STATUS_REFUNDED     = "refunded"
+        STATUS_PENDING      = "pending"
+        STATUS_CHARGED_BACK = "charged_back"
 
         RECURRINGTYPE_NONE      = nil
         RECURRINGTYPE_FIRST     = "first"
@@ -60,6 +62,18 @@ module Mollie
 
         def refunded?
           status == STATUS_REFUNDED
+        end
+
+        def failed?
+          status == STATUS_FAILED
+        end
+
+        def pending?
+          status == STATUS_PENDING
+        end
+
+        def charged_back?
+          status == STATUS_CHARGED_BACK
         end
 
         def details=(details)

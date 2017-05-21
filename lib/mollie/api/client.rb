@@ -11,6 +11,7 @@ require "bigdecimal"
  "resource/customers/mandates",
  "resource/customers/payments",
  "resource/customers/subscriptions",
+ "resource/invoices",
  "resource/issuers",
  "resource/methods",
  "resource/organizations",
@@ -25,6 +26,7 @@ require "bigdecimal"
  "object/customer",
  "object/customer/mandate",
  "object/customer/subscription",
+ "object/invoice",
  "object/issuer",
  "object/method",
  "object/organization",
@@ -47,7 +49,7 @@ module Mollie
       attr_accessor :api_key
       attr_reader :customers, :customers_payments, :customers_mandates, :customers_subscriptions,
                   :issuers, :methods, :organizations, :payments, :payments_refunds,
-                  :permissions, :profiles, :profiles_api_keys, :settlements,
+                  :permissions, :profiles, :profiles_api_keys, :settlements, :invoices,
                   :api_endpoint
 
       def initialize(api_key)
@@ -64,6 +66,7 @@ module Mollie
         @profiles                = Mollie::API::Resource::Profiles.new self
         @profiles_api_keys       = Mollie::API::Resource::Profiles::ApiKeys.new self
         @settlements             = Mollie::API::Resource::Settlements.new self
+        @invoices                = Mollie::API::Resource::Invoices.new self
 
         @api_endpoint    = API_ENDPOINT
         @api_key         = api_key

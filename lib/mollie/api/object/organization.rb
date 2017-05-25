@@ -16,7 +16,7 @@ module Mollie
                       :verified_datetime
 
         def registration_datetime=(registration_datetime)
-          @registration_datetime = Time.parse(registration_datetime.to_s)
+          @registration_datetime = Time.parse(registration_datetime.to_s) rescue nil
         end
 
         def verified_datetime=(verified_datetime)

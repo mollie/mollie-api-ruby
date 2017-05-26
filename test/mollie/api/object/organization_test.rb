@@ -36,12 +36,6 @@ module Mollie
           assert_equal Time.parse('2007-06-29T09:41:00.0Z'), organization.verified_datetime
         end
 
-        def test_registration_datetime_required
-          assert_raise ArgumentError.new('no time information in ""') do
-            Organization.new(registration_datetime: nil)
-          end
-        end
-
         def test_verified_datetime_optional
           assert_equal nil, Organization.new(verified_datetime: nil).verified_datetime
         end

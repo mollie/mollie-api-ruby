@@ -34,6 +34,7 @@ module Mollie
       def test_perform_http_call_defaults
         stub_request(:any, "https://api.mollie.nl/v1/my-method")
             .with(:headers => { 'Accept'          => 'application/json',
+                                'Content-type'    => 'application/json',
                                 'Authorization'   => 'Bearer test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
                                 'User-Agent'      => /^Mollie\/#{Mollie::API::Client::VERSION} Ruby\/#{RUBY_VERSION} OpenSSL\/.*$/ })
             .to_return(:status => 200, :body => "{}", :headers => {})

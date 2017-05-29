@@ -103,6 +103,7 @@ module Mollie
         end
 
         request['Accept']        = 'application/json'
+        request['Content-Type']  = 'application/json'
         request['Authorization'] = "Bearer #{@api_key}"
         request['User-Agent']    = @version_strings.join(" ")
 

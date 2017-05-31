@@ -16,8 +16,8 @@ module Mollie
           }
         end
 
-        def get(id)
-          request("GET", id, {}) { |response|
+        def get(id, options = {})
+          request("GET", id, {}, options) { |response|
             new_resource_object response
           }
         end

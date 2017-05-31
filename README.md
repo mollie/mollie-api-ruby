@@ -91,6 +91,17 @@ $ ruby examples/app.rb
 ```
 
 ## API documentation ##
+If you wish to learn more about the Ruby API, download the source code and run the Example app as follows:
+
+```
+$ git clone git@github.com:mollie/mollie-api-ruby.git
+$ cd mollie-api-ruby
+$ bundle
+$ cd examples
+$ API_KEY=test_xxxxxx rackup
+```
+You can then browse the swagger documentation on [http://localhost:9292](http://localhost:9292)
+
 If you wish to learn more about our API, please visit the [Mollie Developer Portal](https://www.mollie.com/developer/). API Documentation is available in both Dutch and English.
 
 ## License ##

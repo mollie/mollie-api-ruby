@@ -2,6 +2,7 @@ require "json"
 require "time"
 require "ostruct"
 require "bigdecimal"
+require "net/https"
 
 ["exception",
  "util",

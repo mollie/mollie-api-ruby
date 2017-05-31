@@ -32,8 +32,8 @@ module Mollie
           request "DELETE", id, {}
         end
 
-        def all(offset = 0, limit = 50)
-          request("GET", nil, {}, { offset: offset, count: limit }) { |response|
+        def all(offset = 0, limit = 50, options = {})
+          request("GET", nil, {}, { offset: offset, count: limit }.merge(options)) { |response|
             Object::List.new response, resource_object
           }
         end

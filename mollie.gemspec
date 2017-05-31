@@ -25,5 +25,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency("webmock")
   s.add_development_dependency("thin")
   s.add_development_dependency("sinatra")
+  s.add_development_dependency("sinatra-contrib")
+  s.add_development_dependency("sinatra-cross_origin")
   s.add_development_dependency("rack-oauth2")
+  s.add_development_dependency("swagger-blocks")
 end

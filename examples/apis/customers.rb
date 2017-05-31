@@ -1,0 +1,71 @@
+class Application < Sinatra::Application
+  swagger_schema :CustomerRequest do
+    property :name, type: :decimal, description: 'Name', example: "John doe"
+    property :email, type: :string, description: 'Email', example: "john@example.com"
+    property :locale, type: :string, description: 'locale', example: "en_US"
+    property :metadata, type: :object, description: 'Metadata', example: { "user_id" => "12345" }
+  end
+
+  swagger_path '/v1/customers' do
+    operation :get, description: 'https://www.mollie.com/en/docs/reference/customers/list', tags: ['Customers'] do
+      security api_key: []
+      response 200, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+  end
+
+  swagger_path '/v1/customers' do
+    operation :post, description: 'https://www.mollie.com/en/docs/reference/customers/create', tags: ['Customers'] do
+      security api_key: []
+      parameter name: :customer, in: 'body', description: 'CustomerRequest params', schema: { '$ref' => '#/definitions/CustomerRequest' }
+      response 200, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+  end
+
+  swagger_path '/v1/customers/{id}' do
+    operation :get, description: 'https://www.mollie.com/en/docs/reference/customers/get', tags: ['Customers'] do
+      parameter name: :id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
+      security api_key: []
+      response 200, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+    operation :patch, description: 'https://www.mollie.com/en/docs/reference/customers/create', tags: ['Customers'] do
+      parameter name: :id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
+      security api_key: []
+      parameter name: :customer, in: 'body', description: 'CustomerRequest params', schema: { '$ref' => '#/definitions/CustomerRequest' }
+      response 200, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+  end
+
+  get '/v1/customers' do
+    customers = client.customers.all
+    JSON.pretty_generate(customers.attributes)
+  end
+
+  get '/v1/customers/:id' do
+    customer = client.customers.get(params[:id])
+    JSON.pretty_generate(customer.attributes)
+  end
+
+  post '/v1/customers' do
+    customer = client.customers.create(
+        name:     json_params['name'],
+        email:    json_params['email'],
+        locale:   json_params['locale'],
+        metadata: json_params['metadata'],
+    )
+    JSON.pretty_generate(customer.attributes)
+  end
+
+  patch '/v1/customers/:id' do
+    customer = client.customers.update(params[:id],
+                                       name:     json_params['name'],
+                                       email:    json_params['email'],
+                                       locale:   json_params['locale'],
+                                       metadata: json_params['metadata'],
+    )
+    JSON.pretty_generate(customer.attributes)
+  end
+end

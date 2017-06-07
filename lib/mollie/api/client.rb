@@ -88,7 +88,10 @@ module Mollie
 
       def perform_http_call(http_method, api_method, id = nil, http_body = {}, query = {})
         path = "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
-        path += "?#{URI.encode_www_form(query)}" if query.length > 0
+        if query.length > 0
+          camelized_query = Util.camelize_keys(query)
+          path += "?#{URI.encode_www_form(camelized_query)}"
+        end
 
         case http_method
           when 'GET'

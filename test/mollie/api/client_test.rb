@@ -33,15 +33,21 @@ module Mollie
 
       def test_perform_http_call_defaults
         stub_request(:any, "https://api.mollie.nl/v1/my-method")
-            .with(:headers => { 'Accept'          => 'application/json',
-                                'Content-type'    => 'application/json',
-                                'Authorization'   => 'Bearer test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
-                                'User-Agent'      => /^Mollie\/#{Mollie::API::Client::VERSION} Ruby\/#{RUBY_VERSION} OpenSSL\/.*$/ })
+            .with(:headers => { 'Accept'        => 'application/json',
+                                'Content-type'  => 'application/json',
+                                'Authorization' => 'Bearer test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
+                                'User-Agent'    => /^Mollie\/#{Mollie::API::Client::VERSION} Ruby\/#{RUBY_VERSION} OpenSSL\/.*$/ })
             .to_return(:status => 200, :body => "{}", :headers => {})
         client.perform_http_call("GET", "my-method", nil, {})
       end
 
-      def test_get_requests_convert_to_snake_case
+      def test_get_request_convert_to_camel_case
+        stub_request(:get, "https://api.mollie.nl/v1/my-method?myParam=ok")
+            .to_return(:status => 200, :body => "{}", :headers => {})
+        client.perform_http_call("GET", "my-method", nil, {}, {my_param: "ok"})
+      end
+
+      def test_get_response_convert_to_snake_case
         response_body = <<-JSON
           {
             "someCamelCased" : {
@@ -92,7 +98,7 @@ module Mollie
           {"error": {"message": "Error on field", "field": "my-field"}}
         JSON
         stub_request(:post, "https://api.mollie.nl/v1/my-method")
-                    .to_return(:status => 500, :body => response, :headers => {})
+            .to_return(:status => 500, :body => response, :headers => {})
 
         e = assert_raise Mollie::API::Exception.new("Error on field") do
           client.perform_http_call("POST", "my-method", nil, {})

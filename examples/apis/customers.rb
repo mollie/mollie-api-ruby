@@ -39,6 +39,23 @@ class Application < Sinatra::Application
     end
   end
 
+  swagger_path '/v1/customers/{customer_id}/payments' do
+    operation :get, description: 'https://www.mollie.com/en/docs/reference/customers/list-payments', tags: ['Customers'] do
+      parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
+      security api_key: []
+      response 200, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+
+    operation :post, description: 'https://www.mollie.com/en/docs/reference/customers/create-payment', tags: ['Customers'] do
+      parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
+      parameter name: :payment, in: 'body', description: 'PaymentRequest params', schema: { '$ref' => '#/definitions/PaymentRequest' }
+      security api_key: []
+      response 200, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+  end
+
   get '/v1/customers' do
     customers = client.customers.all
     JSON.pretty_generate(customers.attributes)
@@ -67,5 +84,21 @@ class Application < Sinatra::Application
                                        metadata: json_params['metadata'],
     )
     JSON.pretty_generate(customer.attributes)
+  end
+
+  get '/v1/customers/:customer_id/payments' do
+    payments = client.customer_payments.with(params[:customer_id]).all
+    JSON.pretty_generate(payments.attributes)
+  end
+
+  post '/v1/customers/:customer_id/payments' do
+    payment = client.customer_payments.with(params[:customer_id]).create(
+        amount:       json_params['amount'],
+        description:  json_params['description'],
+        redirect_url: json_params['redirect_url'],
+        webhook_url:  json_params['webhook_url'],
+        metadata:     json_params['metadata'],
+    )
+    JSON.pretty_generate(payment.attributes)
   end
 end

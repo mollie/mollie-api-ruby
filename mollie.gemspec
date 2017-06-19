@@ -29,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency("sinatra-cross_origin")
   s.add_development_dependency("rack-oauth2")
   s.add_development_dependency("swagger-blocks")
+  s.add_development_dependency("ngrok-tunnel")
 end

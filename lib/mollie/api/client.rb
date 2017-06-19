@@ -18,6 +18,7 @@ require "net/https"
  "resource/organizations",
  "resource/payments",
  "resource/payments/refunds",
+ "resource/refunds",
  "resource/permissions",
  "resource/profiles",
  "resource/profiles/apikeys",
@@ -49,7 +50,7 @@ module Mollie
 
       attr_accessor :api_key
       attr_reader :customers, :customers_payments, :customers_mandates, :customers_subscriptions,
-                  :issuers, :methods, :organizations, :payments, :payments_refunds,
+                  :issuers, :methods, :organizations, :payments, :payments_refunds, :refunds,
                   :permissions, :profiles, :profiles_api_keys, :settlements, :invoices,
                   :api_endpoint
 
@@ -63,6 +64,7 @@ module Mollie
         @organizations           = Mollie::API::Resource::Organizations.new self
         @payments                = Mollie::API::Resource::Payments.new self
         @payments_refunds        = Mollie::API::Resource::Payments::Refunds.new self
+        @refunds                 = Mollie::API::Resource::Refunds.new self
         @permissions             = Mollie::API::Resource::Permissions.new self
         @profiles                = Mollie::API::Resource::Profiles.new self
         @profiles_api_keys       = Mollie::API::Resource::Profiles::ApiKeys.new self

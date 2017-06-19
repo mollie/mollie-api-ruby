@@ -7,6 +7,10 @@ require "swagger/blocks"
 
 require File.expand_path "../lib/mollie/api/client", File.dirname(__FILE__)
 
+require 'ngrok/tunnel'
+
+puts "[NGROK] tunneling at " + Ngrok::Tunnel.start(addr: 9292)
+
 class Application < Sinatra::Application
   include Swagger::Blocks
 

@@ -14,6 +14,7 @@ module Mollie
         BELFIUS           = "belfius"
         PAYSAFECARD       = "paysafecard"
         PODIUMCADEAUKAART = "podiumcadeaukaart"
+        GIFTCARD          = "giftcard"
 
         attr_accessor :id,
                       :description,

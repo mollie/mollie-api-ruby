@@ -1,13 +1,18 @@
 class Application < Sinatra::Application
   swagger_schema :CustomerRequest do
-    property :name, type: :decimal, description: 'Name', example: "John doe"
+    property :name, type: :string, description: 'Name', example: "John doe"
     property :email, type: :string, description: 'Email', example: "john@example.com"
     property :locale, type: :string, description: 'locale', example: "en_US"
     property :metadata, type: :object, description: 'Metadata', example: { "user_id" => "12345" }
+    property :profileId, type: :object, description: 'ProfileId (Connect api only)', example: "pfl_FxPFwdxxJf"
+    property :testmode, type: :boolean, description: '(Connect api only)', example: true
   end
 
   swagger_path '/v1/customers' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/customers/list', tags: ['Customers'] do
+      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
+      parameter name: :count, in: 'query', description: 'Count', type: :integer
+      parameter name: :testmode, in: 'query', type: :boolean, description: '(Connect api only)', example: true
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
@@ -26,6 +31,7 @@ class Application < Sinatra::Application
   swagger_path '/v1/customers/{id}' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/customers/get', tags: ['Customers'] do
       parameter name: :id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
+      parameter name: :testmode, in: 'query', type: :boolean, description: '(Connect api only)', example: true
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
@@ -42,6 +48,7 @@ class Application < Sinatra::Application
   swagger_path '/v1/customers/{customer_id}/payments' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/customers/list-payments', tags: ['Customers'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
+      parameter name: :testmode, in: 'query', type: :boolean, description: '(Connect api only)', example: true
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
@@ -57,21 +64,23 @@ class Application < Sinatra::Application
   end
 
   get '/v1/customers' do
-    customers = client.customers.all
+    customers = client.customers.all(params[:offset], params[:count], testmode: params[:testmode])
     JSON.pretty_generate(customers.attributes)
   end
 
   get '/v1/customers/:id' do
-    customer = client.customers.get(params[:id])
+    customer = client.customers.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(customer.attributes)
   end
 
   post '/v1/customers' do
     customer = client.customers.create(
-        name:     json_params['name'],
-        email:    json_params['email'],
-        locale:   json_params['locale'],
-        metadata: json_params['metadata'],
+      name:      json_params['name'],
+      email:     json_params['email'],
+      locale:    json_params['locale'],
+      metadata:  json_params['metadata'],
+      profileId: json_params['profileId'],
+      testmode:  json_params['testmode']
     )
     JSON.pretty_generate(customer.attributes)
   end
@@ -87,17 +96,19 @@ class Application < Sinatra::Application
   end
 
   get '/v1/customers/:customer_id/payments' do
-    payments = client.customer_payments.with(params[:customer_id]).all
+    payments = client.customers_payments.with(params[:customer_id]).all(testmode: params[:testmode])
     JSON.pretty_generate(payments.attributes)
   end
 
   post '/v1/customers/:customer_id/payments' do
-    payment = client.customer_payments.with(params[:customer_id]).create(
-        amount:       json_params['amount'],
-        description:  json_params['description'],
-        redirect_url: json_params['redirect_url'],
-        webhook_url:  json_params['webhook_url'],
-        metadata:     json_params['metadata'],
+    payment = client.customers_payments.with(params[:customer_id]).create(
+      amount:       json_params['amount'],
+      description:  json_params['description'],
+      redirect_url: json_params['redirect_url'],
+      webhook_url:  json_params['webhook_url'],
+      metadata:     json_params['metadata'],
+      profileId:    json_params['profileId'],
+      testmode:     json_params['testmode']
     )
     JSON.pretty_generate(payment.attributes)
   end

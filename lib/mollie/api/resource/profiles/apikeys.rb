@@ -20,6 +20,12 @@ module Mollie
             @profile_id = profile_or_id.is_a?(Object::Profile) ? profile_or_id.id : profile_or_id
             self
           end
+
+          def create(mode)
+            request("POST", mode, {}) { |response|
+              new_resource_object response
+            }
+          end
         end
       end
     end

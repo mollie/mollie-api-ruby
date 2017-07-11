@@ -26,7 +26,8 @@ class Application < Sinatra::Application
   end
 
   get '/' do
-    redirect "http://petstore.swagger.io/?url=#{Ngrok::Tunnel.ngrok_url_https}/api-docs"
+    # redirect "http://petstore.swagger.io/?url=#{Ngrok::Tunnel.ngrok_url_https}/api-docs"
+    redirect "#{Ngrok::Tunnel.ngrok_url_https}/index.html"
   end
 
   get '/api-docs' do

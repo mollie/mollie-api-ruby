@@ -28,12 +28,12 @@ class Application < Sinatra::Application
   end
 
   get '/v1/methods' do
-    methods = client.methods.with(params[:customer_id]).all(params[:offset], params[:count],
-                                                            include:        params[:include],
-                                                            recurring_type: params[:recurring_type],
-                                                            locale:         params[:locale],
-                                                            profile_id:     params[:profile_id],
-                                                            testmode:       params[:test_mode]
+    methods = client.methods.all(params[:offset], params[:count],
+                                 include:        params[:include],
+                                 recurring_type: params[:recurring_type],
+                                 locale:         params[:locale],
+                                 profile_id:     params[:profile_id],
+                                 testmode:       params[:testmode]
     )
     JSON.pretty_generate(methods.attributes)
   end
@@ -43,7 +43,7 @@ class Application < Sinatra::Application
                                 include:    params[:include],
                                 locale:     params[:locale],
                                 profile_id: params[:profile_id],
-                                testmode:   params[:test_mode]
+                                testmode:   params[:testmode]
     )
     JSON.pretty_generate(method.attributes)
   end

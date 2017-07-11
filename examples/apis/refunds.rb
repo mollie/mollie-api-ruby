@@ -11,8 +11,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/refunds' do
-    refunds = client.refunds.with(params[:customer_id]).all(params[:offset], params[:limit],
-                                                            testmode: params[:test_mode])
+    refunds = client.refunds.all(params[:offset], params[:limit], testmode: params[:test_mode])
     JSON.pretty_generate(refunds.attributes)
   end
 end

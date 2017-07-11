@@ -10,7 +10,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/organizations/:id' do
-    organization = client.organizations.get(params[:id])
+    organization = client.organizations.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(organization.attributes)
   end
 end

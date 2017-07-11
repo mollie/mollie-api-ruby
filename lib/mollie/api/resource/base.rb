@@ -28,8 +28,8 @@ module Mollie
           }
         end
 
-        def delete(id)
-          request "DELETE", id, {}
+        def delete(id, options = {})
+          request "DELETE", id, options
         end
 
         def all(offset = 0, limit = 50, options = {})

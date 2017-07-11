@@ -5,6 +5,8 @@ class Application < Sinatra::Application
     property :redirect_url, type: :string, description: 'URL for redirection', example: "https://webshop.example.org/order/12345/"
     property :webhook_url, type: :string, description: 'URL for redirection', example: "https://webshop.example.org/payments/webhook/"
     property :metadata, type: :object, description: 'Extra info', example: { "order_id" => "12345" }
+    property :profileId, type: :object, description: 'ProfileId (Connect api only)', example: "pfl_FxPFwdxxJf"
+    property :testmode, type: :boolean, description: '(Connect api only)', example: true
   end
 
   swagger_schema :RefundRequest do
@@ -25,6 +27,7 @@ class Application < Sinatra::Application
   swagger_path '/v1/payments/{id}' do
     operation :get, description: 'Get payment https://www.mollie.com/en/docs/reference/payments/get', tags: ['Payments'] do
       parameter name: :id, in: 'path', description: 'Payment id', type: :string
+      parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
@@ -43,7 +46,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/payments/:payment_id/refunds' do
+  swagger_path '/v1/payments/{payment_id}/refunds' do
     operation :post, description: 'Create payment https://www.mollie.com/nl/docs/reference/refunds/create', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       security api_key: []
@@ -56,22 +59,27 @@ class Application < Sinatra::Application
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :offset, in: 'query', description: 'Offset', type: :integer
       parameter name: :count, in: 'query', description: 'Count', type: :integer
+      parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
     end
   end
 
-  swagger_path '/v1/payments/:payment_id/refunds/:id' do
+  swagger_path '/v1/payments/{payment_id}/refunds/{id}' do
     operation :get, description: 'Create payment https://www.mollie.com/nl/docs/reference/refunds/get', tags: ['Payments'] do
+      parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :id, in: 'path', description: 'Refund id', type: :string
+      parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
     end
 
-    operation :delete, description: 'Create payment https://www.mollie.com/nl/docs/reference/refunds/delete', tags: ['Payments'] do
+    operation :delete, description: 'Delete payment https://www.mollie.com/nl/docs/reference/refunds/delete', tags: ['Payments'] do
+      parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :id, in: 'path', description: 'Refund id', type: :string
+      parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 204, description: 'Successful response'
       response 500, description: 'Unexpected error'
@@ -88,42 +96,44 @@ class Application < Sinatra::Application
   end
 
   get '/v1/payments/:id' do
-    payment = client.payments.get(params[:id])
+    payment = client.payments.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(payment.attributes)
   end
 
   post '/v1/payments' do
     payment = client.payments.create(
-        amount:       json_params['amount'],
-        description:  json_params['description'],
-        redirect_url: json_params['redirect_url'],
-        webhook_url:  json_params['webhook_url'],
-        metadata:     json_params['metadata'],
+      amount:       json_params['amount'],
+      description:  json_params['description'],
+      redirect_url: json_params['redirect_url'],
+      webhook_url:  json_params['webhook_url'],
+      metadata:     json_params['metadata'],
+      profileId:    json_params['profileId'],
+      testmode:     json_params['testmode'],
     )
     JSON.pretty_generate(payment.attributes)
   end
 
   post '/v1/payments/:payment_id/refunds' do
     refund = client.payments_refunds.with(params[:payment_id]).create(
-        amount:      json_params['amount'],
-        description: json_params['description'],
-        testmode:    json_params['testmode']
+      amount:      json_params['amount'],
+      description: json_params['description'],
+      testmode:    json_params['testmode']
     )
     JSON.pretty_generate(refund.attributes)
   end
 
   get '/v1/payments/:payment_id/refunds/:id' do
-    refund = client.payments_refunds.with(params[:payment_id]).get(params[:id])
+    refund = client.payments_refunds.with(params[:payment_id]).get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(refund.attributes)
   end
 
   delete '/v1/payments/:payment_id/refunds/:id' do
-    client.payments_refunds.with(params[:payment_id]).delete(params[:id])
+    client.payments_refunds.with(params[:payment_id]).delete(params[:id], testmode: params[:testmode])
     "deleted"
   end
 
-  get  '/v1/payments/:payment_id/refunds' do
-    refunds = client.payments_refunds.with(params[:payment_id]).all(params[:offset], params[:count])
+  get '/v1/payments/:payment_id/refunds' do
+    refunds = client.payments_refunds.with(params[:payment_id]).all(params[:offset], params[:count], testmode: params[:testmode])
     JSON.pretty_generate(refunds.attributes)
   end
 

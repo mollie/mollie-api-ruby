@@ -23,6 +23,7 @@ require "net/https"
  "resource/profiles",
  "resource/profiles/apikeys",
  "resource/settlements",
+ "resource/settlements/payments",
  "object/base",
  "object/list",
  "object/customer",
@@ -51,7 +52,7 @@ module Mollie
       attr_accessor :api_key
       attr_reader :customers, :customers_payments, :customers_mandates, :customers_subscriptions,
                   :issuers, :methods, :organizations, :payments, :payments_refunds, :refunds,
-                  :permissions, :profiles, :profiles_api_keys, :settlements, :invoices,
+                  :permissions, :profiles, :profiles_api_keys, :settlements, :settlements_payments, :invoices,
                   :api_endpoint
 
       def initialize(api_key)
@@ -69,6 +70,7 @@ module Mollie
         @profiles                = Mollie::API::Resource::Profiles.new self
         @profiles_api_keys       = Mollie::API::Resource::Profiles::ApiKeys.new self
         @settlements             = Mollie::API::Resource::Settlements.new self
+        @settlements_payments    = Mollie::API::Resource::Settlements::Payments.new self
         @invoices                = Mollie::API::Resource::Invoices.new self
 
         @api_endpoint    = API_ENDPOINT
@@ -92,20 +94,22 @@ module Mollie
         path = "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
         if query.length > 0
           camelized_query = Util.camelize_keys(query)
-          path += "?#{URI.encode_www_form(camelized_query)}"
+          path            += "?#{URI.encode_www_form(camelized_query)}"
         end
 
         case http_method
-          when 'GET'
-            request = Net::HTTP::Get.new(path)
-          when 'POST'
-            http_body.delete_if { |k, v| v.nil? }
-            request      = Net::HTTP::Post.new(path)
-            request.body = Util.camelize_keys(http_body).to_json
-          when 'DELETE'
-            request = Net::HTTP::Delete.new(path)
-          else
-            raise Mollie::API::Exception.new("Invalid HTTP Method: #{http_method}")
+        when 'GET'
+          request = Net::HTTP::Get.new(path)
+        when 'POST'
+          http_body.delete_if { |k, v| v.nil? }
+          request      = Net::HTTP::Post.new(path)
+          request.body = Util.camelize_keys(http_body).to_json
+        when 'DELETE'
+          http_body.delete_if { |k, v| v.nil? }
+          request = Net::HTTP::Delete.new(path)
+          request.body = Util.camelize_keys(http_body).to_json
+        else
+          raise Mollie::API::Exception.new("Invalid HTTP Method: #{http_method}")
         end
 
         request['Accept']        = 'application/json'
@@ -116,22 +120,28 @@ module Mollie
         begin
           response = client.request(request)
         rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
-            Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+          Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
           raise Mollie::API::Exception.new(e.message)
         end
 
         http_code = response.code.to_i
         case http_code
-          when 200, 201
-            Util.nested_underscore_keys(JSON.parse(response.body))
-          when 204
-            {} # No Content
-          else
-            response        = JSON.parse(response.body)
+        when 200, 201
+          Util.nested_underscore_keys(JSON.parse(response.body))
+        when 204
+          {} # No Content
+        else
+          response = JSON.parse(response.body)
+          if response['error']
             exception       = Mollie::API::Exception.new response['error']['message']
-            exception.code  = http_code
             exception.field = response['error']['field'] unless response['error']['field'].nil?
-            raise exception
+          elsif response['errors']
+            exception = Mollie::API::Exception.new response['errors'].values.join(", ")
+          else
+            exception = Mollie::API::Exception.new response.body
+          end
+          exception.code = http_code
+          raise exception
         end
       end
 

@@ -83,11 +83,13 @@ refund  = mollie.payments_refunds.with(payment).create
 
 ## Examples ##
 
-The examples require [Sinatra](http://rubygems.org/gems/sinatra) so you will need to install that gem first. Afterwards simply run:
+In order to run the examples first run `bundle install`
 
 ```
 $ cd mollie-api-ruby
-$ ruby examples/app.rb
+$ bundle install
+$ cd examples
+$ rackup
 ```
 
 ## API documentation ##

@@ -3,6 +3,7 @@ module Mollie
     module Object
       class Payment
         class Refund < Base
+          STATUS_QUEUED     = "queued"
           STATUS_PENDING    = "pending"
           STATUS_PROCESSING = "processing"
           STATUS_REFUNDED   = "refunded"
@@ -12,7 +13,10 @@ module Mollie
                         :amount,
                         :status,
                         :refunded_datetime
-
+          def queued?
+            status == STATUS_QUEUED
+          end
+          
           def pending?
             status == STATUS_PENDING
           end

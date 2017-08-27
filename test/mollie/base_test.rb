@@ -79,12 +79,37 @@ module Mollie
       assert_equal BigDecimal.new("1.00"), resource.amount
     end
 
+    def test_update_instance
+      stub_request(:post, "https://api.mollie.nl/v1/testobject/my-id")
+        .with(body: %{{"amount":1.95}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.00}}, :headers => {})
+
+      resource = TestObject.new(id: "my-id")
+      resource.update(amount: 1.95)
+
+      assert_equal "my-id", resource.id
+      assert_equal BigDecimal.new("1.00"), resource.amount
+    end
+
     def test_nested_update
       stub_request(:post, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
         .with(body: %{{"amount":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "amount":1.00}}, :headers => {})
 
       resource = TestObject::NestedObject.update("my-id", amount: 1.95, testobject_id: "object-id")
+
+      assert_equal "my-id", resource.id
+      assert_equal "object-id", resource.testobject_id
+      assert_equal BigDecimal.new("1.00"), resource.amount
+    end
+
+    def test_nested_update_instance
+      stub_request(:post, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
+        .with(body: %{{"amount":1.95}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "amount":1.00}}, :headers => {})
+
+      resource = TestObject::NestedObject.new(id: "my-id", testobject_id: "object-id")
+      resource.update(amount: 1.95)
 
       assert_equal "my-id", resource.id
       assert_equal "object-id", resource.testobject_id
@@ -100,6 +125,15 @@ module Mollie
       assert_equal nil, resource
     end
 
+    def test_delete_instance
+      stub_request(:delete, "https://api.mollie.nl/v1/testobject/my-id")
+        .to_return(:status => 204, :headers => {})
+
+      resource = TestObject.new(id: "my-id")
+
+      assert_equal nil, resource.delete
+    end
+
     def test_nested_delete
       stub_request(:delete, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
         .to_return(:status => 204, :headers => {})
@@ -107,6 +141,15 @@ module Mollie
       resource = TestObject::NestedObject.delete("my-id", testobject_id: "object-id")
 
       assert_equal nil, resource
+    end
+
+    def test_nested_delete_instance
+      stub_request(:delete, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
+        .to_return(:status => 204, :headers => {})
+
+      resource = TestObject::NestedObject.new(id: "my-id", testobject_id: "object-id")
+
+      assert_equal nil, resource.delete
     end
 
     def test_all

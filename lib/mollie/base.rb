@@ -4,6 +4,10 @@ module Mollie
 
     def initialize(attributes)
       @attributes = attributes
+      assign_attributes(attributes)
+    end
+
+    def assign_attributes(attributes)
       attributes.each do |key, value|
         public_send("#{key}=", value) if respond_to?("#{key}=")
       end
@@ -17,7 +21,7 @@ module Mollie
       end
 
       def all(*args)
-        options = args.last.is_a?(Hash) ? args.pop : {}
+        options       = args.last.is_a?(Hash) ? args.pop : {}
         offset, limit = args
         request("GET", nil, {}, { offset: offset || 0, count: limit || 50 }.merge(options)) do |response|
           Mollie::List.new(response, self)
@@ -62,10 +66,21 @@ module Mollie
     end
 
     def update(data = {})
-      self.class.update(id, data)
+      if (parent_id = attributes[self.class.parent_id])
+        data[self.class.parent_id] = parent_id
+      end
+
+      if (resource = self.class.update(id, data))
+        !!assign_attributes(resource.attributes)
+      else
+        resource
+      end
     end
 
     def delete(options = {})
+      if (parent_id = attributes[self.class.parent_id])
+        options[self.class.parent_id] = parent_id
+      end
       self.class.delete(id, options)
     end
   end

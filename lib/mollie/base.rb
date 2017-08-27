@@ -16,8 +16,10 @@ module Mollie
         end
       end
 
-      def all(offset = 0, limit = 50, options = {})
-        request("GET", nil, {}, { offset: offset, count: limit }.merge(options)) do |response|
+      def all(*args)
+        options = args.last.is_a?(Hash) ? args.pop : {}
+        offset, limit = args
+        request("GET", nil, {}, { offset: offset || 0, count: limit || 50 }.merge(options)) do |response|
           Mollie::List.new(response, self)
         end
       end
@@ -39,12 +41,23 @@ module Mollie
       end
 
       def request(method, id = 0, data = {}, query = {})
-        response = Mollie::Client.instance.perform_http_call(method, resource_name, id, data, query)
+        parent_id = query.delete(self.parent_id) || data.delete(self.parent_id)
+        response  = Mollie::Client.instance.perform_http_call(method, resource_name(parent_id), id, data, query)
         yield(response) if block_given?
       end
 
-      def resource_name
-        name.downcase.split("::").slice(1..-1).join "/"
+      def parent_id
+        "#{name.downcase.split("::")[-2]}_id".to_sym
+      end
+
+      def resource_name(parent_id = nil)
+        path = name.downcase.split("::").slice(1..-1)
+
+        if path.size == 2 && parent_id
+          path.join("/#{parent_id}/")
+        else
+          path.last
+        end
       end
     end
 

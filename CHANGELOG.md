@@ -4,6 +4,12 @@
 
 All notable changes to this project will be documented in this file.
 
+#### 2.2.1 - 2017-09-13
+  - Added support for gift card method.
+  - Added support for `invoice` endpoint.
+  - Improved support for `refunds` endpoint.
+  - Added and updated examples.
+
 #### 2.2.0 - 2017-04-21
   - Add support for organizations, permissions, profiles, settlement and profiles/apikeys resources ([#54](https://github.com/mollie/mollie-api-ruby/issues/54)).
   - Remove `jruby` from the build.

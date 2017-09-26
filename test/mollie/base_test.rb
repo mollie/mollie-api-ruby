@@ -11,11 +11,11 @@ module Mollie
 
   class BaseTest < Test::Unit::TestCase
     def test_resource_name
-      assert_equal "testobject", TestObject.resource_name
+      assert_equal "testobjects", TestObject.resource_name
     end
 
     def test_nested_resource_name
-      assert_equal "testobject/object-id/nestedobject", TestObject::NestedObject.resource_name("object-id")
+      assert_equal "testobjects/object-id/nestedobjects", TestObject::NestedObject.resource_name("object-id")
     end
 
     def test_setting_attributes
@@ -27,7 +27,7 @@ module Mollie
     end
 
     def test_get
-      stub_request(:get, "https://api.mollie.nl/v1/testobject/my-id")
+      stub_request(:get, "https://api.mollie.nl/v1/testobjects/my-id")
         .to_return(:status => 200, :body => %{{"id":"my-id"}}, :headers => {})
 
       resource = TestObject.get("my-id")
@@ -36,7 +36,7 @@ module Mollie
     end
 
     def test_nested_get
-      stub_request(:get, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
+      stub_request(:get, "https://api.mollie.nl/v1/testobjects/object-id/nestedobjects/my-id")
         .to_return(:status => 200, :body => %{{"id":"my-id", "testobject_id":"object-id"}}, :headers => {})
 
       resource = TestObject::NestedObject.get("my-id", testobject_id: 'object-id')
@@ -46,7 +46,7 @@ module Mollie
     end
 
     def test_create
-      stub_request(:post, "https://api.mollie.nl/v1/testobject")
+      stub_request(:post, "https://api.mollie.nl/v1/testobjects")
         .with(body: %{{"amount":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.00}}, :headers => {})
 
@@ -57,7 +57,7 @@ module Mollie
     end
 
     def test_nested_create
-      stub_request(:post, "https://api.mollie.nl/v1/testobject/object-id/nestedobject")
+      stub_request(:post, "https://api.mollie.nl/v1/testobjects/object-id/nestedobjects")
         .with(body: %{{"amount":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "amount":1.00}}, :headers => {})
 
@@ -69,7 +69,7 @@ module Mollie
     end
 
     def test_update
-      stub_request(:post, "https://api.mollie.nl/v1/testobject/my-id")
+      stub_request(:post, "https://api.mollie.nl/v1/testobjects/my-id")
         .with(body: %{{"amount":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.00}}, :headers => {})
 
@@ -80,7 +80,7 @@ module Mollie
     end
 
     def test_update_instance
-      stub_request(:post, "https://api.mollie.nl/v1/testobject/my-id")
+      stub_request(:post, "https://api.mollie.nl/v1/testobjects/my-id")
         .with(body: %{{"amount":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.00}}, :headers => {})
 
@@ -92,7 +92,7 @@ module Mollie
     end
 
     def test_nested_update
-      stub_request(:post, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
+      stub_request(:post, "https://api.mollie.nl/v1/testobjects/object-id/nestedobjects/my-id")
         .with(body: %{{"amount":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "amount":1.00}}, :headers => {})
 
@@ -104,7 +104,7 @@ module Mollie
     end
 
     def test_nested_update_instance
-      stub_request(:post, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
+      stub_request(:post, "https://api.mollie.nl/v1/testobjects/object-id/nestedobjects/my-id")
         .with(body: %{{"amount":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "amount":1.00}}, :headers => {})
 
@@ -117,7 +117,7 @@ module Mollie
     end
 
     def test_delete
-      stub_request(:delete, "https://api.mollie.nl/v1/testobject/my-id")
+      stub_request(:delete, "https://api.mollie.nl/v1/testobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject.delete("my-id")
@@ -126,7 +126,7 @@ module Mollie
     end
 
     def test_delete_instance
-      stub_request(:delete, "https://api.mollie.nl/v1/testobject/my-id")
+      stub_request(:delete, "https://api.mollie.nl/v1/testobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject.new(id: "my-id")
@@ -135,7 +135,7 @@ module Mollie
     end
 
     def test_nested_delete
-      stub_request(:delete, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
+      stub_request(:delete, "https://api.mollie.nl/v1/testobjects/object-id/nestedobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject::NestedObject.delete("my-id", testobject_id: "object-id")
@@ -144,7 +144,7 @@ module Mollie
     end
 
     def test_nested_delete_instance
-      stub_request(:delete, "https://api.mollie.nl/v1/testobject/object-id/nestedobject/my-id")
+      stub_request(:delete, "https://api.mollie.nl/v1/testobjects/object-id/nestedobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject::NestedObject.new(id: "my-id", testobject_id: "object-id")
@@ -153,7 +153,7 @@ module Mollie
     end
 
     def test_all
-      stub_request(:get, "https://api.mollie.nl/v1/testobject?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v1/testobjects?count=50&offset=0")
         .to_return(:status => 200, :body => %{{"data":[{"id":"my-id"}]}}, :headers => {})
 
       resource = TestObject.all
@@ -162,7 +162,7 @@ module Mollie
     end
 
     def test_nested_all
-      stub_request(:get, "https://api.mollie.nl/v1/nestedobject?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v1/nestedobjects?count=50&offset=0")
         .to_return(:status => 200, :body => %{{"data":[{"id":"my-id"}]}}, :headers => {})
 
       resource = TestObject::NestedObject.all
@@ -171,7 +171,7 @@ module Mollie
     end
 
     def test_nested_all_scoped
-      stub_request(:get, "https://api.mollie.nl/v1/testobject/object-id/nestedobject?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v1/testobjects/object-id/nestedobjects?count=50&offset=0")
         .to_return(:status => 200, :body => %{{"data":[{"id":"my-id"}]}}, :headers => {})
 
       resource = TestObject::NestedObject.all(testobject_id: 'object-id')

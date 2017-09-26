@@ -51,7 +51,7 @@ module Mollie
       assert_equal 'https://webshop.example.org/order/33/', payment.redirect_url
       assert_equal 'https://webshop.example.org/payment/tr_WDqYK6vllg', payment.payment_url
       assert_equal 'https://webshop.example.org/payment/tr_WDqYK6vllg/settlement', payment.settlement
-      assert_equal 'https://webshop.example.org/payment/tr_WDqYK6vllg/refunds', payment.refunds
+      assert_equal 'https://webshop.example.org/payment/tr_WDqYK6vllg/refunds', payment.refunds_url
     end
 
     def test_status_open
@@ -97,6 +97,44 @@ module Mollie
     def test_status_charged_back
       assert Payment.new(status: Payment::STATUS_CHARGED_BACK).charged_back?
       assert !Payment.new(status: 'not-charged-back').charged_back?
+    end
+
+    def test_list_refunds
+      stub_request(:get, "https://api.mollie.nl/v1/payments/pay-id/refunds?count=50&offset=0")
+        .to_return(:status => 200, :body => %{{"data" : [{"id":"ref-id", "payment_id":"pay-id"}]}}, :headers => {})
+
+      refunds = Payment.new(id: "pay-id").refunds.all
+
+      assert_equal "ref-id", refunds.first.id
+    end
+
+    def test_create_refund
+      stub_request(:post, "https://api.mollie.nl/v1/payments/pay-id/refunds")
+        .with(body: %{{"amount":1.95}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.95}}, :headers => {})
+
+      refund = Payment.new(id: "pay-id").refunds.create(amount: 1.95)
+
+      assert_equal "my-id", refund.id
+      assert_equal BigDecimal.new("1.95"), refund.amount
+    end
+
+    def test_delete_refund
+      stub_request(:delete, "https://api.mollie.nl/v1/payments/pay-id/refunds/ref-id")
+        .to_return(:status => 204, :headers => {})
+
+      refund = Payment.new(id: "pay-id").refunds.delete("ref-id")
+      assert_equal nil, refund
+    end
+
+    def test_get_refund
+      stub_request(:get, "https://api.mollie.nl/v1/payments/pay-id/refunds/ref-id")
+        .to_return(:status => 200, :body => %{{"id":"ref-id", "payment":{"id":"pay-id"}}}, :headers => {})
+
+      refund = Payment.new(id: "pay-id").refunds.get("ref-id")
+
+      assert_equal "ref-id", refund.id
+      assert_equal "pay-id", refund.payment.id
     end
   end
 end

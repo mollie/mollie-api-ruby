@@ -20,5 +20,13 @@ module Mollie
     def metadata=(metadata)
       @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
     end
+
+    def mandates
+      Relation.new(self, Customer::Mandate)
+    end
+
+    def subscriptions
+      Relation.new(self, Customer::Subscription)
+    end
   end
 end

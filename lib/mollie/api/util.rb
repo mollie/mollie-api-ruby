@@ -28,6 +28,12 @@ module Mollie
         downcase.to_s
     end
 
+    # Dirty pluralize function, but currently holds for all required plurals
+    # Not worth to include another library like ActiveSupport
+    def pluralize(string)
+      "#{string}s"
+    end
+
     def camelize(term)
       string = term.to_s
       string = string.sub(/^(?:(?=\b|[A-Z_])|\w)/) { |match| match.downcase }

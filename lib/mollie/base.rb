@@ -59,7 +59,7 @@ module Mollie
       end
 
       def resource_name(parent_id = nil)
-        path = name.downcase.split("::").slice(1..-1).map { |resource_name| "#{resource_name}s" }
+        path = name.downcase.split("::").slice(1..-1).map(&Util.method(:pluralize))
 
         if path.size == 2 && parent_id
           path.join("/#{parent_id}/")

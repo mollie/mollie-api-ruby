@@ -63,12 +63,16 @@ module Mollie
       @updated_datetime = Time.parse(updated_datetime.to_s) rescue nil
     end
 
-    def apikeys
+    def apikeys_url
       links && links['apikeys']
     end
 
     def checkout_preview_url
       links && links['checkout_preview_url']
+    end
+
+    def apikeys
+      Relation.new(self, Profile::ApiKey)
     end
   end
 end

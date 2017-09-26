@@ -122,12 +122,16 @@ module Mollie
       links && links['redirect_url']
     end
 
+    def refunds_url
+      links && links['refunds']
+    end
+
     def settlement
       links && links['settlement']
     end
 
     def refunds
-      links && links['refunds']
+      Relation.new(self, Payment::Refund)
     end
   end
 end

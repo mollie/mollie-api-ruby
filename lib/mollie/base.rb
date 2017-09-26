@@ -50,12 +50,16 @@ module Mollie
         yield(response) if block_given?
       end
 
+      def id_param
+        "#{name.downcase.split("::")[-1]}_id".to_sym
+      end
+
       def parent_id
         "#{name.downcase.split("::")[-2]}_id".to_sym
       end
 
       def resource_name(parent_id = nil)
-        path = name.downcase.split("::").slice(1..-1)
+        path = name.downcase.split("::").slice(1..-1).map { |resource_name| "#{resource_name}s" }
 
         if path.size == 2 && parent_id
           path.join("/#{parent_id}/")

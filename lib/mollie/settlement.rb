@@ -9,6 +9,14 @@ module Mollie
                   :refund_ids,
                   :links
 
+    def self.open(options = {})
+      get("open", options)
+    end
+
+    def self.next(options = {})
+      get("next", options)
+    end
+
     def settled_datetime=(settled_datetime)
       @settled_datetime = Time.parse(settled_datetime.to_s) rescue nil
     end

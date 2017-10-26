@@ -87,7 +87,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/payments' do
-    payments = client.payments.all(params[:offset], params[:count],
+    payments = Mollie::Payment.all(params[:offset], params[:count],
                                    profile_id: params[:profile_id],
                                    testmode:   params[:testmode]
     )
@@ -96,12 +96,12 @@ class Application < Sinatra::Application
   end
 
   get '/v1/payments/:id' do
-    payment = client.payments.get(params[:id], testmode: params[:testmode])
+    payment = Mollie::Payment.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(payment.attributes)
   end
 
   post '/v1/payments' do
-    payment = client.payments.create(
+    payment = Mollie::Payment.create(
       amount:       json_params['amount'],
       description:  json_params['description'],
       redirect_url: json_params['redirect_url'],
@@ -114,7 +114,8 @@ class Application < Sinatra::Application
   end
 
   post '/v1/payments/:payment_id/refunds' do
-    refund = client.payments_refunds.with(params[:payment_id]).create(
+    refund = Mollie::Payment::Refund.create(
+      payment_id:  params[:payment_id],
       amount:      json_params['amount'],
       description: json_params['description'],
       testmode:    json_params['testmode']
@@ -123,17 +124,17 @@ class Application < Sinatra::Application
   end
 
   get '/v1/payments/:payment_id/refunds/:id' do
-    refund = client.payments_refunds.with(params[:payment_id]).get(params[:id], testmode: params[:testmode])
+    refund = Mollie::Payment::Refund.get(params[:id], testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(refund.attributes)
   end
 
   delete '/v1/payments/:payment_id/refunds/:id' do
-    client.payments_refunds.with(params[:payment_id]).delete(params[:id], testmode: params[:testmode])
+    Mollie::Payment::Refund.delete(params[:id], testmode: params[:testmode], payment_id: params[:payment_id])
     "deleted"
   end
 
   get '/v1/payments/:payment_id/refunds' do
-    refunds = client.payments_refunds.with(params[:payment_id]).all(params[:offset], params[:count], testmode: params[:testmode])
+    refunds = Mollie::Payment::Refund.all(params[:offset], params[:count], testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(refunds.attributes)
   end
 

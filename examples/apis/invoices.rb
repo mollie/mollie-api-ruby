@@ -23,7 +23,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/invoices' do
-    invoices = client.invoices.all(params[:offset], params[:count],
+    invoices = Mollie::Invoice.all(params[:offset], params[:count],
                                    include:   params[:include],
                                    reference: params[:reference],
                                    year:      params[:year]
@@ -32,7 +32,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/invoices/:id' do
-    invoice = client.invoices.get(params[:id], include: params[:include])
+    invoice = Mollie::Invoice.get(params[:id], include: params[:include])
     JSON.pretty_generate(invoice.attributes)
   end
 end

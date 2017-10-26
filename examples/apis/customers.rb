@@ -64,17 +64,17 @@ class Application < Sinatra::Application
   end
 
   get '/v1/customers' do
-    customers = client.customers.all(params[:offset], params[:count], testmode: params[:testmode])
+    customers = Mollie::Customer.all(params[:offset], params[:count], testmode: params[:testmode])
     JSON.pretty_generate(customers.attributes)
   end
 
   get '/v1/customers/:id' do
-    customer = client.customers.get(params[:id], testmode: params[:testmode])
+    customer = Mollie::Customer.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(customer.attributes)
   end
 
   post '/v1/customers' do
-    customer = client.customers.create(
+    customer = Mollie::Customer.create(
       name:      json_params['name'],
       email:     json_params['email'],
       locale:    json_params['locale'],
@@ -86,7 +86,7 @@ class Application < Sinatra::Application
   end
 
   patch '/v1/customers/:id' do
-    customer = client.customers.update(params[:id],
+    customer = Mollie::Customer.update(params[:id],
                                        name:     json_params['name'],
                                        email:    json_params['email'],
                                        locale:   json_params['locale'],
@@ -96,12 +96,13 @@ class Application < Sinatra::Application
   end
 
   get '/v1/customers/:customer_id/payments' do
-    payments = client.customers_payments.with(params[:customer_id]).all(testmode: params[:testmode])
+    payments = Mollie::Customer::Payment.all(customer_id: params[:customer_id], testmode: params[:testmode])
     JSON.pretty_generate(payments.attributes)
   end
 
   post '/v1/customers/:customer_id/payments' do
-    payment = client.customers_payments.with(params[:customer_id]).create(
+    payment = Mollie::Customer::Payment.create(
+      customer_id:  params[:customer_id],
       amount:       json_params['amount'],
       description:  json_params['description'],
       redirect_url: json_params['redirect_url'],

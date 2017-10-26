@@ -103,5 +103,26 @@ module Mollie
       assert_equal "sub-id", subscription.id
       assert_equal "cus-id", subscription.customer_id
     end
+
+    def test_list_payments
+      stub_request(:get, "https://api.mollie.nl/v1/customers/cus-id/payments?count=50&offset=0")
+        .to_return(:status => 200, :body => %{{"data" : [{"id":"sub-id", "customer_id":"cus-id"}]}}, :headers => {})
+
+      payments = Customer.new(id: "cus-id").payments.all
+
+      assert_equal "sub-id", payments.first.id
+    end
+
+    def test_create_payment
+      stub_request(:post, "https://api.mollie.nl/v1/customers/cus-id/payments")
+        .with(body: %{{"amount":1.95}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.95}}, :headers => {})
+
+      payment = Customer.new(id: "cus-id").payments.create(amount: 1.95)
+
+      assert_kind_of Mollie::Payment, payment
+      assert_equal "my-id", payment.id
+      assert_equal BigDecimal.new("1.95"), payment.amount
+    end
   end
 end

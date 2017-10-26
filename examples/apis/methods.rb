@@ -28,7 +28,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/methods' do
-    methods = client.methods.all(params[:offset], params[:count],
+    methods = Mollie::Method.all(params[:offset], params[:count],
                                  include:        params[:include],
                                  recurring_type: params[:recurring_type],
                                  locale:         params[:locale],
@@ -39,7 +39,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/methods/:id' do
-    method = client.methods.get(params[:id],
+    method = Mollie::Method.get(params[:id],
                                 include:    params[:include],
                                 locale:     params[:locale],
                                 profile_id: params[:profile_id],

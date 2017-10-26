@@ -76,17 +76,17 @@ class Application < Sinatra::Application
   end
 
   get '/v1/profiles' do
-    profiles = client.profiles.all(params[:offset], params[:count])
+    profiles = Mollie::Profile.all(params[:offset], params[:count])
     JSON.pretty_generate(profiles.attributes)
   end
 
   get '/v1/profiles/:id' do
-    profile = client.profiles.get(params[:id])
+    profile = Mollie::Profile.get(params[:id])
     JSON.pretty_generate(profile.attributes)
   end
 
   post '/v1/profiles' do
-    profile = client.profiles.create(
+    profile = Mollie::Profile.create(
       name:         json_params['name'],
       website:      json_params['website'],
       email:        json_params['email'],
@@ -98,7 +98,7 @@ class Application < Sinatra::Application
   end
 
   patch '/v1/profiles/:id' do
-    profile = client.profiles.update(params[:id],
+    profile = Mollie::Profile.update(params[:id],
                                      name:         json_params['name'],
                                      website:      json_params['website'],
                                      email:        json_params['email'],
@@ -110,17 +110,17 @@ class Application < Sinatra::Application
   end
 
   get '/v1/profiles/:profile_id/apikeys' do
-    api_keys = client.profiles_api_keys.with(params[:profile_id]).all
+    api_keys = Mollie::Profile::ApiKey.all(profile_id: params[:profile_id])
     JSON.pretty_generate(api_keys.attributes)
   end
 
   get '/v1/profiles/:profile_id/apikeys/:mode' do
-    api_key = client.profiles_api_keys.with(params[:profile_id]).get(params[:mode])
+    api_key = Mollie::Profile::ApiKey.get(params[:mode], profile_id: params[:profile_id])
     JSON.pretty_generate(api_key.attributes)
   end
 
   post '/v1/profiles/:profile_id/apikeys/:mode' do
-    payment = client.profiles_api_keys.with(params[:profile_id]).create(params[:mode])
+    payment = Mollie::Profile::ApiKey.create(params[:mode], profile_id: params[:profile_id])
     JSON.pretty_generate(payment.attributes)
   end
 end

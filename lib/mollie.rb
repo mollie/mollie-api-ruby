@@ -29,3 +29,7 @@ require 'mollie/permission'
 require 'mollie/profile'
 require 'mollie/profile/api_key'
 require 'mollie/settlement'
+
+require 'mollie/customer/payment'
+require 'mollie/settlement/payment'
+require 'mollie/settlement/refund'

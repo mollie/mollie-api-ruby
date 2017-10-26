@@ -26,6 +26,17 @@ module Mollie
       client.perform_http_call("GET", "my-method", nil, {})
     end
 
+    def test_perform_http_call_key_override
+      stub_request(:any, "https://localhost/v1/my-method")
+        .with(:headers => { 'Accept'        => 'application/json',
+                            'Content-type'  => 'application/json',
+                            'Authorization' => 'Bearer my_key',
+                            'User-Agent'    => /^Mollie\/#{Mollie::VERSION} Ruby\/#{RUBY_VERSION} OpenSSL\/.*$/ })
+        .to_return(:status => 200, :body => "{}", :headers => {})
+      client.perform_http_call("GET", "my-method", nil, {api_key: 'my_key', api_endpoint: 'https://localhost'})
+      client.perform_http_call("GET", "my-method", nil, {}, {api_key: 'my_key', api_endpoint: 'https://localhost'})
+    end
+
     def test_get_request_convert_to_camel_case
       stub_request(:get, "https://api.mollie.nl/v1/my-method?myParam=ok")
         .to_return(:status => 200, :body => "{}", :headers => {})

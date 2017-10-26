@@ -56,6 +56,8 @@ module Mollie
                   :api_endpoint
 
       def initialize(api_key)
+        warn "[DEPRECATION] `#{self.class}` is deprecated.  Please use resource style like `Mollie::Payment` instead. in #{caller_locations.first}"
+
         @customers               = Mollie::API::Resource::Customers.new self
         @customers_payments      = Mollie::API::Resource::Customers::Payments.new self
         @customers_mandates      = Mollie::API::Resource::Customers::Mandates.new self

@@ -52,7 +52,7 @@ class Application < Sinatra::Application
   end
 
   get '/v1/settlements' do
-    settlements = client.settlements.all(params[:offset], params[:count],
+    settlements = Mollie::Settlement.all(params[:offset], params[:count],
                                          reference: params[:reference],
                                          testmode:  params[:testmode]
     )
@@ -60,23 +60,23 @@ class Application < Sinatra::Application
   end
 
   get '/v1/settlements/:id' do
-    settlement = client.settlements.get(params[:id], testmode: params[:testmode])
+    settlement = Mollie::Settlement.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(settlement.attributes)
   end
 
   get '/v1/settlements/next' do
-    settlement = client.settlements.next(testmode: params[:testmode])
+    settlement = Mollie::Settlement.next(testmode: params[:testmode])
     JSON.pretty_generate(settlement.attributes)
   end
 
   get '/v1/settlements/open' do
-    settlement = client.settlements.open(testmode: params[:testmode])
+    settlement = Mollie::Settlement.open(testmode: params[:testmode])
     JSON.pretty_generate(settlement.attributes)
   end
 
 
   get '/v1/settlements/:settlement_id/payments' do
-    payments = client.settlements_payments.with(params[:settlement_id]).all(params[:offset], params[:count], testmode: params[:testmode])
+    payments = Mollie::Settlement::Payment.all(params[:offset], params[:count], testmode: params[:testmode], settlement_id: params[:settlement_id])
     JSON.pretty_generate(payments.attributes)
   end
 

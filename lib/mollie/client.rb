@@ -33,11 +33,20 @@ module Mollie
     end
 
     def perform_http_call(http_method, api_method, id = nil, http_body = {}, query = {})
-      path = "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
+      path         = "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
+      api_key      = http_body.delete(:api_key) || query.delete(:api_key) || @api_key
+      api_endpoint = http_body.delete(:api_endpoint) || query.delete(:api_endpoint) || @api_endpoint
+
       if query.length > 0
         camelized_query = Util.camelize_keys(query)
         path            += "?#{URI.encode_www_form(camelized_query)}"
       end
+
+      uri                = URI.parse(api_endpoint)
+      client             = Net::HTTP.new(uri.host, uri.port)
+      client.use_ssl     = true
+      client.verify_mode = OpenSSL::SSL::VERIFY_PEER
+      client.ca_file     = (File.expand_path 'cacert.pem', File.dirname(__FILE__))
 
       case http_method
       when 'GET'
@@ -56,7 +65,7 @@ module Mollie
 
       request['Accept']        = 'application/json'
       request['Content-Type']  = 'application/json'
-      request['Authorization'] = "Bearer #{@api_key}"
+      request['Authorization'] = "Bearer #{api_key}"
       request['User-Agent']    = @version_strings.join(' ')
 
       begin
@@ -85,18 +94,6 @@ module Mollie
         exception.code = http_code
         raise exception
       end
-    end
-
-    private
-
-    def client
-      return @client if defined? @client
-      uri                 = URI.parse(@api_endpoint)
-      @client             = Net::HTTP.new(uri.host, uri.port)
-      @client.use_ssl     = true
-      @client.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      @client.ca_file     = (File.expand_path 'cacert.pem', File.dirname(__FILE__))
-      @client
     end
   end
 end

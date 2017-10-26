@@ -132,5 +132,25 @@ module Mollie
       assert_equal 're_PvGHiV2BPA', settlement.refund_ids[0]
       assert_equal 're_APBiGPH2vV', settlement.refund_ids[1]
     end
+
+    def test_open_settlement
+      stub_request(:get, "https://api.mollie.nl/v1/settlements/open")
+        .to_return(:status => 200, :body => %{{"id":"set-id"}}, :headers => {})
+
+      settlement = Settlement.open
+
+      assert_kind_of Settlement, settlement
+      assert_equal "set-id", settlement.id
+    end
+
+    def test_next_settlement
+      stub_request(:get, "https://api.mollie.nl/v1/settlements/next")
+        .to_return(:status => 200, :body => %{{"id":"set-id"}}, :headers => {})
+
+      settlement = Settlement.next
+
+      assert_kind_of Settlement, settlement
+      assert_equal "set-id", settlement.id
+    end
   end
 end

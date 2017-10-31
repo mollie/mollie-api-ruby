@@ -5,7 +5,7 @@ require 'sinatra/namespace'
 require 'sinatra/cross_origin'
 require "swagger/blocks"
 
-require File.expand_path "../lib/mollie", File.dirname(__FILE__)
+require File.expand_path "../lib/mollie-api-ruby", File.dirname(__FILE__)
 
 require 'ngrok/tunnel'
 

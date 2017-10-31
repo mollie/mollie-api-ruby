@@ -8,7 +8,16 @@ module Mollie
 
     # @return [Mollie::Client]
     def self.instance
-      @client ||= new
+      Thread.current['MOLLIE_CLIENT'] ||= new
+    end
+
+    def self.with_api_key(api_key)
+      Thread.current['MOLLIE_API_KEY'] = instance.api_key
+      instance.api_key                 = api_key
+      yield
+    ensure
+      instance.api_key                 = Thread.current['MOLLIE_API_KEY']
+      Thread.current['MOLLIE_API_KEY'] = nil
     end
 
     attr_accessor :api_key,

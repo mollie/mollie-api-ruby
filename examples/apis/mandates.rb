@@ -51,7 +51,8 @@ class Application < Sinatra::Application
   end
 
   post '/v1/customers/:customer_id/mandates' do
-    mandate = client.customers_mandates.with(params[:customer_id]).create(
+    mandate = Mollie::Customer::Mandate.create(
+      customer_id:       params[:customer_id],
       method:            json_params['method'],
       consumer_name:     json_params['consumer_name'],
       consumer_account:  json_params['consumer_account'],
@@ -65,19 +66,18 @@ class Application < Sinatra::Application
   end
 
   get '/v1/customers/:customer_id/mandates' do
-    mandates = client.customers_mandates.with(params[:customer_id]).all(params[:offset], params[:count], testmode: params[:testmode]
-    )
+    mandates = Mollie::Customer::Mandate.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(mandates.attributes)
   end
 
 
   get '/v1/customers/:customer_id/mandates/:id' do
-    mandate = client.customers_mandates.with(params[:customer_id]).get(params[:id], testmode: params[:testmode])
+    mandate = Mollie::Customer::Mandate.get(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(mandate.attributes)
   end
 
   delete '/v1/customers/:customer_id/mandates/:id' do
-    client.customers_mandates.with(params[:customer_id]).delete(params[:id], testmode: params[:testmode])
+    Mollie::Customer::Mandate.delete(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     "deleted"
   end
 end

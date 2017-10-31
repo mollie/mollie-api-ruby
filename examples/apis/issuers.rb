@@ -21,13 +21,13 @@ class Application < Sinatra::Application
   end
 
   get '/v1/issuers' do
-    issuers = client.issuers.all(params[:offset], params[:count],
+    issuers = Mollie::Issuer.all(params[:offset], params[:count],
                                  testmode: params[:testmode])
     JSON.pretty_generate(issuers.attributes)
   end
 
   get '/v1/issuers/:id' do
-    issuer = client.issuers.get(params[:id],
+    issuer = Mollie::Issuer.get(params[:id],
                                 testmode: params[:testmode]
     )
     JSON.pretty_generate(issuer.attributes)

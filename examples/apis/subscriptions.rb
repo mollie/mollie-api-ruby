@@ -102,7 +102,7 @@ class Application < Sinatra::Application
   end
 
   post '/v1/subscriptions/first_payment' do
-    payment = client.payments.create(
+    payment = Mollie::Payment.create(
       amount:         json_params['amount'],
       customer_id:    json_params['customer_id'],
       description:    json_params['description'],
@@ -116,12 +116,12 @@ class Application < Sinatra::Application
   end
 
   get '/v1/subscriptions/mandates/:customer_id' do
-    mandates = client.customers_mandates.with(params[:customer_id]).all
+    mandates = Mollie::Customer::Mandates.all(customer_id: params[:customer_id])
     JSON.pretty_generate(mandates.attributes)
   end
 
   post '/v1/subscriptions/on_demand' do
-    payment = client.payments.create(
+    payment = Mollie::Payment.create(
       amount:         json_params['amount'],
       customer_id:    json_params['customer_id'],
       description:    json_params['description'],
@@ -135,17 +135,17 @@ class Application < Sinatra::Application
   end
 
   get '/v1/customers/:customer_id/subscriptions' do
-    subscriptions = client.customers_subscriptions.with(params[:customer_id]).all(params[:offset], params[:count], testmode: params[:testmode])
+    subscriptions = Mollie::Customer::Subscriptions.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(subscriptions.attributes)
   end
 
   get '/v1/customers/:customer_id/subscriptions/:id' do
-    payment = client.customers_subscriptions.with(params[:customer_id]).get(params[:id], testmode: params[:testmode])
+    payment = Mollie::Customer::Subscriptions.get(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(payment.attributes)
   end
 
   post '/v1/customers/:customer_id/subscriptions' do
-    subscription = client.customers_subscriptions.with(params[:customer_id]).create(
+    subscription = Mollie::Customer::Subscriptions.create(
       amount:      json_params['amount'],
       times:       json_params['times'],
       interval:    json_params['interval'],
@@ -159,7 +159,7 @@ class Application < Sinatra::Application
   end
 
   delete '/v1/customers/:customer_id/subscriptions/:id' do
-    client.customers_subscriptions.with(params[:customer_id]).delete(params[:id], testmode: params[:testmode])
+    Mollie::Customer::Subscriptions.delete(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     "deleted"
   end
 end

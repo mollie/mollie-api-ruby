@@ -21,12 +21,12 @@ class Application < Sinatra::Application
   end
 
   get '/v1/permissions' do
-    permissions = client.permissions.all(params[:offset], params[:count], testmode: params[:testmode])
+    permissions = Mollie::Permission.all(params[:offset], params[:count], testmode: params[:testmode])
     JSON.pretty_generate(permissions.attributes)
   end
 
   get '/v1/permissions/:id' do
-    permission = client.permissions.get(params[:id], testmode: params[:testmode])
+    permission = Mollie::Permission.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(permission.attributes)
   end
 end

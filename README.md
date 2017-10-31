@@ -20,6 +20,9 @@ To use the Mollie API client, the following things are required:
 By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/).
 
 ```
+# Gemfile
+gem 'mollie-api-ruby'
+
 $ gem install mollie-api-ruby
 ```
 
@@ -37,22 +40,44 @@ To successfully receive a payment, these steps should be implemented:
 
 ## Getting started ##
 
-Requiring the Mollie API Client.
+Requiring the Mollie API Client. *Not required when used with a Gemfile*
 
 ```ruby
-require 'mollie/api/client'
+require 'mollie-api-ruby'
 ```
 
-Initializing the Mollie API client, and setting your API key.
+Create an initializer and add the following line:
 
 ```ruby
-mollie = Mollie::API::Client.new('test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM')
+Mollie::Client.instance.api_key = '<your-api-key>'
+```
+
+You can also include the API Key in each request you make, for instance if you are using the Connect API
+
+```ruby
+Mollie::Payment.get("pay-id", api_key: '<your-api-key>')
+```
+
+If you need to do multiple calls with the same API Key, use the following helper
+
+```ruby
+Mollie::Client.with_api_key('<your-api-key>') do
+  mandates = Mollie::Customer::Mandate.all(customer_id: params[:customer_id])
+  if mandates.any?
+    payment = Mollie::Payment.create(
+      amount:       10.00,
+      description:  'My first API payment',
+      redirect_url: 'https://webshop.example.org/order/12345/',
+      webhook_url:  'https://webshop.example.org/mollie-webhook/'
+    )
+  end
+end
 ```
 
 Creating a new payment.
 
 ```ruby
-payment = mollie.payments.create(
+payment = Mollie::Payment.create(
   amount:       10.00,
   description:  'My first API payment',
   redirect_url: 'https://webshop.example.org/order/12345/',
@@ -63,7 +88,7 @@ payment = mollie.payments.create(
 Retrieving a payment.
 
 ```ruby
-payment = mollie.payments.get(payment.id)
+payment = Mollie::Payment.get(payment.id)
 
 if payment.paid?
   puts 'Payment received.'
@@ -77,8 +102,8 @@ definitive. Refunds are only supported for iDEAL, credit card and Bank Transfer 
 be refunded through our API at the moment.
 
 ```ruby
-payment = mollie.payments.get(payment.id)
-refund  = mollie.payments_refunds.with(payment).create
+payment = Mollie::Payment.get(payment.id)
+refund  = payment.refunds.create
 ```
 
 ## Examples ##

@@ -46,7 +46,7 @@ module Mollie
       client             = Net::HTTP.new(uri.host, uri.port)
       client.use_ssl     = true
       client.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      client.ca_file     = (File.expand_path 'cacert.pem', File.dirname(__FILE__))
+      client.ca_file     = (File.expand_path '../cacert.pem', File.dirname(__FILE__))
 
       case http_method
       when 'GET'

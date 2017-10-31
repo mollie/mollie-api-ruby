@@ -5,7 +5,7 @@ require 'sinatra/namespace'
 require 'sinatra/cross_origin'
 require "swagger/blocks"
 
-require File.expand_path "../lib/mollie/api/client", File.dirname(__FILE__)
+require File.expand_path "../lib/mollie", File.dirname(__FILE__)
 
 require 'ngrok/tunnel'
 
@@ -17,6 +17,7 @@ class Application < Sinatra::Application
   before do
     headers "Access-Control-Allow-Origin" => "*"
     headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept, X-Mollie-Api-Key"
+    Mollie::Client.instance.api_key = request.env["HTTP_X_MOLLIE_API_KEY"] || ENV["API_KEY"]
   end
 
   configure :production, :development do
@@ -39,10 +40,6 @@ class Application < Sinatra::Application
     response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept, X-Mollie-Api-Key"
 
     200
-  end
-
-  def client
-    @client ||= Mollie::API::Client.new(request.env["HTTP_X_MOLLIE_API_KEY"] || ENV["API_KEY"])
   end
 
   def json_params

@@ -6,7 +6,7 @@ class Application < Sinatra::Application
       parameter name: :secret, in: 'query', description: 'oAuth Secret', type: :string
       parameter name: :redirect_uri, in: 'query', description: 'Redirect URI', type: :string, default: "#{Ngrok::Tunnel.ngrok_url_https}/token"
       parameter name: :state, in: 'query', description: 'State', type: :string, default: SecureRandom.uuid
-      parameter name: :scope, in: 'query', description: 'Scope', type: :string, default: Mollie::API::Resource::Permissions.available.join(' ')
+      parameter name: :scope, in: 'query', description: 'Scope', type: :string, default: Mollie::Permission::AVAILABLE.join(' ')
       parameter name: :response_type, in: 'query', description: 'Response Type', type: :string
       parameter name: :approval_prompt, in: 'query', description: 'Approval prompt', type: :boolean
       security api_key: []

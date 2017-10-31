@@ -1,6 +1,6 @@
 class Application < Sinatra::Application
   swagger_path '/v1/chargebacks' do
-    operation :get, description: 'List chargebacks https://www.mollie.com/en/docs/reference/chargebacks/list', tags: ['Refunds'] do
+    operation :get, description: 'List chargebacks https://www.mollie.com/en/docs/reference/chargebacks/list', tags: ['Chargebacks'] do
       parameter name: :offset, in: 'query', description: 'Offset', type: :integer
       parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean

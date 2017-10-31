@@ -67,7 +67,7 @@ class Application < Sinatra::Application
   end
 
   swagger_path '/v1/payments/{payment_id}/refunds/{id}' do
-    operation :get, description: 'Create payment https://www.mollie.com/nl/docs/reference/refunds/get', tags: ['Payments'] do
+    operation :get, description: 'Get refund https://www.mollie.com/nl/docs/reference/refunds/get', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :id, in: 'path', description: 'Refund id', type: :string
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
@@ -76,12 +76,35 @@ class Application < Sinatra::Application
       response 500, description: 'Unexpected error'
     end
 
-    operation :delete, description: 'Delete payment https://www.mollie.com/nl/docs/reference/refunds/delete', tags: ['Payments'] do
+    operation :delete, description: 'Delete refund https://www.mollie.com/nl/docs/reference/refunds/delete', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :id, in: 'path', description: 'Refund id', type: :string
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 204, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+  end
+
+  swagger_path '/v1/payments/{payment_id}/chargebacks' do
+    operation :get, description: 'List payment chargebacks https://www.mollie.com/en/docs/reference/chargebacks/list', tags: ['Payments'] do
+      parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
+      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
+      parameter name: :count, in: 'query', description: 'Count', type: :integer
+      parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
+      security api_key: []
+      response 200, description: 'Successful response'
+      response 500, description: 'Unexpected error'
+    end
+  end
+
+  swagger_path '/v1/payments/{payment_id}/chargebacks/{id}' do
+    operation :get, description: 'Get chargeback https://www.mollie.com/nl/docs/reference/chargebacks/get', tags: ['Payments'] do
+      parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
+      parameter name: :id, in: 'path', description: 'Refund id', type: :string
+      parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
+      security api_key: []
+      response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
     end
   end
@@ -136,6 +159,16 @@ class Application < Sinatra::Application
   get '/v1/payments/:payment_id/refunds' do
     refunds = Mollie::Payment::Refund.all(params[:offset], params[:count], testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(refunds.attributes)
+  end
+
+  get '/v1/payments/:payment_id/chargebacks/:id' do
+    chargeback = Mollie::Payment::Chargeback.get(params[:id], testmode: params[:testmode], payment_id: params[:payment_id])
+    JSON.pretty_generate(chargeback.attributes)
+  end
+
+  get '/v1/payments/:payment_id/chargebacks' do
+    chargebacks = Mollie::Payment::Chargeback.all(params[:offset], params[:count], testmode: params[:testmode], payment_id: params[:payment_id])
+    JSON.pretty_generate(chargebacks.attributes)
   end
 
 end

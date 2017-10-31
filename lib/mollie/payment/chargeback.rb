@@ -1,6 +1,6 @@
 module Mollie
   class Payment
-    class Refund < Mollie::Refund
+    class Chargeback < Mollie::Chargeback
     end
   end
 end

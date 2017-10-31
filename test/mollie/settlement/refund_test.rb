@@ -5,7 +5,7 @@ module Mollie
     class RefundTest < Test::Unit::TestCase
       def test_kind_of_refund
         refund = Mollie::Settlement::Refund.new({})
-        assert_kind_of Mollie::Payment::Refund, refund
+        assert_kind_of Mollie::Refund, refund
       end
 
       def test_list_refunds

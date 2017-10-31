@@ -1,6 +1,6 @@
 module Mollie
   class Settlement
-    class Refund < Mollie::Payment::Refund
+    class Refund < Mollie::Refund
     end
   end
 end

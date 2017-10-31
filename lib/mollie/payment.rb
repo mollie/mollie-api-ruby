@@ -133,5 +133,9 @@ module Mollie
     def refunds
       Relation.new(self, Payment::Refund)
     end
+
+    def chargebacks
+      Relation.new(self, Payment::Chargeback)
+    end
   end
 end

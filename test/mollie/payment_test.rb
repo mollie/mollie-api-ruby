@@ -136,5 +136,24 @@ module Mollie
       assert_equal "ref-id", refund.id
       assert_equal "pay-id", refund.payment.id
     end
+
+    def test_list_chargebacks
+      stub_request(:get, "https://api.mollie.nl/v1/payments/pay-id/chargebacks?count=50&offset=0")
+        .to_return(:status => 200, :body => %{{"data" : [{"id":"chb-id", "payment_id":"pay-id"}]}}, :headers => {})
+
+      chargebacks = Payment.new(id: "pay-id").chargebacks.all
+
+      assert_equal "chb-id", chargebacks.first.id
+    end
+
+    def test_get_chargeback
+      stub_request(:get, "https://api.mollie.nl/v1/payments/pay-id/chargebacks/chb-id")
+        .to_return(:status => 200, :body => %{{"id":"chb-id", "payment":{"id":"pay-id"}}}, :headers => {})
+
+      chargeback = Payment.new(id: "pay-id").chargebacks.get("chb-id")
+
+      assert_equal "chb-id", chargeback.id
+      assert_equal "pay-id", chargeback.payment.id
+    end
   end
 end

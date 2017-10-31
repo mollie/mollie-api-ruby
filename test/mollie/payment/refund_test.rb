@@ -3,39 +3,19 @@ require 'helper'
 module Mollie
   class Payment
     class RefundTest < Test::Unit::TestCase
-      def test_setting_attributes
-        attributes = {
-          id:                "re_4qqhO89gsT",
-          payment:           {
-            id: "tr_WDqYK6vllg",
-          },
-          amount:            "5.95",
-          refunded_datetime: "2016-10-08T07:59:53.0Z",
-          status:            "pending"
-        }
-
-        refund = Refund.new(attributes)
-
-        assert_equal "re_4qqhO89gsT", refund.id
-        assert_equal BigDecimal.new("5.95"), refund.amount
-        assert_kind_of Payment, refund.payment
-        assert_equal Time.parse("2016-10-08T07:59:53.0Z"), refund.refunded_datetime
-        assert_equal Refund::STATUS_PENDING, refund.status
+      def test_kind_of_refund
+        refund = Mollie::Payment::Refund.new({})
+        assert_kind_of Mollie::Refund, refund
       end
 
-      def test_pending?
-        assert Refund.new(status: Refund::STATUS_PENDING).pending?
-        assert !Refund.new(status: 'not-pending').pending?
-      end
+      def test_list_refunds
+        stub_request(:get, "https://api.mollie.nl/v1/payments/pay-id/refunds?count=50&offset=0")
+          .to_return(:status => 200, :body => %{{"data" : [{"id":"re-id", "payment": {"id":"pay-id"}}]}}, :headers => {})
 
-      def test_processing?
-        assert Refund.new(status: Refund::STATUS_PROCESSING).processing?
-        assert !Refund.new(status: 'not-processing').processing?
-      end
+        refunds = Mollie::Payment::Refund.all(payment_id: "pay-id")
 
-      def test_refunded?
-        assert Refund.new(status: Refund::STATUS_REFUNDED).refunded?
-        assert !Refund.new(status: 'not-refunded').refunded?
+        assert_equal "re-id", refunds.first.id
+        assert_equal "pay-id", refunds.first.payment.id
       end
     end
   end

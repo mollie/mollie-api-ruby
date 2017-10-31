@@ -1,5 +1,7 @@
 ![Mollie](https://www.mollie.nl/files/Mollie-Logo-Style-Small.png)
 
+# LOOKING FOR VERSION v2.2.X README [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/2.2.x) #
+
 # Mollie API client for Ruby #
 
 [![Gem Version](https://badge.fury.io/rb/mollie-api-ruby.svg)](https://badge.fury.io/rb/mollie-api-ruby)

@@ -1,10 +1,10 @@
 $:.push File.expand_path('../lib', __FILE__)
 
-require 'mollie/api/client/version'
+require 'mollie/version'
 
 Gem::Specification.new do |s|
   s.name = 'mollie-api-ruby'
-  s.version = Mollie::API::Client::VERSION
+  s.version = Mollie::VERSION
   s.summary = 'Official Mollie API Client for Ruby'
   s.description = %(Accepting iDEAL, Bancontact/Mister Cash, SOFORT Banking,
                   Creditcard, SEPA Bank transfer, SEPA Direct debit, Bitcoin,

@@ -12,18 +12,18 @@ module Mollie
 
         api_key = ApiKey.new(attributes)
 
-        assert_equal Mollie::API::Client::MODE_LIVE, api_key.id
+        assert_equal Mollie::Client::MODE_LIVE, api_key.id
         assert_equal "live_eSf9fQRwpsdfPY8y3tUFFmqjADRKyA", api_key.key
         assert_equal Time.parse("2017-04-20T12:19:48.0Z"), api_key.created_datetime
       end
 
       def test_testmode
-        assert ApiKey.new(id: Mollie::API::Client::MODE_TEST).testmode?
+        assert ApiKey.new(id: Mollie::Client::MODE_TEST).testmode?
         assert !ApiKey.new(id: 'not-test').testmode?
       end
 
       def test_livemode
-        assert ApiKey.new(id: Mollie::API::Client::MODE_LIVE).livemode?
+        assert ApiKey.new(id: Mollie::Client::MODE_LIVE).livemode?
         assert !ApiKey.new(id: 'not-live').livemode?
       end
     end

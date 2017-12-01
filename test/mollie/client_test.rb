@@ -112,7 +112,7 @@ module Mollie
       stub_request(:post, "https://api.mollie.nl/v1/my-method")
         .to_return(:status => 500, :body => response, :headers => {})
 
-      e = assert_raise Mollie::API::Exception.new("Error on field") do
+      e = assert_raise Mollie::Exception.new("Error on field") do
         client.perform_http_call("POST", "my-method", nil, {})
       end
 

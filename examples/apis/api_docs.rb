@@ -2,7 +2,7 @@ class Application < Sinatra::Application
   ::Application
   swagger_root do
     key :swagger, '2.0'
-    info version:        Mollie::API::Client::VERSION,
+    info version:        Mollie::Client::VERSION,
          title:          'Mollie',
          description:    'Examples for the mollie api',
          termsOfService: 'https://github.com/mollie/mollie-api-ruby',

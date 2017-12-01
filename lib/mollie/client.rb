@@ -69,7 +69,7 @@ module Mollie
         request      = Net::HTTP::Delete.new(path)
         request.body = Util.camelize_keys(http_body).to_json
       else
-        raise Mollie::API::Exception.new("Invalid HTTP Method: #{http_method}")
+        raise Mollie::Exception.new("Invalid HTTP Method: #{http_method}")
       end
 
       request['Accept']        = 'application/json'
@@ -81,7 +81,7 @@ module Mollie
         response = client.request(request)
       rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
         Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
-        raise Mollie::API::Exception.new(e.message)
+        raise Mollie::Exception.new(e.message)
       end
 
       http_code = response.code.to_i
@@ -93,12 +93,12 @@ module Mollie
       else
         response = JSON.parse(response.body)
         if response['error']
-          exception       = Mollie::API::Exception.new response['error']['message']
+          exception       = Mollie::Exception.new response['error']['message']
           exception.field = response['error']['field'] unless response['error']['field'].nil?
         elsif response['errors']
-          exception = Mollie::API::Exception.new response['errors'].values.join(', ')
+          exception = Mollie::Exception.new response['errors'].values.join(', ')
         else
-          exception = Mollie::API::Exception.new response.body
+          exception = Mollie::Exception.new response.body
         end
         exception.code = http_code
         raise exception

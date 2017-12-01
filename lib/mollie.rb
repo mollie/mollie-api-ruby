@@ -8,8 +8,8 @@ module Mollie
 
 end
 
-require 'mollie/api/exception'
-require 'mollie/api/util'
+require 'mollie/exception'
+require 'mollie/util'
 require 'mollie/version'
 
 require 'mollie/base'

@@ -4,6 +4,13 @@
 
 All notable changes to this project will be documented in this file.
 
+#### 3.1.0 - ....
+  - Removed old api
+
+#### 3.0.0 - ....
+  - Introduced new api
+  - Deprecated old api
+
 #### 2.2.1 - 2017-09-13
   - Added support for gift card method.
   - Added support for `invoice` endpoint.

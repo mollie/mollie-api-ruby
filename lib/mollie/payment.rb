@@ -35,6 +35,7 @@ module Mollie
                   :recurring_type,
                   :mandate_id,
                   :subscription_id,
+                  :country_code,
                   :links,
                   :details
 

@@ -6,9 +6,26 @@ module Mollie
     MODE_TEST = 'test'
     MODE_LIVE = 'live'
 
+    class << self
+      attr_accessor :configuration
+    end
+
+    class Configuration
+      attr_accessor :api_key
+
+      def initialize
+        @api_key = ''
+      end
+    end
+
+    def self.configure
+      self.configuration ||= Configuration.new
+      yield(configuration)
+    end
+
     # @return [Mollie::Client]
     def self.instance
-      Thread.current['MOLLIE_CLIENT'] ||= new
+      Thread.current['MOLLIE_CLIENT'] ||= new(configuration.api_key)
     end
 
     def self.with_api_key(api_key)

@@ -12,6 +12,7 @@ module Mollie
         amount:           35.07,
         description:      'Order 33',
         method:           'ideal',
+        country_code:     'NL',
         metadata:         {
           order_id: '33'
         },
@@ -46,6 +47,7 @@ module Mollie
       assert_equal 'NL53INGB0618365937', payment.details.consumer_account
       assert_equal 'INGBNL2A', payment.details.consumer_bic
       assert_equal 'nl', payment.locale
+      assert_equal 'NL', payment.country_code
       assert_equal 'pfl_QkEhN94Ba', payment.profile_id
       assert_equal 'https://webshop.example.org/payments/webhook', payment.webhook_url
       assert_equal 'https://webshop.example.org/order/33/', payment.redirect_url

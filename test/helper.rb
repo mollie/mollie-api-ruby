@@ -3,4 +3,6 @@ require 'webmock/test_unit'
 
 require 'mollie'
 
-Mollie::Client.instance.api_key = "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+Mollie::Client.configure do |config|
+  config.api_key = "test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+end

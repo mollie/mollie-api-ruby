@@ -5,6 +5,7 @@ module Mollie
                   :payment,
                   :amount,
                   :chargeback_datetime,
+                  :settlement_id,
                   :reversed_datetime
 
 

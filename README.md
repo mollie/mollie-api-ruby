@@ -51,7 +51,9 @@ require 'mollie-api-ruby'
 Create an initializer and add the following line:
 
 ```ruby
-Mollie::Client.instance.api_key = '<your-api-key>'
+Mollie::Client.configure do |config|
+  config.api_key = '<your-api-key>'
+end
 ```
 
 You can also include the API Key in each request you make, for instance if you are using the Connect API

@@ -135,17 +135,17 @@ class Application < Sinatra::Application
   end
 
   get '/v1/customers/:customer_id/subscriptions' do
-    subscriptions = Mollie::Customer::Subscriptions.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
+    subscriptions = Mollie::Customer::Subscription.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(subscriptions.attributes)
   end
 
   get '/v1/customers/:customer_id/subscriptions/:id' do
-    payment = Mollie::Customer::Subscriptions.get(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
+    payment = Mollie::Customer::Subscription.get(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(payment.attributes)
   end
 
   post '/v1/customers/:customer_id/subscriptions' do
-    subscription = Mollie::Customer::Subscriptions.create(
+    subscription = Mollie::Customer::Subscription.create(
       amount:      json_params['amount'],
       times:       json_params['times'],
       interval:    json_params['interval'],
@@ -159,7 +159,7 @@ class Application < Sinatra::Application
   end
 
   delete '/v1/customers/:customer_id/subscriptions/:id' do
-    Mollie::Customer::Subscriptions.delete(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
+    Mollie::Customer::Subscription.delete(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     "deleted"
   end
 end

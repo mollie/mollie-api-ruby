@@ -1,3 +1,5 @@
+require 'mollie-api-ruby'
+
 begin
   organization = Mollie::Organization.get(
     'org_1234567',

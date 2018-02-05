@@ -8,3 +8,10 @@ rvm:
 matrix:
   allow_failures:
   - rvm: 2.0.0
+deploy:
+  provider: rubygems
+  api_key:
+    secure: "eBq3/esJILG/1rs9mYwD/6QEybpiElDihqRO6sPH17D9e+lMYVXsaBxrBQutWLB9i7V176mbN/z/VR/fHbj8/xDYEuKzTnFwaROZpckX0dmwp8SRdBA1Lleq/zeQwhjeOLSSAJBxZXTSJcKQ5YQaUvojVIh1ky+rAz20QxyYHV8="
+  on:
+    tags: true
+    rvm: 2.3.0

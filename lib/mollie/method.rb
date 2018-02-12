@@ -13,6 +13,7 @@ module Mollie
     PAYSAFECARD       = "paysafecard"
     PODIUMCADEAUKAART = "podiumcadeaukaart"
     GIFTCARD          = "giftcard"
+    INGHOMEPAY        = "inghomepay"
 
     attr_accessor :id,
                   :description,

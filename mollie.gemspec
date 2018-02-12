@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.description = %(Accepting iDEAL, Bancontact/Mister Cash, SOFORT Banking,
                   Creditcard, SEPA Bank transfer, SEPA Direct debit, Bitcoin,
                   PayPal, KBC Payment Button, CBC Payment Button, Belfius Direct
-                  Net, paysafecard and PODIUM Cadeaukaart online payments without
+                  Net, paysafecard, PODIUM Cadeaukaart and ING Home’Pay online payments without
                   fixed monthly costs or any punishing registration procedures.')
   s.authors = ['Mollie B.V.']
   s.email = ['info@mollie.nl']

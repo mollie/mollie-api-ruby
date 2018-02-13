@@ -25,7 +25,10 @@ module Mollie
 
     # @return [Mollie::Client]
     def self.instance
-      Thread.current['MOLLIE_CLIENT'] ||= new(configuration.api_key)
+      Thread.current['MOLLIE_CLIENT'] ||= begin
+        self.configuration ||= Configuration.new
+        new(configuration.api_key)
+      end
     end
 
     def self.with_api_key(api_key)

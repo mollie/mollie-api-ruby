@@ -18,7 +18,8 @@ module Mollie
     attr_accessor :id,
                   :description,
                   :amount,
-                  :image
+                  :image,
+                  :issuers
 
     def normal_image
       image['normal']

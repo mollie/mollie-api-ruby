@@ -7,14 +7,14 @@ module Mollie
         attributes = {
           id:               "live",
           key:              "live_eSf9fQRwpsdfPY8y3tUFFmqjADRKyA",
-          created_datetime: "2017-04-20T12:19:48.0Z"
+          created_at: "2017-04-20T12:19:48.0Z"
         }
 
         api_key = ApiKey.new(attributes)
 
         assert_equal Mollie::Client::MODE_LIVE, api_key.id
         assert_equal "live_eSf9fQRwpsdfPY8y3tUFFmqjADRKyA", api_key.key
-        assert_equal Time.parse("2017-04-20T12:19:48.0Z"), api_key.created_datetime
+        assert_equal Time.parse("2017-04-20T12:19:48.0Z"), api_key.created_at
       end
 
       def test_testmode

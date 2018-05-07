@@ -11,7 +11,7 @@ module Mollie
         locale:                'nl_NL',
         metadata:              { my_field: 'value' },
         recently_used_methods: 'creditcard',
-        created_datetime:      '2016-04-06T13:23:21.0Z'
+        created_at:            '2016-04-06T13:23:21.0Z'
       }
 
       customer = Customer.new(attributes)
@@ -22,15 +22,15 @@ module Mollie
       assert_equal 'customer@example.org', customer.email
       assert_equal 'nl_NL', customer.locale
       assert_equal ['creditcard'], customer.recently_used_methods
-      assert_equal Time.parse('2016-04-06T13:23:21.0Z'), customer.created_datetime
+      assert_equal Time.parse('2016-04-06T13:23:21.0Z'), customer.created_at
 
       assert_equal 'value', customer.metadata.my_field
       assert_equal nil, customer.metadata.non_existing
     end
 
     def test_list_mandates
-      stub_request(:get, "https://api.mollie.nl/v1/customers/cus-id/mandates?count=50&offset=0")
-        .to_return(:status => 200, :body => %{{"data" : [{"id":"man-id", "customer_id":"cus-id"}]}}, :headers => {})
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/mandates?count=50&offset=0")
+        .to_return(:status => 200, :body => %{{"_embedded" : { "mandates" : [{"id":"man-id", "customer_id":"cus-id"}]}} }, :headers => {})
 
       mandates = Customer.new(id: "cus-id").mandates.all
 
@@ -38,7 +38,7 @@ module Mollie
     end
 
     def test_create_mandate
-      stub_request(:post, "https://api.mollie.nl/v1/customers/cus-id/mandates")
+      stub_request(:post, "https://api.mollie.nl/v2/customers/cus-id/mandates")
         .with(body: %{{"method":"directdebit"}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "method":"directdebit"}}, :headers => {})
 
@@ -49,7 +49,7 @@ module Mollie
     end
 
     def test_delete_mandate
-      stub_request(:delete, "https://api.mollie.nl/v1/customers/cus-id/mandates/man-id")
+      stub_request(:delete, "https://api.mollie.nl/v2/customers/cus-id/mandates/man-id")
         .to_return(:status => 204, :headers => {})
 
       mandate = Customer.new(id: "cus-id").mandates.delete("man-id")
@@ -57,7 +57,7 @@ module Mollie
     end
 
     def test_get_mandate
-      stub_request(:get, "https://api.mollie.nl/v1/customers/cus-id/mandates/man-id")
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/mandates/man-id")
         .to_return(:status => 200, :body => %{{"id":"man-id", "customer_id":"cus-id"}}, :headers => {})
 
       mandate = Customer.new(id: "cus-id").mandates.get("man-id")
@@ -67,8 +67,8 @@ module Mollie
     end
 
     def test_list_subscriptions
-      stub_request(:get, "https://api.mollie.nl/v1/customers/cus-id/subscriptions?count=50&offset=0")
-        .to_return(:status => 200, :body => %{{"data" : [{"id":"sub-id", "customer_id":"cus-id"}]}}, :headers => {})
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/subscriptions?count=50&offset=0")
+        .to_return(:status => 200, :body => %{{"_embedded" : {"subscriptions" : [{"id":"sub-id", "customer_id":"cus-id"}]}} }, :headers => {})
 
       subscriptions = Customer.new(id: "cus-id").subscriptions.all
 
@@ -76,18 +76,18 @@ module Mollie
     end
 
     def test_create_subscription
-      stub_request(:post, "https://api.mollie.nl/v1/customers/cus-id/subscriptions")
-        .with(body: %{{"amount":1.95}})
-        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.95}}, :headers => {})
+      stub_request(:post, "https://api.mollie.nl/v2/customers/cus-id/subscriptions")
+        .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "amount": { "value" : 1.95, "currency": "EUR"}}}, :headers => {})
 
-      subscription = Customer.new(id: "cus-id").subscriptions.create(amount: 1.95)
+      subscription = Customer.new(id: "cus-id").subscriptions.create(amount: { value: 1.95, currency: "EUR" })
 
       assert_equal "my-id", subscription.id
       assert_equal BigDecimal.new("1.95"), subscription.amount
     end
 
     def test_delete_subscription
-      stub_request(:delete, "https://api.mollie.nl/v1/customers/cus-id/subscriptions/sub-id")
+      stub_request(:delete, "https://api.mollie.nl/v2/customers/cus-id/subscriptions/sub-id")
         .to_return(:status => 204, :headers => {})
 
       subscription = Customer.new(id: "cus-id").subscriptions.delete("sub-id")
@@ -95,7 +95,7 @@ module Mollie
     end
 
     def test_get_subscription
-      stub_request(:get, "https://api.mollie.nl/v1/customers/cus-id/subscriptions/sub-id")
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/subscriptions/sub-id")
         .to_return(:status => 200, :body => %{{"id":"sub-id", "customer_id":"cus-id"}}, :headers => {})
 
       subscription = Customer.new(id: "cus-id").subscriptions.get("sub-id")
@@ -105,8 +105,8 @@ module Mollie
     end
 
     def test_list_payments
-      stub_request(:get, "https://api.mollie.nl/v1/customers/cus-id/payments?count=50&offset=0")
-        .to_return(:status => 200, :body => %{{"data" : [{"id":"sub-id", "customer_id":"cus-id"}]}}, :headers => {})
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/payments?count=50&offset=0")
+        .to_return(:status => 200, :body => %{{"_embedded" : { "payments" : [{"id":"sub-id", "customer_id":"cus-id"}]}}}, :headers => {})
 
       payments = Customer.new(id: "cus-id").payments.all
 
@@ -114,11 +114,11 @@ module Mollie
     end
 
     def test_create_payment
-      stub_request(:post, "https://api.mollie.nl/v1/customers/cus-id/payments")
-        .with(body: %{{"amount":1.95}})
-        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":1.95}}, :headers => {})
+      stub_request(:post, "https://api.mollie.nl/v2/customers/cus-id/payments")
+        .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}}}, :headers => {})
 
-      payment = Customer.new(id: "cus-id").payments.create(amount: 1.95)
+      payment = Customer.new(id: "cus-id").payments.create(amount: { value: 1.95, currency: "EUR" })
 
       assert_kind_of Mollie::Payment, payment
       assert_equal "my-id", payment.id

@@ -17,24 +17,15 @@ module Mollie
 
     attr_accessor :id,
                   :description,
-                  :amount,
                   :image,
                   :issuers
 
     def normal_image
-      image['normal']
+      image['size1x']
     end
 
     def bigger_image
-      image['bigger']
-    end
-
-    def minimum_amount
-      BigDecimal.new(amount['minimum'].to_s)
-    end
-
-    def maximum_amount
-      BigDecimal.new(amount['maximum'].to_s)
+      image['size2x']
     end
   end
 end

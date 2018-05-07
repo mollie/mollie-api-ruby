@@ -1,7 +1,7 @@
 module Mollie
   class Profile
     class ApiKey < Base
-      attr_accessor :id, :key, :created_datetime
+      attr_accessor :id, :key, :created_at
 
       def testmode?
         id == Mollie::Client::MODE_TEST
@@ -11,8 +11,8 @@ module Mollie
         id == Mollie::Client::MODE_LIVE
       end
 
-      def created_datetime=(created_datetime)
-        @created_datetime = Time.parse(created_datetime)
+      def created_at=(created_at)
+        @created_at = Time.parse(created_at)
       end
     end
   end

@@ -1,5 +1,5 @@
 class Application < Sinatra::Application
-  swagger_path '/v1/methods' do
+  swagger_path '/v2/methods' do
     operation :get, description: 'List methods https://www.mollie.com/en/docs/reference/methods/list', tags: ['Methods'] do
       parameter name: :include, in: 'query', description: 'Include additional data, e.g. issuers', type: :string
       parameter name: :recurring_type, in: 'query', description: 'Recurring type', type: :string, default: 'first'
@@ -14,7 +14,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/methods/{id}' do
+  swagger_path '/v2/methods/{id}' do
     operation :get, description: 'Get method', tags: ['Methods'] do
       parameter name: :id, in: 'path', description: 'Method id', type: :string
       parameter name: :include, in: 'query', description: 'Include additional data, e.g. issuers', type: :string
@@ -27,7 +27,7 @@ class Application < Sinatra::Application
     end
   end
 
-  get '/v1/methods' do
+  get '/v2/methods' do
     methods = Mollie::Method.all(params[:offset], params[:count],
                                  include:        params[:include],
                                  recurring_type: params[:recurring_type],
@@ -38,7 +38,7 @@ class Application < Sinatra::Application
     JSON.pretty_generate(methods.attributes)
   end
 
-  get '/v1/methods/:id' do
+  get '/v2/methods/:id' do
     method = Mollie::Method.get(params[:id],
                                 include:    params[:include],
                                 locale:     params[:locale],

@@ -9,7 +9,7 @@ module Mollie
                     :method,
                     :customer_id,
                     :details,
-                    :created_datetime,
+                    :created_at,
                     :mandate_reference
 
 
@@ -17,8 +17,8 @@ module Mollie
         @details = OpenStruct.new(details) if details.is_a?(Hash)
       end
 
-      def created_datetime=(created_datetime)
-        @created_datetime = Time.parse(created_datetime.to_s) rescue nil
+      def created_at=(created_at)
+        @created_at = Time.parse(created_at.to_s) rescue nil
       end
 
       def valid?

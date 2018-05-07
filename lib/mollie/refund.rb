@@ -8,8 +8,12 @@ module Mollie
     attr_accessor :id,
                   :payment,
                   :amount,
+                  :currency,
+                  :settlement_amount,
+                  :settlement_currency,
                   :status,
-                  :refunded_datetime
+                  :payment_id,
+                  :created_at
 
     def queued?
       status == STATUS_QUEUED
@@ -27,16 +31,22 @@ module Mollie
       status == STATUS_REFUNDED
     end
 
-    def refunded_datetime=(refunded_datetime)
-      @refunded_datetime = Time.parse(refunded_datetime) rescue nil
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at) rescue nil
     end
 
     def amount=(amount)
-      @amount = BigDecimal.new(amount.to_s) if amount
+      if amount
+        @amount   = BigDecimal.new(amount['value'].to_s)
+        @currency = amount['currency']
+      end
     end
 
-    def payment=(payment)
-      @payment = Payment.new(payment)
+    def settlement_amount=(settlement_amount)
+      if settlement_amount
+        @settlement_amount   = BigDecimal.new(settlement_amount['value'].to_s)
+        @settlement_currency = settlement_amount['currency']
+      end
     end
   end
 end

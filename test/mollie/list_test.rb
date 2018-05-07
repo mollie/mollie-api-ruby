@@ -7,15 +7,27 @@ module Mollie
         'total_count' => 280,
         'offset'      => 0,
         'count'       => 10,
-        'data'        => [
+        '_embedded'   => { "payments" => [
           { 'id' => "tr_1" },
           { 'id' => "tr_2" },
-        ],
-        'links'       => {
-          'first'    => "https://api.mollie.nl/v1/payments?count=10&offset=0",
-          'previous' => nil,
-          'next'     => "https://api.mollie.nl/v1/payments?count=10&offset=10",
-          'last'     => "https://api.mollie.nl/v1/payments?count=10&offset=270"
+        ] },
+        '_links'      => {
+          "self"          => {
+            "href" => "https://api.mollie.com/v2/payments?limit=5",
+            "type" => "application/hal+json"
+          },
+          "previous"      => {
+            "href" => "https://api.mollie.com/v2/payments?from=tr_1&limit=1",
+            "type" => "application/hal+json"
+          },
+          "next"          => {
+            "href" => "https://api.mollie.com/v2/payments?from=tr_2&limit=1",
+            "type" => "application/hal+json"
+          },
+          "documentation" => {
+            "href" => "https://docs.mollie.com/reference/payments/list",
+            "type" => "text/html"
+          }
         }
       }
 
@@ -31,10 +43,8 @@ module Mollie
       assert_kind_of Payment, list.to_a[1]
       assert_equal "tr_2", list.to_a[1].id
 
-      assert_equal "https://api.mollie.nl/v1/payments?count=10&offset=0", list.first_url
-      assert_equal nil, list.previous_url
-      assert_equal "https://api.mollie.nl/v1/payments?count=10&offset=10", list.next_url
-      assert_equal "https://api.mollie.nl/v1/payments?count=10&offset=270", list.last_url
+      assert_equal "https://api.mollie.com/v2/payments?from=tr_1&limit=1", list.previous_url
+      assert_equal "https://api.mollie.com/v2/payments?from=tr_2&limit=1", list.next_url
     end
   end
 end

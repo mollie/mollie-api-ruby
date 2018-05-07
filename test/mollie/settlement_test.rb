@@ -4,11 +4,11 @@ module Mollie
   class SettlementTest < Test::Unit::TestCase
     def test_setting_attributes
       attributes = {
-        id:               'stl_jDk30akdN',
-        reference:        '1234567.1511.03',
-        settled_datetime: '2015-11-06T06:00:02.0Z',
-        amount:           39.75,
-        periods:          {
+        id:         'stl_jDk30akdN',
+        reference:  '1234567.1511.03',
+        settled_at: '2015-11-06T06:00:02.0Z',
+        amount:     { "value" => 39.75, "currency" => "EUR" },
+        periods:    {
           "2015" => {
             "11" => {
               revenue: [
@@ -66,28 +66,27 @@ module Mollie
             }
           }
         },
-        links:            {
-          'payments' => 'https://api.mollie.nl/v1/settlements/stl_jDk30akdN/payments',
+        "_links":   {
+          'payments' => {
+            'href'  => 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/payments',
+            "type": "application/hal+json"
+          },
+          'refunds' => {
+            'href'  => 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/refunds',
+            "type": "application/hal+json"
+          },
+          'chargebacks' => {
+            'href'  => 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/chargebacks',
+            "type": "application/hal+json"
+          }
         },
-        payment_ids:      [
-                            'tr_PBHPvA2ViG',
-                            'tr_GAHivPBVP2',
-                            'tr_2VBPiPvGAH',
-                            'tr_2iHGBvPPVA',
-                            'tr_VPH2iPGvAB',
-                            'tr_AGPVviP2BH',
-                          ],
-        refund_ids:       [
-                            're_PvGHiV2BPA',
-                            're_APBiGPH2vV',
-                          ]
       }
 
       settlement = Settlement.new(attributes)
 
       assert_equal 'stl_jDk30akdN', settlement.id
       assert_equal '1234567.1511.03', settlement.reference
-      assert_equal Time.parse('2015-11-06T06:00:02.0Z'), settlement.settled_datetime
+      assert_equal Time.parse('2015-11-06T06:00:02.0Z'), settlement.settled_at
       assert_equal 39.75, settlement.amount
 
       assert_equal 'iDEAL', settlement.periods[:'2015'][:'11'].revenue[0].description
@@ -122,19 +121,13 @@ module Mollie
       assert_equal 0.105, settlement.periods[:'2015'][:'11'].costs[1].amount.vat
       assert_equal 0.605, settlement.periods[:'2015'][:'11'].costs[1].amount.gross
 
-      assert_equal 'https://api.mollie.nl/v1/settlements/stl_jDk30akdN/payments', settlement.payments
-      assert_equal 'tr_PBHPvA2ViG', settlement.payment_ids[0]
-      assert_equal 'tr_GAHivPBVP2', settlement.payment_ids[1]
-      assert_equal 'tr_2VBPiPvGAH', settlement.payment_ids[2]
-      assert_equal 'tr_2iHGBvPPVA', settlement.payment_ids[3]
-      assert_equal 'tr_VPH2iPGvAB', settlement.payment_ids[4]
-      assert_equal 'tr_AGPVviP2BH', settlement.payment_ids[5]
-      assert_equal 're_PvGHiV2BPA', settlement.refund_ids[0]
-      assert_equal 're_APBiGPH2vV', settlement.refund_ids[1]
+      assert_equal 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/payments', settlement.payments
+      assert_equal 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/refunds', settlement.refunds
+      assert_equal 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/chargebacks', settlement.chargebacks
     end
 
     def test_open_settlement
-      stub_request(:get, "https://api.mollie.nl/v1/settlements/open")
+      stub_request(:get, "https://api.mollie.nl/v2/settlements/open")
         .to_return(:status => 200, :body => %{{"id":"set-id"}}, :headers => {})
 
       settlement = Settlement.open
@@ -144,7 +137,7 @@ module Mollie
     end
 
     def test_next_settlement
-      stub_request(:get, "https://api.mollie.nl/v1/settlements/next")
+      stub_request(:get, "https://api.mollie.nl/v2/settlements/next")
         .to_return(:status => 200, :body => %{{"id":"set-id"}}, :headers => {})
 
       settlement = Settlement.next

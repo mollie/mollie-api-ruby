@@ -1,6 +1,7 @@
 class Application < Sinatra::Application
   swagger_schema :FirstPaymentRequest do
     property :amount, type: :decimal, description: 'Amount of money', example: 0.01
+    property :currency, type: :string, description: 'Currency', example: 'EUR'
     property :customer_id, type: :string, description: 'Customer id', example: "cst_GUvJFqwVCD"
     property :description, type: :string, description: 'Description', example: "My first payment"
     property :recurring_type, type: :string, description: 'Recurring type', example: "first"
@@ -12,6 +13,7 @@ class Application < Sinatra::Application
 
   swagger_schema :OnDemandPaymentRequest do
     property :amount, type: :decimal, description: 'Amount of money', example: 25.0
+    property :currency, type: :string, description: 'Currency', example: 'EUR'
     property :customer_id, type: :string, description: 'Customer id', example: "cst_GUvJFqwVCD"
     property :description, type: :string, description: 'Description', example: "Monthly payment"
     property :recurring_type, type: :string, description: 'Recurring type', example: "recurring"
@@ -23,6 +25,7 @@ class Application < Sinatra::Application
 
   swagger_schema :SubscriptionRequest do
     property :amount, type: :decimal, description: 'Amount of money', example: 25.0
+    property :currency, type: :string, description: 'Currency', example: 'EUR'
     property :times, type: :integer, description: 'Times', example: "10"
     property :interval, type: :string, description: 'Interval', example: "1 month"
     property :start_date, type: :string, description: 'Start date', example: Time.now.strftime("%Y-%m-%d")
@@ -32,7 +35,7 @@ class Application < Sinatra::Application
     property :testmode, type: :boolean, description: '(Connect api only)', example: true
   end
 
-  swagger_path '/v1/subscriptions/first_payment' do
+  swagger_path '/v2/subscriptions/first_payment' do
     operation :post, description: 'https://www.mollie.com/en/docs/recurring#first-payment', tags: ['Subscriptions'] do
       security api_key: []
       parameter name: :payment, in: 'body', description: 'PaymentRequest params', schema: { '$ref' => '#/definitions/OnDemandPaymentRequest' }
@@ -41,7 +44,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/subscriptions/mandates/{customer_id}' do
+  swagger_path '/v2/subscriptions/mandates/{customer_id}' do
     operation :get, description: 'List mandates', tags: ['Subscriptions'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
@@ -51,7 +54,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/subscriptions/on_demand' do
+  swagger_path '/v2/subscriptions/on_demand' do
     operation :post, description: 'https://www.mollie.com/en/docs/recurring#on-demand', tags: ['Subscriptions'] do
       parameter name: :payment, in: 'body', description: 'PaymentRequest params', schema: { '$ref' => '#/definitions/OnDemandPaymentRequest' }
       security api_key: []
@@ -60,7 +63,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/customers/{customer_id}/subscriptions' do
+  swagger_path '/v2/customers/{customer_id}/subscriptions' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/subscriptions/get', tags: ['Subscriptions'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
       parameter name: :offset, in: 'query', description: 'Offset', type: :integer
@@ -80,7 +83,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/customers/{customer_id}/subscriptions/{id}' do
+  swagger_path '/v2/customers/{customer_id}/subscriptions/{id}' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/subscriptions/get', tags: ['Subscriptions'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
       parameter name: :id, in: 'path', description: 'Subscription id', type: :string, default: 'sub_qte7Jyfc5B'
@@ -101,9 +104,9 @@ class Application < Sinatra::Application
     end
   end
 
-  post '/v1/subscriptions/first_payment' do
+  post '/v2/subscriptions/first_payment' do
     payment = Mollie::Payment.create(
-      amount:         json_params['amount'],
+      amount:         { value: json_params['amount'], currency: json_params["currency"] },
       customer_id:    json_params['customer_id'],
       description:    json_params['description'],
       redirect_url:   json_params['redirect_url'],
@@ -115,14 +118,14 @@ class Application < Sinatra::Application
     JSON.pretty_generate(payment.attributes)
   end
 
-  get '/v1/subscriptions/mandates/:customer_id' do
+  get '/v2/subscriptions/mandates/:customer_id' do
     mandates = Mollie::Customer::Mandates.all(customer_id: params[:customer_id])
     JSON.pretty_generate(mandates.attributes)
   end
 
-  post '/v1/subscriptions/on_demand' do
+  post '/v2/subscriptions/on_demand' do
     payment = Mollie::Payment.create(
-      amount:         json_params['amount'],
+      amount:         { value: json_params['amount'], currency: json_params["currency"] },
       customer_id:    json_params['customer_id'],
       description:    json_params['description'],
       redirect_url:   json_params['redirect_url'],
@@ -134,19 +137,19 @@ class Application < Sinatra::Application
     JSON.pretty_generate(payment.attributes)
   end
 
-  get '/v1/customers/:customer_id/subscriptions' do
+  get '/v2/customers/:customer_id/subscriptions' do
     subscriptions = Mollie::Customer::Subscription.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(subscriptions.attributes)
   end
 
-  get '/v1/customers/:customer_id/subscriptions/:id' do
+  get '/v2/customers/:customer_id/subscriptions/:id' do
     payment = Mollie::Customer::Subscription.get(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(payment.attributes)
   end
 
-  post '/v1/customers/:customer_id/subscriptions' do
+  post '/v2/customers/:customer_id/subscriptions' do
     subscription = Mollie::Customer::Subscription.create(
-      amount:      json_params['amount'],
+      amount:      { value: json_params['amount'], currency: json_params["currency"] },
       times:       json_params['times'],
       interval:    json_params['interval'],
       start_date:  json_params['start_date'],
@@ -158,7 +161,7 @@ class Application < Sinatra::Application
     JSON.pretty_generate(subscription.attributes)
   end
 
-  delete '/v1/customers/:customer_id/subscriptions/:id' do
+  delete '/v2/customers/:customer_id/subscriptions/:id' do
     Mollie::Customer::Subscription.delete(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     "deleted"
   end

@@ -5,36 +5,33 @@ module Mollie
     attr_accessor :total_count,
                   :offset,
                   :count,
-                  :links,
-                  :data
+                  :_links,
+                  :items
+    alias_method :links, :_links
 
     def initialize(list_attributes, klass)
-      list_attributes['data'] ||= []
+      if list_attributes['_embedded']
+        list_attributes['items'] ||= list_attributes['_embedded'].fetch(klass.resource_name, [])
+      else
+        list_attributes['items'] ||= []
+      end
       super list_attributes
 
-      @data = self.data.map do |attributes|
+      @items = self.items.map do |attributes|
         klass.new attributes
       end
     end
 
     def each(&block)
-      @data.each(&block)
-    end
-
-    def first_url
-      links && links['first']
+      @items.each(&block)
     end
 
     def previous_url
-      links && links['previous']
+      Util.extract_url(links, 'previous')
     end
 
     def next_url
-      links && links['next']
-    end
-
-    def last_url
-      links && links['last']
+      Util.extract_url(links, 'next')
     end
   end
 end

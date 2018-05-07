@@ -15,10 +15,10 @@ module Mollie
         review:           {
           status: 'pending'
         },
-        created_datetime: '2017-04-20T09:03:58.0Z',
-        updated_datetime: '2017-04-20T09:03:58.0Z',
+        created_at: '2017-04-20T09:03:58.0Z',
+        updated_at: '2017-04-20T09:03:58.0Z',
         links:            {
-          'apikeys'              => 'https://api.mollie.nl/v1/profiles/pfl_v9hTwCvYqw/apikeys',
+          'apikeys'              => 'https://api.mollie.nl/v2/profiles/pfl_v9hTwCvYqw/apikeys',
           'checkout_preview_url' => 'https://www.mollie.com/beheer/account_profielen/preview-payscreen/1337',
         }
       }
@@ -34,9 +34,9 @@ module Mollie
       assert_equal 5399, profile.category_code
       assert_equal Profile::STATUS_UNVERIFIED, profile.status
       assert_equal Profile::REVIEW_STATUS_PENDING, profile.review.status
-      assert_equal Time.parse('2017-04-20T09:03:58.0Z'), profile.created_datetime
-      assert_equal Time.parse('2017-04-20T09:03:58.0Z'), profile.updated_datetime
-      assert_equal 'https://api.mollie.nl/v1/profiles/pfl_v9hTwCvYqw/apikeys', profile.apikeys_url
+      assert_equal Time.parse('2017-04-20T09:03:58.0Z'), profile.created_at
+      assert_equal Time.parse('2017-04-20T09:03:58.0Z'), profile.updated_at
+      assert_equal 'https://api.mollie.nl/v2/profiles/pfl_v9hTwCvYqw/apikeys', profile.apikeys_url
       assert_equal 'https://www.mollie.com/beheer/account_profielen/preview-payscreen/1337', profile.checkout_preview_url
     end
 
@@ -66,8 +66,8 @@ module Mollie
     end
 
     def test_list_apikeys
-      stub_request(:get, "https://api.mollie.nl/v1/profiles/pfl-id/apikeys?count=50&offset=0")
-        .to_return(:status => 200, :body => %{{"data" : [{"id":"live", "key":"key"}]}}, :headers => {})
+      stub_request(:get, "https://api.mollie.nl/v2/profiles/pfl-id/apikeys?count=50&offset=0")
+        .to_return(:status => 200, :body => %{{"_embedded" : {"apikeys": [{"id":"live", "key":"key"}]}}}, :headers => {})
 
       apikeys = Profile.new(id: "pfl-id").apikeys.all
 
@@ -76,7 +76,7 @@ module Mollie
     end
 
     def test_update_apikey
-      stub_request(:post, "https://api.mollie.nl/v1/profiles/pfl-id/apikeys/live")
+      stub_request(:post, "https://api.mollie.nl/v2/profiles/pfl-id/apikeys/live")
         .to_return(:status => 200, :body => %{{"id":"live", "key":"key"}}, :headers => {})
 
       apikey = Profile.new(id: "pfl-id").apikeys.update("live")
@@ -86,7 +86,7 @@ module Mollie
     end
 
     def test_get_apikey
-      stub_request(:get, "https://api.mollie.nl/v1/profiles/pfl-id/apikeys/live")
+      stub_request(:get, "https://api.mollie.nl/v2/profiles/pfl-id/apikeys/live")
         .to_return(:status => 200, :body => %{{"id":"live", "key":"key"}}, :headers => {})
 
       apikey = Profile.new(id: "pfl-id").apikeys.get("live")

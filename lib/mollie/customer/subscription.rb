@@ -11,15 +11,15 @@ module Mollie
                     :id,
                     :customer_id,
                     :mode,
-                    :created_datetime,
+                    :created_at,
                     :status,
                     :amount,
                     :times,
                     :interval,
                     :description,
                     :method,
-                    :cancelled_datetime,
-                    :links
+                    :cancelled_at,
+                    :webhook_url
 
       def active?
         status == STATUS_ACTIVE
@@ -41,24 +41,23 @@ module Mollie
         status == STATUS_COMPLETED
       end
 
-      def created_datetime=(created_datetime)
-        @created_datetime = Time.parse(created_datetime.to_s) rescue nil
+      def created_at=(created_at)
+        @created_at = Time.parse(created_at.to_s) rescue nil
       end
 
-      def cancelled_datetime=(cancelled_datetime)
-        @cancelled_datetime = Time.parse(cancelled_datetime.to_s) rescue nil
+      def cancelled_at=(cancelled_at)
+        @cancelled_at = Time.parse(cancelled_at.to_s) rescue nil
       end
 
       def amount=(amount)
-        @amount = BigDecimal.new(amount.to_s)
+        if amount
+          @amount   = BigDecimal.new(amount['value'].to_s)
+          @currency = amount['currency']
+        end
       end
 
       def times=(times)
         @times = times.to_i
-      end
-
-      def webhook_url
-        links && links['webhook_url']
       end
     end
   end

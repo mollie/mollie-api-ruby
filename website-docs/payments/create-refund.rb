@@ -3,7 +3,7 @@ require 'mollie-api-ruby'
 begin
   refund = Mollie::Payment::Refund.create(
     payment_id:  'tr_7UhSN1zuXS',
-    amount:      '5.0',
+    amount:      { value: '5.0', currency: 'EUR' },
     description: 'Did not like it',
     api_key:     'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
   )

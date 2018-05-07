@@ -4,32 +4,38 @@ module Mollie
     attr_accessor :id,
                   :payment,
                   :amount,
-                  :chargeback_datetime,
+                  :currency,
+                  :settlement_amount,
+                  :settlement_currency,
+                  :created_at,
                   :settlement_id,
-                  :reversed_datetime
+                  :payment_id,
+                  :reversed_at
 
 
     def reversed?
-      !!reversed_datetime
+      !!reversed_at
     end
 
-    def reversed_datetime=(reversed_datetime)
-      @reversed_datetime = Time.parse(reversed_datetime) rescue nil
+    def reversed_at=(reversed_at)
+      @reversed_at = Time.parse(reversed_at) rescue nil
     end
 
-    def chargeback_datetime=(chargeback_datetime)
-      @chargeback_datetime = Time.parse(chargeback_datetime) rescue nil
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at) rescue nil
     end
 
     def amount=(amount)
-      @amount = BigDecimal.new(amount.to_s) if amount
+      if amount
+        @amount   = BigDecimal.new(amount['value'].to_s)
+        @currency = amount['currency']
+      end
     end
 
-    def payment=(payment)
-      if payment.is_a?(Hash)
-        @payment = Payment.new(payment)
-      else
-        @payment = payment
+    def settlement_amount=(settlement_amount)
+      if settlement_amount
+        @settlement_amount   = BigDecimal.new(settlement_amount['value'].to_s)
+        @settlement_currency = settlement_amount['currency']
       end
     end
   end

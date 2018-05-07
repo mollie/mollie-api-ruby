@@ -27,8 +27,8 @@ module Mollie
                   :category_code,
                   :status,
                   :review,
-                  :created_datetime,
-                  :updated_datetime,
+                  :created_at,
+                  :updated_at,
                   :links
 
     def unverified?
@@ -55,12 +55,12 @@ module Mollie
       @review && @review.status == REVIEW_STATUS_REJECTED
     end
 
-    def created_datetime=(created_datetime)
-      @created_datetime = Time.parse(created_datetime.to_s) rescue nil
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at.to_s) rescue nil
     end
 
-    def updated_datetime=(updated_datetime)
-      @updated_datetime = Time.parse(updated_datetime.to_s) rescue nil
+    def updated_at=(updated_at)
+      @updated_at = Time.parse(updated_at.to_s) rescue nil
     end
 
     def apikeys_url

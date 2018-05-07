@@ -2,7 +2,7 @@ require 'mollie-api-ruby'
 
 begin
   subscription = Mollie::Customer::Subscription.create(
-    amount:      "20.00",
+    amount:      { value: "20.00", currency: "EUR" },
     times:       4,
     interval:    "3 months",
     description: "Quarterly payment",

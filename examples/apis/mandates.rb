@@ -10,7 +10,7 @@ class Application < Sinatra::Application
     property :testmode, type: :boolean, description: '(Connect api only)', example: true
   end
 
-  swagger_path '/v1/customers/{customer_id}/mandates' do
+  swagger_path '/v2/customers/{customer_id}/mandates' do
     operation :post, description: 'Create mandates', tags: ['Mandates'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: "cst_GUvJFqwVCD"
       security api_key: []
@@ -30,7 +30,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/customers/{customer_id}/mandates/{id}' do
+  swagger_path '/v2/customers/{customer_id}/mandates/{id}' do
     operation :get, description: 'Get mandate', tags: ['Mandates'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: "cst_GUvJFqwVCD"
       parameter name: :id, in: 'path', description: 'Mandate id', type: :string, default: "mdt_qP7Qk6mgaz"
@@ -50,7 +50,7 @@ class Application < Sinatra::Application
     end
   end
 
-  post '/v1/customers/:customer_id/mandates' do
+  post '/v2/customers/:customer_id/mandates' do
     mandate = Mollie::Customer::Mandate.create(
       customer_id:       params[:customer_id],
       method:            json_params['method'],
@@ -65,18 +65,18 @@ class Application < Sinatra::Application
     JSON.pretty_generate(mandate.attributes)
   end
 
-  get '/v1/customers/:customer_id/mandates' do
+  get '/v2/customers/:customer_id/mandates' do
     mandates = Mollie::Customer::Mandate.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(mandates.attributes)
   end
 
 
-  get '/v1/customers/:customer_id/mandates/:id' do
+  get '/v2/customers/:customer_id/mandates/:id' do
     mandate = Mollie::Customer::Mandate.get(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(mandate.attributes)
   end
 
-  delete '/v1/customers/:customer_id/mandates/:id' do
+  delete '/v2/customers/:customer_id/mandates/:id' do
     Mollie::Customer::Mandate.delete(params[:id], testmode: params[:testmode], customer_id: params[:customer_id])
     "deleted"
   end

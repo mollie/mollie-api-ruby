@@ -6,19 +6,16 @@ module Mollie
                   :address,
                   :postal_code,
                   :city,
-                  :country,
                   :country_code,
-                  :registration_type,
                   :registration_number,
-                  :registration_datetime,
-                  :verified_datetime
+                  :verified_at
 
-    def registration_datetime=(registration_datetime)
-      @registration_datetime = Time.parse(registration_datetime.to_s) rescue nil
+    def verified_at=(verified_at)
+      @verified_at = Time.parse(verified_at.to_s) rescue nil
     end
 
-    def verified_datetime=(verified_datetime)
-      @verified_datetime = Time.parse(verified_datetime.to_s) rescue nil
+    def address=(address)
+      @address = OpenStruct.new(address) if address.is_a?(Hash)
     end
   end
 end

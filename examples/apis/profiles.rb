@@ -8,7 +8,7 @@ class Application < Sinatra::Application
     property :mode, type: :string, description: 'Mode (live or test)', example: "test"
   end
 
-  swagger_path '/v1/profiles' do
+  swagger_path '/v2/profiles' do
     operation :post, description: 'https://www.mollie.com/en/docs/reference/profiles/create', tags: ['Profiles'] do
       security api_key: []
       parameter name: :profile, in: 'body', description: 'ProfileRequest params', schema: { '$ref' => '#/definitions/ProfileRequest' }
@@ -17,7 +17,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/profiles' do
+  swagger_path '/v2/profiles' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/profiles/list', tags: ['Profiles'] do
       parameter name: :offset, in: 'query', description: 'Offset', type: :integer
       parameter name: :count, in: 'query', description: 'Count', type: :integer
@@ -27,7 +27,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/profiles/{id}' do
+  swagger_path '/v2/profiles/{id}' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/profiles/get', tags: ['Profiles'] do
       parameter name: :id, in: 'path', description: 'Profile id', type: :string, default: 'pfl_v9hTwCvYqw'
       security api_key: []
@@ -49,7 +49,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/profiles/{profile_id}/apikeys' do
+  swagger_path '/v2/profiles/{profile_id}/apikeys' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/profiles/api-keys/list', tags: ['Profiles'] do
       parameter name: :profile_id, in: 'path', description: 'Profile id', type: :string, default: 'pfl_v9hTwCvYqw'
       security api_key: []
@@ -58,7 +58,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/profiles/{profile_id}/apikeys/{mode}' do
+  swagger_path '/v2/profiles/{profile_id}/apikeys/{mode}' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/profiles/api-keys/list', tags: ['Profiles'] do
       parameter name: :profile_id, in: 'path', description: 'Profile id', type: :string, default: 'pfl_v9hTwCvYqw'
       parameter name: :mode, in: 'path', description: 'Mode (live or test)', type: :string, default: 'test'
@@ -75,17 +75,17 @@ class Application < Sinatra::Application
     end
   end
 
-  get '/v1/profiles' do
+  get '/v2/profiles' do
     profiles = Mollie::Profile.all(params[:offset], params[:count])
     JSON.pretty_generate(profiles.attributes)
   end
 
-  get '/v1/profiles/:id' do
+  get '/v2/profiles/:id' do
     profile = Mollie::Profile.get(params[:id])
     JSON.pretty_generate(profile.attributes)
   end
 
-  post '/v1/profiles' do
+  post '/v2/profiles' do
     profile = Mollie::Profile.create(
       name:         json_params['name'],
       website:      json_params['website'],
@@ -97,7 +97,7 @@ class Application < Sinatra::Application
     JSON.pretty_generate(profile.attributes)
   end
 
-  patch '/v1/profiles/:id' do
+  patch '/v2/profiles/:id' do
     profile = Mollie::Profile.update(params[:id],
                                      name:         json_params['name'],
                                      website:      json_params['website'],
@@ -109,17 +109,17 @@ class Application < Sinatra::Application
     JSON.pretty_generate(profile.attributes)
   end
 
-  get '/v1/profiles/:profile_id/apikeys' do
+  get '/v2/profiles/:profile_id/apikeys' do
     api_keys = Mollie::Profile::ApiKey.all(profile_id: params[:profile_id])
     JSON.pretty_generate(api_keys.attributes)
   end
 
-  get '/v1/profiles/:profile_id/apikeys/:mode' do
+  get '/v2/profiles/:profile_id/apikeys/:mode' do
     api_key = Mollie::Profile::ApiKey.get(params[:mode], profile_id: params[:profile_id])
     JSON.pretty_generate(api_key.attributes)
   end
 
-  post '/v1/profiles/:profile_id/apikeys/:mode' do
+  post '/v2/profiles/:profile_id/apikeys/:mode' do
     payment = Mollie::Profile::ApiKey.create(params[:mode], profile_id: params[:profile_id])
     JSON.pretty_generate(payment.attributes)
   end

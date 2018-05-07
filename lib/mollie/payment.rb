@@ -1,14 +1,11 @@
 module Mollie
   class Payment < Base
-    STATUS_OPEN         = "open"
-    STATUS_CANCELLED    = "cancelled"
-    STATUS_EXPIRED      = "expired"
-    STATUS_PAID         = "paid"
-    STATUS_PAIDOUT      = "paidout"
-    STATUS_FAILED       = "failed"
-    STATUS_REFUNDED     = "refunded"
-    STATUS_PENDING      = "pending"
-    STATUS_CHARGED_BACK = "charged_back"
+    STATUS_OPEN      = "open"
+    STATUS_CANCELLED = "cancelled"
+    STATUS_EXPIRED   = "expired"
+    STATUS_PAID      = "paid"
+    STATUS_FAILED    = "failed"
+    STATUS_PENDING   = "pending"
 
     RECURRINGTYPE_NONE      = nil
     RECURRINGTYPE_FIRST     = "first"
@@ -16,15 +13,19 @@ module Mollie
 
     attr_accessor :id,
                   :mode,
-                  :created_datetime,
+                  :created_at,
                   :status,
-                  :paid_datetime,
-                  :cancelled_datetime,
-                  :expired_datetime,
-                  :expiry_period,
+                  :paid_at,
+                  :is_cancelable,
+                  :cancelled_at,
+                  :expired_at,
+                  :expires_at,
+                  :currency,
                   :amount,
                   :amount_refunded,
                   :amount_remaining,
+                  :settlement_amount,
+                  :settlement_currency,
                   :description,
                   :method,
                   :metadata,
@@ -32,12 +33,16 @@ module Mollie
                   :profile_id,
                   :settlement_id,
                   :customer_id,
-                  :recurring_type,
+                  :sequence_type,
                   :mandate_id,
                   :subscription_id,
                   :country_code,
-                  :links,
-                  :details
+                  :_links,
+                  :details,
+                  :redirect_url,
+                  :webhook_url
+
+    alias_method :links, :_links
 
     def open?
       status == STATUS_OPEN
@@ -52,11 +57,7 @@ module Mollie
     end
 
     def paid?
-      !!paid_datetime
-    end
-
-    def paidout?
-      status == STATUS_PAIDOUT
+      !!paid_at
     end
 
     def refunded?
@@ -71,10 +72,6 @@ module Mollie
       status == STATUS_PENDING
     end
 
-    def charged_back?
-      status == STATUS_CHARGED_BACK
-    end
-
     def details=(details)
       @details = OpenStruct.new(details) if details.is_a?(Hash)
     end
@@ -83,24 +80,38 @@ module Mollie
       @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
     end
 
-    def created_datetime=(created_datetime)
-      @created_datetime = Time.parse(created_datetime.to_s) rescue nil
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at.to_s) rescue nil
     end
 
-    def paid_datetime=(paid_datetime)
-      @paid_datetime = Time.parse(paid_datetime.to_s) rescue nil
+    def paid_at=(paid_at)
+      @paid_at = Time.parse(paid_at.to_s) rescue nil
     end
 
-    def cancelled_datetime=(cancelled_datetime)
-      @cancelled_datetime = Time.parse(cancelled_datetime.to_s) rescue nil
+    def cancelled_at=(cancelled_at)
+      @cancelled_at = Time.parse(cancelled_at.to_s) rescue nil
     end
 
-    def expired_datetime=(expired_datetime)
-      @expired_datetime = Time.parse(expired_datetime.to_s) rescue nil
+    def expired_at=(expired_at)
+      @expired_at = Time.parse(expired_at.to_s) rescue nil
+    end
+
+    def expires_at=(expires_at)
+      @expires_at = Time.parse(expires_at.to_s) rescue nil
     end
 
     def amount=(amount)
-      @amount = BigDecimal.new(amount.to_s) if amount
+      if amount
+        @amount   = BigDecimal.new(amount['value'].to_s)
+        @currency = amount['currency']
+      end
+    end
+
+    def settlement_amount=(settlement_amount)
+      if settlement_amount
+        @settlement_amount   = BigDecimal.new(settlement_amount['value'].to_s)
+        @settlement_currency = settlement_amount['currency']
+      end
     end
 
     def amount_remaining=(amount_remaining)
@@ -111,24 +122,18 @@ module Mollie
       @amount_refunded = BigDecimal.new(amount_refunded.to_s) if amount_refunded
     end
 
-    def payment_url
-      links && links['payment_url']
+    def checkout_url
+      Util.extract_url(links, 'checkout')
     end
 
-    def webhook_url
-      links && links['webhook_url']
-    end
-
-    def redirect_url
-      links && links['redirect_url']
-    end
+    alias_method :payment_url, :checkout_url
 
     def refunds_url
-      links && links['refunds']
+      Util.extract_url(links, 'refunds')
     end
 
     def settlement
-      links && links['settlement']
+      Util.extract_url(links, 'settlement')
     end
 
     def refunds

@@ -53,5 +53,9 @@ module Mollie
         obj
       end
     end
+
+    def extract_url(links, type)
+      links && links[type] && links[type]['href']
+    end
   end
 end

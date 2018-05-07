@@ -13,7 +13,7 @@ module Mollie
             card_holder:      "John Doe",
             card_expiry_date: "2016-03-31"
           },
-          created_datetime: "2016-04-13T11:32:38.0Z"
+          created_at: "2016-04-13T11:32:38.0Z"
         }
 
         mandate = Mandate.new(attributes)
@@ -22,7 +22,7 @@ module Mollie
         assert_equal 'valid', mandate.status
         assert_equal 'creditcard', mandate.method
         assert_equal 'cst_R6JLAuqEgm', mandate.customer_id
-        assert_equal Time.parse('2016-04-13T11:32:38.0Z'), mandate.created_datetime
+        assert_equal Time.parse('2016-04-13T11:32:38.0Z'), mandate.created_at
 
         assert_equal 'John Doe', mandate.details.card_holder
         assert_equal '2016-03-31', mandate.details.card_expiry_date

@@ -1,7 +1,7 @@
 module Mollie
   class Client
     API_ENDPOINT = 'https://api.mollie.nl'
-    API_VERSION  = 'v1'
+    API_VERSION  = 'v2'
 
     MODE_TEST = 'test'
     MODE_LIVE = 'live'
@@ -111,12 +111,12 @@ module Mollie
       when 204
         {} # No Content
       else
-        response = JSON.parse(response.body)
-        if response['error']
-          exception       = Mollie::Exception.new response['error']['message']
-          exception.field = response['error']['field'] unless response['error']['field'].nil?
-        elsif response['errors']
-          exception = Mollie::Exception.new response['errors'].values.join(', ')
+        json = JSON.parse(response.body)
+        if json['error']
+          exception       = Mollie::Exception.new json['error']['message']
+          exception.field = json['error']['field'] unless json['error']['field'].nil?
+        elsif json['errors']
+          exception = Mollie::Exception.new json['errors'].values.join(', ')
         else
           exception = Mollie::Exception.new response.body
         end

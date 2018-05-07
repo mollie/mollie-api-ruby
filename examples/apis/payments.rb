@@ -15,7 +15,7 @@ class Application < Sinatra::Application
     property :testmode, type: :boolean, description: 'Testmode', example: true
   end
 
-  swagger_path '/v1/payments' do
+  swagger_path '/v2/payments' do
     operation :post, description: 'Create payment https://www.mollie.com/en/docs/reference/payments/create', tags: ['Payments'] do
       security api_key: []
       parameter name: :payment, in: 'body', description: 'PaymentRequest params', schema: { '$ref' => '#/definitions/PaymentRequest' }
@@ -24,7 +24,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/payments/{id}' do
+  swagger_path '/v2/payments/{id}' do
     operation :get, description: 'Get payment https://www.mollie.com/en/docs/reference/payments/get', tags: ['Payments'] do
       parameter name: :id, in: 'path', description: 'Payment id', type: :string
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
@@ -34,7 +34,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/payments' do
+  swagger_path '/v2/payments' do
     operation :get, description: 'List payments https://www.mollie.com/en/docs/reference/payments/list', tags: ['Payments'] do
       parameter name: :offset, in: 'query', description: 'Offset', type: :integer
       parameter name: :count, in: 'query', description: 'Count', type: :integer
@@ -46,7 +46,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/payments/{payment_id}/refunds' do
+  swagger_path '/v2/payments/{payment_id}/refunds' do
     operation :post, description: 'Create payment https://www.mollie.com/nl/docs/reference/refunds/create', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       security api_key: []
@@ -66,7 +66,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/payments/{payment_id}/refunds/{id}' do
+  swagger_path '/v2/payments/{payment_id}/refunds/{id}' do
     operation :get, description: 'Get refund https://www.mollie.com/nl/docs/reference/refunds/get', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :id, in: 'path', description: 'Refund id', type: :string
@@ -86,7 +86,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/payments/{payment_id}/chargebacks' do
+  swagger_path '/v2/payments/{payment_id}/chargebacks' do
     operation :get, description: 'List payment chargebacks https://www.mollie.com/en/docs/reference/chargebacks/list', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :offset, in: 'query', description: 'Offset', type: :integer
@@ -98,7 +98,7 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v1/payments/{payment_id}/chargebacks/{id}' do
+  swagger_path '/v2/payments/{payment_id}/chargebacks/{id}' do
     operation :get, description: 'Get chargeback https://www.mollie.com/nl/docs/reference/chargebacks/get', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
       parameter name: :id, in: 'path', description: 'Refund id', type: :string
@@ -109,7 +109,7 @@ class Application < Sinatra::Application
     end
   end
 
-  get '/v1/payments' do
+  get '/v2/payments' do
     payments = Mollie::Payment.all(params[:offset], params[:count],
                                    profile_id: params[:profile_id],
                                    testmode:   params[:testmode]
@@ -118,14 +118,15 @@ class Application < Sinatra::Application
     JSON.pretty_generate(payments.attributes)
   end
 
-  get '/v1/payments/:id' do
+  get '/v2/payments/:id' do
     payment = Mollie::Payment.get(params[:id], testmode: params[:testmode])
+
     JSON.pretty_generate(payment.attributes)
   end
 
-  post '/v1/payments' do
+  post '/v2/payments' do
     payment = Mollie::Payment.create(
-      amount:       json_params['amount'],
+      amount:       { value: json_params['amount'], currency: json_params["currency"] },
       description:  json_params['description'],
       redirect_url: json_params['redirect_url'],
       webhook_url:  json_params['webhook_url'],
@@ -136,37 +137,37 @@ class Application < Sinatra::Application
     JSON.pretty_generate(payment.attributes)
   end
 
-  post '/v1/payments/:payment_id/refunds' do
+  post '/v2/payments/:payment_id/refunds' do
     refund = Mollie::Payment::Refund.create(
       payment_id:  params[:payment_id],
-      amount:      json_params['amount'],
+      amount:      { value: json_params['amount'], currency: json_params["currency"] },
       description: json_params['description'],
       testmode:    json_params['testmode']
     )
     JSON.pretty_generate(refund.attributes)
   end
 
-  get '/v1/payments/:payment_id/refunds/:id' do
+  get '/v2/payments/:payment_id/refunds/:id' do
     refund = Mollie::Payment::Refund.get(params[:id], testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(refund.attributes)
   end
 
-  delete '/v1/payments/:payment_id/refunds/:id' do
+  delete '/v2/payments/:payment_id/refunds/:id' do
     Mollie::Payment::Refund.delete(params[:id], testmode: params[:testmode], payment_id: params[:payment_id])
     "deleted"
   end
 
-  get '/v1/payments/:payment_id/refunds' do
+  get '/v2/payments/:payment_id/refunds' do
     refunds = Mollie::Payment::Refund.all(params[:offset], params[:count], testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(refunds.attributes)
   end
 
-  get '/v1/payments/:payment_id/chargebacks/:id' do
+  get '/v2/payments/:payment_id/chargebacks/:id' do
     chargeback = Mollie::Payment::Chargeback.get(params[:id], testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(chargeback.attributes)
   end
 
-  get '/v1/payments/:payment_id/chargebacks' do
+  get '/v2/payments/:payment_id/chargebacks' do
     chargebacks = Mollie::Payment::Chargeback.all(params[:offset], params[:count], testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(chargebacks.attributes)
   end

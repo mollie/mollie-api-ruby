@@ -7,10 +7,10 @@ module Mollie
                   :locale,
                   :metadata,
                   :recently_used_methods,
-                  :created_datetime
+                  :created_at
 
-    def created_datetime=(created_datetime)
-      @created_datetime = Time.parse(created_datetime.to_s)
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at.to_s)
     end
 
     def recently_used_methods=(methods)

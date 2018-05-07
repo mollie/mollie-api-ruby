@@ -4,21 +4,18 @@ module Mollie
   class RefundTest < Test::Unit::TestCase
     def test_setting_attributes
       attributes = {
-        id:                "re_4qqhO89gsT",
-        payment:           {
-          id: "tr_WDqYK6vllg",
-        },
-        amount:            "5.95",
-        refunded_datetime: "2016-10-08T07:59:53.0Z",
-        status:            "pending"
+        id:         "re_4qqhO89gsT",
+        amount:     { "value" => "5.95", "currency" => "EUR" },
+        created_at: "2016-10-08T07:59:53.0Z",
+        status:     "pending"
       }
 
       refund = Refund.new(attributes)
 
       assert_equal "re_4qqhO89gsT", refund.id
       assert_equal BigDecimal.new("5.95"), refund.amount
-      assert_kind_of Payment, refund.payment
-      assert_equal Time.parse("2016-10-08T07:59:53.0Z"), refund.refunded_datetime
+      assert_equal "EUR", refund.currency
+      assert_equal Time.parse("2016-10-08T07:59:53.0Z"), refund.created_at
       assert_equal Refund::STATUS_PENDING, refund.status
     end
 

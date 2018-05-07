@@ -2,12 +2,14 @@ module Mollie
   class Settlement < Base
     attr_accessor :id,
                   :reference,
-                  :settled_datetime,
+                  :created_at,
+                  :settled_at,
                   :amount,
+                  :currency,
                   :periods,
-                  :payment_ids,
-                  :refund_ids,
-                  :links
+                  :_links
+
+    alias_method :links, :_links
 
     def self.open(options = {})
       get("open", options)
@@ -17,12 +19,19 @@ module Mollie
       get("next", options)
     end
 
-    def settled_datetime=(settled_datetime)
-      @settled_datetime = Time.parse(settled_datetime.to_s) rescue nil
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at.to_s) rescue nil
+    end
+
+    def settled_at=(settled_at)
+      @settled_at = Time.parse(settled_at.to_s) rescue nil
     end
 
     def amount=(amount)
-      @amount = BigDecimal.new(amount.to_s) if amount
+      if amount
+        @amount   = BigDecimal.new(amount['value'].to_s)
+        @currency = amount['currency']
+      end
     end
 
     def periods=(periods)
@@ -30,7 +39,15 @@ module Mollie
     end
 
     def payments
-      links && links['payments']
+      Util.extract_url(links, 'payments')
+    end
+
+    def refunds
+      Util.extract_url(links, 'refunds')
+    end
+
+    def chargebacks
+      Util.extract_url(links, 'chargebacks')
     end
   end
 end

@@ -1,5 +1,5 @@
 class Application < Sinatra::Application
-  swagger_path '/v1/organizations/{id}' do
+  swagger_path '/v2/organizations/{id}' do
     operation :get, description: 'Get organization https://www.mollie.com/en/docs/reference/organizations/get', tags: ['Organizations'] do
       parameter name: :id, in: 'path', description: 'Organization id', type: :string
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean
@@ -9,7 +9,7 @@ class Application < Sinatra::Application
     end
   end
 
-  get '/v1/organizations/:id' do
+  get '/v2/organizations/:id' do
     organization = Mollie::Organization.get(params[:id], testmode: params[:testmode])
     JSON.pretty_generate(organization.attributes)
   end

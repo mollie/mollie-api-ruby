@@ -3,3 +3,4 @@
 mollie-api-ruby*.gem
 Gemfile.lock
 .ruby-gemset
+/mk-ca-bundle.pl

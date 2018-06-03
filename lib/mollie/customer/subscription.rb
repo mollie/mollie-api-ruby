@@ -14,6 +14,7 @@ module Mollie
                     :created_at,
                     :status,
                     :amount,
+                    :currency,
                     :times,
                     :interval,
                     :description,

@@ -4,47 +4,47 @@ module Mollie
   class PaymentTest < Test::Unit::TestCase
     def test_setting_attributes
       attributes = {
-        "resource":      "payment",
-        "id":            "tr_7UhSN1zuXS",
-        "mode":          "test",
-        "created_at":    "2018-03-20T09:13:37+00:00",
-        "amount":        {
+        resource:   "payment",
+        id:         "tr_7UhSN1zuXS",
+        mode:       "test",
+        created_at: "2018-03-20T09:13:37+00:00",
+        amount: {
           "value"    => "10.00",
           "currency" => "EUR"
         },
-        "description":   "My first payment",
-        "method":        "ideal",
-        "country_code":  'NL',
-        "metadata":      {
-          "order_id" => "12345"
+        description:  "My first payment",
+        method:       "ideal",
+        country_code: "NL",
+        metadata: {
+          order_id: "12345"
         },
-        "details":       {
+        details:       {
           consumer_name:    "Hr E G H K\u00fcppers en\/of MW M.J. K\u00fcppers-Veeneman",
-          consumer_account: 'NL53INGB0618365937',
-          consumer_bic:     'INGBNL2A'
+          consumer_account: "NL53INGB0618365937",
+          consumer_bic:     "INGBNL2A"
         },
-        "status":        "paid",
-        "paid_at":       "2018-03-20T09:14:37+00:00",
-        "is_cancelable": false,
-        "expires_at":    "2018-03-20T09:28:37+00:00",
-        "locale":        "nl",
-        "profile_id":    "pfl_QkEhN94Ba",
-        "sequence_type": "oneoff",
-        "redirect_url":  "https://webshop.example.org/order/12345",
-        "webhook_url":   "https://webshop.example.org/payments/webhook",
-        "_links":        {
-          "self"       => {
+        status:        "paid",
+        paid_at:       "2018-03-20T09:14:37+00:00",
+        is_cancelable: false,
+        expires_at:    "2018-03-20T09:28:37+00:00",
+        locale:        "nl",
+        profile_id:    "pfl_QkEhN94Ba",
+        sequence_type: "oneoff",
+        redirect_url:  "https://webshop.example.org/order/12345",
+        webhook_url:   "https://webshop.example.org/payments/webhook",
+        _links:        {
+          "self" => {
             "href" => "https://api.mollie.com/v2/payments/tr_7UhSN1zuXS",
             "type" => "application/json"
           },
-          "checkout"   => {
+          "checkout" => {
             "href" => "https://www.mollie.com/payscreen/select-method/7UhSN1zuXS",
             "type" => "text/html"
           },
           "settlement" => {
             "href" => "https://webshop.example.org/payment/tr_WDqYK6vllg/settlement",
           },
-          "refunds"    => {
+          "refunds" => {
             "href" => "https://webshop.example.org/payment/tr_WDqYK6vllg/refunds",
             "type" => "text/html"
           }

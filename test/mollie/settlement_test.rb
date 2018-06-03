@@ -66,18 +66,18 @@ module Mollie
             }
           }
         },
-        "_links":   {
-          'payments' => {
-            'href'  => 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/payments',
-            "type": "application/hal+json"
+        _links: {
+          "payments" => {
+            "href" => "https://api.mollie.nl/v2/settlements/stl_jDk30akdN/payments",
+            "type" => "application/hal+json"
           },
-          'refunds' => {
-            'href'  => 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/refunds',
-            "type": "application/hal+json"
+          "refunds" => {
+            "href" => "https://api.mollie.nl/v2/settlements/stl_jDk30akdN/refunds",
+            "type" => "application/hal+json"
           },
-          'chargebacks' => {
-            'href'  => 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/chargebacks',
-            "type": "application/hal+json"
+          "chargebacks" => {
+            "href" => "https://api.mollie.nl/v2/settlements/stl_jDk30akdN/chargebacks",
+            "type" => "application/hal+json"
           }
         },
       }

@@ -27,7 +27,7 @@ module Mollie
         paid_at:       "2018-03-20T09:14:37+00:00",
         is_cancelable: false,
         expires_at:    "2018-03-20T09:28:37+00:00",
-        locale:        "nl",
+        locale:        "nl_NL",
         profile_id:    "pfl_QkEhN94Ba",
         sequence_type: "oneoff",
         redirect_url:  "https://webshop.example.org/order/12345",
@@ -66,7 +66,7 @@ module Mollie
       assert_equal "Hr E G H K\u00fcppers en\/of MW M.J. K\u00fcppers-Veeneman", payment.details.consumer_name
       assert_equal 'NL53INGB0618365937', payment.details.consumer_account
       assert_equal 'INGBNL2A', payment.details.consumer_bic
-      assert_equal 'nl', payment.locale
+      assert_equal 'nl_NL', payment.locale
       assert_equal 'NL', payment.country_code
       assert_equal 'pfl_QkEhN94Ba', payment.profile_id
       assert_equal 'https://webshop.example.org/payments/webhook', payment.webhook_url

@@ -2,7 +2,7 @@ module Mollie
   class Method < Base
     IDEAL             = "ideal"
     CREDITCARD        = "creditcard"
-    MISTERCASH        = "mistercash"
+    BANCONTACT        = "bancontact"
     SOFORT            = "sofort"
     BANKTRANSFER      = "banktransfer"
     DIRECTDEBIT       = "directdebit"

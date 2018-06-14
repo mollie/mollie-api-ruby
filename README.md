@@ -213,7 +213,7 @@ Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20
 
 + [More information about iDEAL via Mollie](https://www.mollie.com/ideal/)
 + [More information about credit card via Mollie](https://www.mollie.com/creditcard/)
-+ [More information about Bancontact/Mister Cash via Mollie](https://www.mollie.com/mistercash/)
++ [More information about Bancontact via Mollie](https://www.mollie.com/mistercash/)
 + [More information about SOFORT Banking via Mollie](https://www.mollie.com/sofort/)
 + [More information about SEPA Bank transfer via Mollie](https://www.mollie.com/banktransfer/)
 + [More information about SEPA Direct debit via Mollie](https://www.mollie.com/directdebit/)

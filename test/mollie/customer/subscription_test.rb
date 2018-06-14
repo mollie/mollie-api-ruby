@@ -15,7 +15,7 @@ module Mollie
           interval:     "3 months",
           description:  "Quarterly payment",
           method:       "creditcard",
-          cancelled_at: "2016-06-01T12:23:34.0Z",
+          canceled_at: "2016-06-01T12:23:34.0Z",
           webhook_url:  "https://example.org/payments/webhook"
         }
 
@@ -32,7 +32,7 @@ module Mollie
         assert_equal "3 months", subscription.interval
         assert_equal "Quarterly payment", subscription.description
         assert_equal "creditcard", subscription.method
-        assert_equal Time.parse("2016-06-01T12:23:34.0Z"), subscription.cancelled_at
+        assert_equal Time.parse("2016-06-01T12:23:34.0Z"), subscription.canceled_at
         assert_equal "https://example.org/payments/webhook", subscription.webhook_url
       end
 
@@ -51,9 +51,9 @@ module Mollie
         assert !Subscription.new(status: 'not-suspended').suspended?
       end
 
-      def test_status_cancelled
-        assert Subscription.new(status: Subscription::STATUS_CANCELLED).cancelled?
-        assert !Subscription.new(status: 'not-cancelled').cancelled?
+      def test_status_canceled
+        assert Subscription.new(status: Subscription::STATUS_CANCELED).canceled?
+        assert !Subscription.new(status: 'not-canceled').canceled?
       end
 
       def test_status_completed

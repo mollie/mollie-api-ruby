@@ -1,7 +1,7 @@
 module Mollie
   class Payment < Base
     STATUS_OPEN      = "open"
-    STATUS_CANCELLED = "cancelled"
+    STATUS_CANCELED  = "canceled"
     STATUS_EXPIRED   = "expired"
     STATUS_PAID      = "paid"
     STATUS_FAILED    = "failed"
@@ -17,7 +17,7 @@ module Mollie
                   :status,
                   :paid_at,
                   :is_cancelable,
-                  :cancelled_at,
+                  :canceled_at,
                   :expired_at,
                   :expires_at,
                   :currency,
@@ -48,8 +48,8 @@ module Mollie
       status == STATUS_OPEN
     end
 
-    def cancelled?
-      status == STATUS_CANCELLED
+    def canceled?
+      status == STATUS_CANCELED
     end
 
     def expired?
@@ -88,8 +88,8 @@ module Mollie
       @paid_at = Time.parse(paid_at.to_s) rescue nil
     end
 
-    def cancelled_at=(cancelled_at)
-      @cancelled_at = Time.parse(cancelled_at.to_s) rescue nil
+    def canceled_at=(canceled_at)
+      @canceled_at = Time.parse(canceled_at.to_s) rescue nil
     end
 
     def expired_at=(expired_at)

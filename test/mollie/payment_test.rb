@@ -81,9 +81,9 @@ module Mollie
       assert !Payment.new(status: 'not-open').open?
     end
 
-    def test_status_cancelled
-      assert Payment.new(status: Payment::STATUS_CANCELLED).cancelled?
-      assert !Payment.new(status: 'not-cancelled').cancelled?
+    def test_status_canceled
+      assert Payment.new(status: Payment::STATUS_CANCELED).canceled?
+      assert !Payment.new(status: 'not-canceled').canceled?
     end
 
     def test_status_expired

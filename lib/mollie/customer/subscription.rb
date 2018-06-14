@@ -3,7 +3,7 @@ module Mollie
     class Subscription < Base
       STATUS_ACTIVE    = "active"
       STATUS_PENDING   = "pending" # Waiting for a valid mandate.
-      STATUS_CANCELLED = "cancelled"
+      STATUS_CANCELED  = "canceled"
       STATUS_SUSPENDED = "suspended" # Active, but mandate became invalid.
       STATUS_COMPLETED = "completed"
 
@@ -19,7 +19,7 @@ module Mollie
                     :interval,
                     :description,
                     :method,
-                    :cancelled_at,
+                    :canceled_at,
                     :webhook_url
 
       def active?
@@ -34,8 +34,8 @@ module Mollie
         status == STATUS_SUSPENDED
       end
 
-      def cancelled?
-        status == STATUS_CANCELLED
+      def canceled?
+        status == STATUS_CANCELED
       end
 
       def completed?
@@ -46,8 +46,8 @@ module Mollie
         @created_at = Time.parse(created_at.to_s) rescue nil
       end
 
-      def cancelled_at=(cancelled_at)
-        @cancelled_at = Time.parse(cancelled_at.to_s) rescue nil
+      def canceled_at=(canceled_at)
+        @canceled_at = Time.parse(canceled_at.to_s) rescue nil
       end
 
       def amount=(amount)

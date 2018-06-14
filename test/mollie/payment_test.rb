@@ -57,6 +57,7 @@ module Mollie
       assert_equal 'test', payment.mode
       assert_equal Time.parse('2018-03-20T09:13:37+00:00'), payment.created_at
       assert_equal 'paid', payment.status
+      assert_equal true, payment.paid?
       assert_equal Time.parse('2018-03-20T09:14:37+00:00'), payment.paid_at
       assert_equal 10.00, payment.amount
       assert_equal 'EUR', payment.currency
@@ -92,8 +93,8 @@ module Mollie
     end
 
     def test_status_paid
-      assert Payment.new(paid_at: Time.now).paid?
-      assert !Payment.new(paid_at: nil).paid?
+      assert Payment.new(status: Payment::STATUS_PAID).paid?
+      assert !Payment.new(status: nil).paid?
     end
 
     def test_status_failed

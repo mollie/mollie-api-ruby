@@ -58,7 +58,7 @@ module Mollie
     end
 
     def paid?
-      !!paid_at
+      status == STATUS_PAID
     end
 
     def refunded?

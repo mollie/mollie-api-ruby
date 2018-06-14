@@ -20,6 +20,7 @@ module Mollie
                   :canceled_at,
                   :expired_at,
                   :expires_at,
+                  :failed_at,
                   :currency,
                   :amount,
                   :amount_refunded,
@@ -98,6 +99,10 @@ module Mollie
 
     def expires_at=(expires_at)
       @expires_at = Time.parse(expires_at.to_s) rescue nil
+    end
+
+    def failed_at=(failed_at)
+      @failed_at = Time.parse(failed_at)
     end
 
     def amount=(amount)

@@ -156,8 +156,8 @@ Configuration can now be simplified by adding a global configure block in a Rail
 
 ```ruby
 # mollie = Mollie::API::Client.new('test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM')
- 
-# config/initializers/mollie.rb or in your app.rb 
+
+# config/initializers/mollie.rb or in your app.rb
 Mollie::Client.configure do |config|
   config.api_key = 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
 end
@@ -173,7 +173,7 @@ def set_mollie_key
     yield
   end
 end
- 
+
 ```
 
 Change the client calls to Resource calls
@@ -186,13 +186,13 @@ Change the client calls to Resource calls
 #  redirect_url: 'https://webshop.example.org/order/12345/',
 #  webhook_url:  'https://webshop.example.org/mollie-webhook/'
 #)
- 
+
 payment = Mollie::Payment.create(
   amount:       10.00,
   description:  'My first API payment',
   redirect_url: 'https://webshop.example.org/order/12345/',
   webhook_url:  'https://webshop.example.org/mollie-webhook/'
-) 
+)
 ```
 
 The resources created are similar to the old resources but have an extra option to retrieve nested resources
@@ -201,7 +201,7 @@ The resources created are similar to the old resources but have an extra option 
 # payment = mollie.payments.get(payment.id)
 # refund  = mollie.payments_refunds.with(payment).create
 payment = Mollie::Payment.get("id")
-refund = payment.refunds.create 
+refund = payment.refunds.create
 ```
 
 ## License ##

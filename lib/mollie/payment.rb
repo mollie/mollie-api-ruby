@@ -131,8 +131,6 @@ module Mollie
       Util.extract_url(links, 'checkout')
     end
 
-    alias_method :payment_url, :checkout_url
-
     def refunds_url
       Util.extract_url(links, 'refunds')
     end

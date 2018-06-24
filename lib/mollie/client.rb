@@ -112,15 +112,7 @@ module Mollie
         {} # No Content
       else
         json = JSON.parse(response.body)
-        if json['error']
-          exception       = Mollie::Exception.new json['error']['message']
-          exception.field = json['error']['field'] unless json['error']['field'].nil?
-        elsif json['errors']
-          exception = Mollie::Exception.new json['errors'].values.join(', ')
-        else
-          exception = Mollie::Exception.new response.body
-        end
-        exception.code = http_code
+        exception = Mollie::Exception.new(json)
         raise exception
       end
     end

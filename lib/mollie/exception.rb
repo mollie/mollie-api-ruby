@@ -1,8 +1,17 @@
 module Mollie
   class Exception < StandardError
-    @field = nil
-    @code = nil
+    attr_accessor :status, :title, :detail, :field, :links
 
-    attr_accessor :field, :code
+    def initialize(error)
+      exception.status = error['status']
+      exception.title  = error['title']
+      exception.detail = error['detail']
+      exception.field  = error['field']
+      exception.links  = error['_links']
+    end
+
+    def to_s
+      "#{status} #{title}: #{detail}"
+    end
   end
 end

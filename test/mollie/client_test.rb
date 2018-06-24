@@ -107,16 +107,33 @@ module Mollie
 
     def test_error_response
       response = <<-JSON
-          {"error": {"message": "Error on field", "field": "my-field"}}
+        {
+            "status": 401,
+            "title": "Unauthorized Request",
+            "detail": "Missing authentication, or failed to authenticate",
+            "field": "test-field",
+            "_links": {
+                "documentation": {
+                    "href": "https://www.mollie.com/en/docs/authentication",
+                    "type": "text/html"
+                }
+            }
+        }
       JSON
-      stub_request(:post, "https://api.mollie.nl/v2/my-method")
-        .to_return(:status => 500, :body => response, :headers => {})
 
-      e = assert_raise Mollie::Exception.new("Error on field") do
+      json = JSON.parse(response)
+      stub_request(:post, "https://api.mollie.nl/v2/my-method")
+        .to_return(:status => 401, :body => response, :headers => {})
+
+      e = assert_raise Mollie::Exception.new(JSON.parse(response)) do
         client.perform_http_call("POST", "my-method", nil, {})
       end
 
-      assert_equal "my-field", e.field
+      assert_equal(json['status'], e.status)
+      assert_equal(json['title'],  e.title)
+      assert_equal(json['detail'], e.detail)
+      assert_equal(json['field'],  e.field)
+      assert_equal(json['_links'], e.links)
     end
   end
 end

@@ -27,7 +27,6 @@ require 'mollie/organization'
 require 'mollie/payment'
 require 'mollie/permission'
 require 'mollie/profile'
-require 'mollie/profile/api_key'
 require 'mollie/refund'
 require 'mollie/settlement'
 

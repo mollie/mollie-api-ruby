@@ -47,32 +47,6 @@ class Application < Sinatra::Application
     end
   end
 
-  swagger_path '/v2/profiles/{profile_id}/apikeys' do
-    operation :get, description: 'https://www.mollie.com/en/docs/reference/profiles/api-keys/list', tags: ['Profiles'] do
-      parameter name: :profile_id, in: 'path', description: 'Profile id', type: :string, default: 'pfl_v9hTwCvYqw'
-      security api_key: []
-      response 200, description: 'Successful response'
-      response 500, description: 'Unexpected error'
-    end
-  end
-
-  swagger_path '/v2/profiles/{profile_id}/apikeys/{mode}' do
-    operation :get, description: 'https://www.mollie.com/en/docs/reference/profiles/api-keys/list', tags: ['Profiles'] do
-      parameter name: :profile_id, in: 'path', description: 'Profile id', type: :string, default: 'pfl_v9hTwCvYqw'
-      parameter name: :mode, in: 'path', description: 'Mode (live or test)', type: :string, default: 'test'
-      security api_key: []
-      response 200, description: 'Successful response'
-      response 500, description: 'Unexpected error'
-    end
-    operation :post, description: 'https://www.mollie.com/en/docs/reference/profiles/api-keys/reset', tags: ['Profiles'] do
-      parameter name: :profile_id, in: 'path', description: 'Profile id', type: :string, default: 'pfl_v9hTwCvYqw'
-      parameter name: :mode, in: 'path', description: 'Mode (live or test)', type: :string, default: 'test'
-      security api_key: []
-      response 200, description: 'Successful response'
-      response 500, description: 'Unexpected error'
-    end
-  end
-
   get '/v2/profiles' do
     profiles = Mollie::Profile.all
     JSON.pretty_generate(profiles.attributes)
@@ -105,20 +79,5 @@ class Application < Sinatra::Application
                                      mode:         json_params['mode'],
     )
     JSON.pretty_generate(profile.attributes)
-  end
-
-  get '/v2/profiles/:profile_id/apikeys' do
-    api_keys = Mollie::Profile::ApiKey.all(profile_id: params[:profile_id])
-    JSON.pretty_generate(api_keys.attributes)
-  end
-
-  get '/v2/profiles/:profile_id/apikeys/:mode' do
-    api_key = Mollie::Profile::ApiKey.get(params[:mode], profile_id: params[:profile_id])
-    JSON.pretty_generate(api_key.attributes)
-  end
-
-  post '/v2/profiles/:profile_id/apikeys/:mode' do
-    payment = Mollie::Profile::ApiKey.create(params[:mode], profile_id: params[:profile_id])
-    JSON.pretty_generate(payment.attributes)
   end
 end

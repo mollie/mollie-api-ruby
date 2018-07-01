@@ -28,7 +28,6 @@ module Mollie
                   :status,
                   :review,
                   :created_at,
-                  :updated_at,
                   :links
 
     def unverified?
@@ -57,10 +56,6 @@ module Mollie
 
     def created_at=(created_at)
       @created_at = Time.parse(created_at.to_s) rescue nil
-    end
-
-    def updated_at=(updated_at)
-      @updated_at = Time.parse(updated_at.to_s) rescue nil
     end
 
     def checkout_preview_url

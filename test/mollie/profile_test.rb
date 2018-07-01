@@ -16,7 +16,6 @@ module Mollie
           status: 'pending'
         },
         created_at: '2017-04-20T09:03:58.0Z',
-        updated_at: '2017-04-20T09:03:58.0Z',
         links:            {
           'checkout_preview_url' => 'https://www.mollie.com/beheer/account_profielen/preview-payscreen/1337',
         }
@@ -34,7 +33,6 @@ module Mollie
       assert_equal Profile::STATUS_UNVERIFIED, profile.status
       assert_equal Profile::REVIEW_STATUS_PENDING, profile.review.status
       assert_equal Time.parse('2017-04-20T09:03:58.0Z'), profile.created_at
-      assert_equal Time.parse('2017-04-20T09:03:58.0Z'), profile.updated_at
       assert_equal 'https://www.mollie.com/beheer/account_profielen/preview-payscreen/1337', profile.checkout_preview_url
     end
 

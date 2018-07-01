@@ -83,7 +83,7 @@ module Mollie
       subscription = Customer.new(id: "cus-id").subscriptions.create(amount: { value: 1.95, currency: "EUR" })
 
       assert_equal "my-id", subscription.id
-      assert_equal BigDecimal.new("1.95"), subscription.amount
+      assert_equal BigDecimal.new("1.95"), subscription.amount.value
     end
 
     def test_delete_subscription

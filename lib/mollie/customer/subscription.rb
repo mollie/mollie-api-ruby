@@ -13,7 +13,6 @@ module Mollie
                     :created_at,
                     :status,
                     :amount,
-                    :currency,
                     :times,
                     :interval,
                     :description,
@@ -50,10 +49,7 @@ module Mollie
       end
 
       def amount=(amount)
-        if amount
-          @amount   = BigDecimal.new(amount['value'].to_s)
-          @currency = amount['currency']
-        end
+        @amount = Mollie::Amount.new(amount)
       end
 
       def times=(times)

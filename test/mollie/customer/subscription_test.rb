@@ -26,8 +26,8 @@ module Mollie
         assert_equal "live", subscription.mode
         assert_equal Time.parse("2016-06-01T12:23:34.0Z"), subscription.created_at
         assert_equal "active", subscription.status
-        assert_equal BigDecimal.new("25.00"), subscription.amount
-        assert_equal "EUR", subscription.currency
+        assert_equal BigDecimal.new("25.00"), subscription.amount.value
+        assert_equal "EUR", subscription.amount.currency
         assert_equal 4, subscription.times
         assert_equal "3 months", subscription.interval
         assert_equal "Quarterly payment", subscription.description

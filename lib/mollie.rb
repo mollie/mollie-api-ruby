@@ -13,6 +13,7 @@ require 'mollie/util'
 require 'mollie/version'
 
 require 'mollie/base'
+require 'mollie/amount'
 require 'mollie/relation'
 require 'mollie/chargeback'
 require 'mollie/client'

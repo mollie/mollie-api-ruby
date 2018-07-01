@@ -4,32 +4,28 @@ module Mollie
     STATUS_PAID    = "paid"
     STATUS_OVERDUE = "overdue"
 
-    class Amount < Base
-      attr_accessor :net, :vat, :gross
-
-      def net=(net)
-        @net = BigDecimal.new(net.to_s)
-      end
-
-      def vat=(vat)
-        @vat = BigDecimal.new(vat.to_s, 2)
-      end
-
-      def gross=(gross)
-        @gross = BigDecimal.new(gross.to_s)
-      end
-    end
-
     class Line < Base
       attr_accessor :period, :description, :count, :vat_percentage, :amount
 
       def amount=(amount)
-        @amount = BigDecimal.new(amount.to_s)
+        @amount = Mollie::Amount.new(amount)
       end
     end
 
-    attr_accessor :id, :reference, :vat_number, :status,
-                  :issue_date, :due_date, :amount, :lines, :links
+    attr_accessor :id,
+                  :reference,
+                  :vat_number,
+                  :status,
+                  :issued_at,
+                  :paid_at,
+                  :due_at,
+                  :net_amount,
+                  :vat_amount,
+                  :gross_amount,
+                  :lines,
+                  :_links
+
+    alias_method :links, :_links
 
     def open?
       status == STATUS_OPEN
@@ -43,16 +39,24 @@ module Mollie
       status == STATUS_OVERDUE
     end
 
-    def amount=(amount)
-      @amount = Amount.new(amount)
+    def net_amount=(net_amount)
+      @net_amount = Mollie::Amount.new(net_amount)
     end
 
-    def issue_date=(issue_date)
-      @issue_date = Time.parse(issue_date) rescue nil
+    def vat_amount=(vat_amount)
+      @vat_amount = Mollie::Amount.new(vat_amount)
     end
 
-    def due_date=(due_date)
-      @due_date = Time.parse(due_date) rescue nil
+    def gross_amount=(gross_amount)
+      @gross_amount = Mollie::Amount.new(gross_amount)
+    end
+
+    def issued_at=(issued_at)
+      @issued_at = Time.parse(issued_at) rescue nil
+    end
+
+    def due_at=(due_at)
+      @due_at = Time.parse(due_at) rescue nil
     end
 
     def lines=(lines)
@@ -60,7 +64,7 @@ module Mollie
     end
 
     def pdf
-      links && links['pdf']
+      links && links['pdf']['href']
     end
   end
 end

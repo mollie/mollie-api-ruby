@@ -25,7 +25,9 @@ module Mollie
     end
 
     def next(options = {})
-      return self.new({}, klass) if links['next'].nil?
+      if links.nil? || links['next'].nil?
+        return self.class.new({}, klass)
+      end
 
       href = URI.parse(links['next']['href'])
       query = URI.decode_www_form(href.query).to_h
@@ -34,7 +36,9 @@ module Mollie
     end
 
     def previous(options = {})
-      return self.new({}, klass) if links['previous'].nil?
+      if links.nil? || links['previous'].nil?
+        return self.class.new({}, klass)
+      end
 
       href = URI.parse(links['previous']['href'])
       query = URI.decode_www_form(href.query).to_h

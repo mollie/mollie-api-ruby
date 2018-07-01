@@ -13,6 +13,7 @@ module Mollie
         country:             'Netherlands',
         country_code:        'NL',
         registration_number: '30204462',
+        vat_number:          'NL815839091B01',
         verified_at:         '2007-06-29T09:41:00.0Z'
       }
 
@@ -26,6 +27,7 @@ module Mollie
       assert_equal 'Amsterdam', organization.city
       assert_equal 'NL', organization.country_code
       assert_equal '30204462', organization.registration_number
+      assert_equal 'NL815839091B01', organization.vat_number
       assert_equal Time.parse('2007-06-29T09:41:00.0Z'), organization.verified_at
     end
 

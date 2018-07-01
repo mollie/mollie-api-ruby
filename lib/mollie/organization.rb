@@ -8,6 +8,7 @@ module Mollie
                   :city,
                   :country_code,
                   :registration_number,
+                  :vat_number,
                   :verified_at
 
     def verified_at=(verified_at)

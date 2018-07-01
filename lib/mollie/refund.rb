@@ -10,9 +10,9 @@ module Mollie
                   :amount,
                   :currency,
                   :settlement_amount,
-                  :settlement_currency,
                   :status,
                   :payment_id,
+                  :description,
                   :created_at
 
     def queued?
@@ -31,22 +31,16 @@ module Mollie
       status == STATUS_REFUNDED
     end
 
-    def created_at=(created_at)
-      @created_at = Time.parse(created_at) rescue nil
-    end
-
     def amount=(amount)
-      if amount
-        @amount   = BigDecimal.new(amount['value'].to_s)
-        @currency = amount['currency']
-      end
+      @amount = Amount.new(amount)
     end
 
     def settlement_amount=(settlement_amount)
-      if settlement_amount
-        @settlement_amount   = BigDecimal.new(settlement_amount['value'].to_s)
-        @settlement_currency = settlement_amount['currency']
-      end
+      @settlement_amount = Amount.new(settlement_amount)
+    end
+
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at) rescue nil
     end
   end
 end

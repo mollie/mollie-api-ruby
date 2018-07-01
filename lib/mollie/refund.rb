@@ -8,7 +8,6 @@ module Mollie
     attr_accessor :id,
                   :payment,
                   :amount,
-                  :currency,
                   :settlement_amount,
                   :status,
                   :payment_id,

@@ -4,14 +4,11 @@ module Mollie
     attr_accessor :id,
                   :payment,
                   :amount,
-                  :currency,
                   :settlement_amount,
-                  :settlement_currency,
                   :created_at,
                   :settlement_id,
                   :payment_id,
                   :reversed_at
-
 
     def reversed?
       !!reversed_at
@@ -26,17 +23,11 @@ module Mollie
     end
 
     def amount=(amount)
-      if amount
-        @amount   = BigDecimal.new(amount['value'].to_s)
-        @currency = amount['currency']
-      end
+      @amount = Mollie::Amount.new(amount)
     end
 
     def settlement_amount=(settlement_amount)
-      if settlement_amount
-        @settlement_amount   = BigDecimal.new(settlement_amount['value'].to_s)
-        @settlement_currency = settlement_amount['currency']
-      end
+      @settlement_amount = Mollie::Amount.new(settlement_amount)
     end
   end
 end

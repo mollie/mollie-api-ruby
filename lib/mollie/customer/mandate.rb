@@ -3,15 +3,16 @@ module Mollie
     class Mandate < Base
       STATUS_VALID   = "valid"
       STATUS_INVALID = "invalid"
+      STATUS_PENDING = "pending"
 
       attr_accessor :id,
                     :status,
                     :method,
                     :customer_id,
                     :details,
-                    :created_at,
-                    :mandate_reference
-
+                    :mandate_reference,
+                    :signature_date,
+                    :created_at
 
       def details=(details)
         @details = OpenStruct.new(details) if details.is_a?(Hash)
@@ -23,6 +24,10 @@ module Mollie
 
       def valid?
         status == STATUS_VALID
+      end
+
+      def pending?
+        status == STATUS_PENDING
       end
 
       def invalid?

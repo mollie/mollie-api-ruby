@@ -13,6 +13,8 @@ module Mollie
             card_holder:      "John Doe",
             card_expiry_date: "2016-03-31"
           },
+          mandate_reference: "YOUR-COMPANY-MD1380",
+          signature_date: "2018-05-07",
           created_at: "2016-04-13T11:32:38.0Z"
         }
 
@@ -22,6 +24,8 @@ module Mollie
         assert_equal 'valid', mandate.status
         assert_equal 'creditcard', mandate.method
         assert_equal 'cst_R6JLAuqEgm', mandate.customer_id
+        assert_equal 'YOUR-COMPANY-MD1380', mandate.mandate_reference
+        assert_equal '2018-05-07', mandate.signature_date
         assert_equal Time.parse('2016-04-13T11:32:38.0Z'), mandate.created_at
 
         assert_equal 'John Doe', mandate.details.card_holder
@@ -29,14 +33,15 @@ module Mollie
         assert_equal nil, mandate.details.non_existing
       end
 
-      def test_valid_invalid
+      def test_valid_invalid_pending
         mandate = Mandate.new(status: Mandate::STATUS_VALID)
         assert mandate.valid?
-        assert !mandate.invalid?
 
         mandate = Mandate.new(status: Mandate::STATUS_INVALID)
-        assert !mandate.valid?
         assert mandate.invalid?
+
+        mandate = Mandate.new(status: Mandate::STATUS_PENDING)
+        assert mandate.pending?
       end
     end
   end

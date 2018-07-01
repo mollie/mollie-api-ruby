@@ -9,7 +9,7 @@ module Mollie
         name:             'My website name',
         website:          'https://www.mywebsite.com',
         email:            'info@mywebsite.com',
-        phone:            '31123456789',
+        phone:            '+31208202070',
         category_code:    5399,
         status:           'unverified',
         review:           {
@@ -29,7 +29,7 @@ module Mollie
       assert_equal 'My website name', profile.name
       assert_equal 'https://www.mywebsite.com', profile.website
       assert_equal 'info@mywebsite.com', profile.email
-      assert_equal '31123456789', profile.phone
+      assert_equal '+31208202070', profile.phone
       assert_equal 5399, profile.category_code
       assert_equal Profile::STATUS_UNVERIFIED, profile.status
       assert_equal Profile::REVIEW_STATUS_PENDING, profile.review.status

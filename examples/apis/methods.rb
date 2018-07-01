@@ -2,7 +2,7 @@ class Application < Sinatra::Application
   swagger_path '/v2/methods' do
     operation :get, description: 'List methods https://www.mollie.com/en/docs/reference/methods/list', tags: ['Methods'] do
       parameter name: :include, in: 'query', description: 'Include additional data, e.g. issuers', type: :string
-      parameter name: :recurring_type, in: 'query', description: 'Recurring type', type: :string, default: 'first'
+      parameter name: :sequence_type, in: 'query', description: 'Recurring type', type: :string, default: 'first'
       parameter name: :locale, in: 'query', description: 'Locale', type: :string
       parameter name: :profile_id, in: 'query', description: 'Profile ID', type: :string
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean
@@ -27,7 +27,7 @@ class Application < Sinatra::Application
 
   get '/v2/methods' do
     methods = Mollie::Method.all(include:        params[:include],
-                                 recurring_type: params[:recurring_type],
+                                 sequence_type:  params[:sequence_type],
                                  locale:         params[:locale],
                                  profile_id:     params[:profile_id],
                                  testmode:       params[:testmode]

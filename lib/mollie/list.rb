@@ -2,11 +2,7 @@ module Mollie
   class List < Base
     include Enumerable
 
-    attr_accessor :total_count,
-                  :offset,
-                  :count,
-                  :_links,
-                  :items
+    attr_accessor :items, :_links
     alias_method :links, :_links
 
     def initialize(list_attributes, klass)
@@ -24,14 +20,6 @@ module Mollie
 
     def each(&block)
       @items.each(&block)
-    end
-
-    def previous_url
-      Util.extract_url(links, 'previous')
-    end
-
-    def next_url
-      Util.extract_url(links, 'next')
     end
   end
 end

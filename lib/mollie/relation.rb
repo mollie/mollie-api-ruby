@@ -5,10 +5,8 @@ module Mollie
       @klass = klass
     end
 
-    def all(*args)
-      options = args.last.is_a?(Hash) ? args.pop : {}
-      args.push(enhance(options))
-      @klass.all(*args)
+    def all(options = {})
+      @klass.all(enhance(options))
     end
 
     def get(id, options = {})

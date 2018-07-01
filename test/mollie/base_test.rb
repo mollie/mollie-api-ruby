@@ -153,7 +153,7 @@ module Mollie
     end
 
     def test_all
-      stub_request(:get, "https://api.mollie.nl/v2/testobjects?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/testobjects")
         .to_return(:status => 200, :body => %{{"_embedded": {"testobjects": [{"id":"my-id"}]}}}, :headers => {})
 
       resource = TestObject.all
@@ -162,7 +162,7 @@ module Mollie
     end
 
     def test_nested_all
-      stub_request(:get, "https://api.mollie.nl/v2/nestedobjects?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/nestedobjects")
         .to_return(:status => 200, :body => %{{"_embedded": {"nestedobjects": [{"id":"my-id"}]}}}, :headers => {})
 
       resource = TestObject::NestedObject.all
@@ -171,7 +171,7 @@ module Mollie
     end
 
     def test_nested_all_scoped
-      stub_request(:get, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects")
         .to_return(:status => 200, :body => %{{"_embedded": {"nestedobjects": [{"id":"my-id"}]}}}, :headers => {})
 
       resource = TestObject::NestedObject.all(testobject_id: 'object-id')

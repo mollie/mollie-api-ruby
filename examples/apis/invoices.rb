@@ -4,8 +4,6 @@ class Application < Sinatra::Application
       parameter name: :include, in: 'query', description: 'Include', type: :string, example: "lines,settlements"
       parameter name: :reference, in: 'query', description: 'Issuer id', type: :string, example: "inv_FrvewDA3Pr"
       parameter name: :year, in: 'query', description: 'Issuer id', type: :integer, example: Time.now.year
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
@@ -23,8 +21,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/invoices' do
-    invoices = Mollie::Invoice.all(params[:offset], params[:count],
-                                   include:   params[:include],
+    invoices = Mollie::Invoice.all(include:   params[:include],
                                    reference: params[:reference],
                                    year:      params[:year]
     )

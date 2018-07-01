@@ -2,8 +2,6 @@ class Application < Sinatra::Application
   swagger_path '/v2/settlements' do
     operation :get, description: 'List settlements https://www.mollie.com/en/docs/reference/settlements/list', tags: ['Settlements'] do
       parameter name: :reference, in: 'query', description: 'Issuer id', type: :string, example: "1182161.1506.02"
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean
       security api_key: []
       response 200, description: 'Successful response'
@@ -42,8 +40,6 @@ class Application < Sinatra::Application
   swagger_path '/v2/settlements/{settlement_id}/payments' do
     operation :get, description: 'List settlement payments https://www.mollie.com/nl/docs/reference/settlements/list-payments', tags: ['Settlements'] do
       parameter name: :settlement_id, in: 'path', description: 'Settlement id', type: :string, example: "stl_jDk30akdN"
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean
       security api_key: []
       response 200, description: 'Successful response'
@@ -52,8 +48,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/settlements' do
-    settlements = Mollie::Settlement.all(params[:offset], params[:count],
-                                         reference: params[:reference],
+    settlements = Mollie::Settlement.all(reference: params[:reference],
                                          testmode:  params[:testmode]
     )
     JSON.pretty_generate(settlements.attributes)
@@ -76,7 +71,7 @@ class Application < Sinatra::Application
 
 
   get '/v2/settlements/:settlement_id/payments' do
-    payments = Mollie::Settlement::Payment.all(params[:offset], params[:count], testmode: params[:testmode], settlement_id: params[:settlement_id])
+    payments = Mollie::Settlement::Payment.all(testmode: params[:testmode], settlement_id: params[:settlement_id])
     JSON.pretty_generate(payments.attributes)
   end
 

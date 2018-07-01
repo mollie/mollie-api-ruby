@@ -10,8 +10,6 @@ class Application < Sinatra::Application
 
   swagger_path '/v2/customers' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/customers/list', tags: ['Customers'] do
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', type: :boolean, description: '(Connect api only)', example: true
       security api_key: []
       response 200, description: 'Successful response'
@@ -64,7 +62,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/customers' do
-    customers = Mollie::Customer.all(params[:offset], params[:count], testmode: params[:testmode])
+    customers = Mollie::Customer.all(testmode: params[:testmode])
     JSON.pretty_generate(customers.attributes)
   end
 

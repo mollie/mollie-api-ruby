@@ -4,8 +4,6 @@ class Application < Sinatra::Application
       parameter name: :include, in: 'query', description: 'Include additional data, e.g. issuers', type: :string
       parameter name: :recurring_type, in: 'query', description: 'Recurring type', type: :string, default: 'first'
       parameter name: :locale, in: 'query', description: 'Locale', type: :integer
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :profile_id, in: 'query', description: 'Profile ID', type: :string
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean
       security api_key: []
@@ -28,8 +26,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/methods' do
-    methods = Mollie::Method.all(params[:offset], params[:count],
-                                 include:        params[:include],
+    methods = Mollie::Method.all(include:        params[:include],
                                  recurring_type: params[:recurring_type],
                                  locale:         params[:locale],
                                  profile_id:     params[:profile_id],

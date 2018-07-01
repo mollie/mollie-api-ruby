@@ -66,7 +66,7 @@ module Mollie
     end
 
     def test_list_apikeys
-      stub_request(:get, "https://api.mollie.nl/v2/profiles/pfl-id/apikeys?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/profiles/pfl-id/apikeys")
         .to_return(:status => 200, :body => %{{"_embedded" : {"apikeys": [{"id":"live", "key":"key"}]}}}, :headers => {})
 
       apikeys = Profile.new(id: "pfl-id").apikeys.all

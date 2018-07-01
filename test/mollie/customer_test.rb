@@ -29,7 +29,7 @@ module Mollie
     end
 
     def test_list_mandates
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/mandates?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/mandates")
         .to_return(:status => 200, :body => %{{"_embedded" : { "mandates" : [{"id":"man-id", "customer_id":"cus-id"}]}} }, :headers => {})
 
       mandates = Customer.new(id: "cus-id").mandates.all
@@ -67,7 +67,7 @@ module Mollie
     end
 
     def test_list_subscriptions
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/subscriptions?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/subscriptions")
         .to_return(:status => 200, :body => %{{"_embedded" : {"subscriptions" : [{"id":"sub-id", "customer_id":"cus-id"}]}} }, :headers => {})
 
       subscriptions = Customer.new(id: "cus-id").subscriptions.all
@@ -105,7 +105,7 @@ module Mollie
     end
 
     def test_list_payments
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/payments?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/payments")
         .to_return(:status => 200, :body => %{{"_embedded" : { "payments" : [{"id":"sub-id", "customer_id":"cus-id"}]}}}, :headers => {})
 
       payments = Customer.new(id: "cus-id").payments.all

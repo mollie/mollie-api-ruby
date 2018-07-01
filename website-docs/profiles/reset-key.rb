@@ -1,7 +1,6 @@
 require 'mollie-api-ruby'
 
 begin
-  offset  = 0
   limit   = 50
   payment = Mollie::Profile::ApiKey.create(
     "live",

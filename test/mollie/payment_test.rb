@@ -108,7 +108,7 @@ module Mollie
     end
 
     def test_list_refunds
-      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/refunds?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/refunds")
         .to_return(:status => 200, :body => %{{"_embedded" : {"refunds" : [{"id":"ref-id", "payment_id":"pay-id"}]}}}, :headers => {})
 
       refunds = Payment.new(id: "pay-id").refunds.all
@@ -145,7 +145,7 @@ module Mollie
     end
 
     def test_list_chargebacks
-      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/chargebacks?count=50&offset=0")
+      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/chargebacks")
         .to_return(:status => 200, :body => %{{"_embedded" : {"chargebacks" :[{"id":"chb-id", "payment_id":"pay-id"}]}}}, :headers => {})
 
       chargebacks = Payment.new(id: "pay-id").chargebacks.all

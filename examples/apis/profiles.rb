@@ -19,8 +19,6 @@ class Application < Sinatra::Application
 
   swagger_path '/v2/profiles' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/profiles/list', tags: ['Profiles'] do
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       security api_key: []
       response 200, description: 'Successful response'
       response 500, description: 'Unexpected error'
@@ -76,7 +74,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/profiles' do
-    profiles = Mollie::Profile.all(params[:offset], params[:count])
+    profiles = Mollie::Profile.all
     JSON.pretty_generate(profiles.attributes)
   end
 

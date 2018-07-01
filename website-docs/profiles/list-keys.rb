@@ -1,10 +1,9 @@
 require 'mollie-api-ruby'
 
 begin
-  offset   = 0
   limit    = 50
   api_keys = Mollie::Profile::ApiKey.all(
-    limit, offset,
+    limit: limit,
     profile_id: "pfl_v9hTwCvYqw",
     api_key:    'access_Wwvu7egPcJLLJ9Kb7J632x8wJ2zMeJ'
   )

@@ -36,8 +36,6 @@ class Application < Sinatra::Application
 
   swagger_path '/v2/payments' do
     operation :get, description: 'List payments https://www.mollie.com/en/docs/reference/payments/list', tags: ['Payments'] do
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :profile_id, in: 'query', description: 'Profile ID', type: :string
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean
       security api_key: []
@@ -57,8 +55,6 @@ class Application < Sinatra::Application
 
     operation :get, description: 'List payment refunds https://www.mollie.com/en/docs/reference/refunds/list', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
@@ -89,8 +85,6 @@ class Application < Sinatra::Application
   swagger_path '/v2/payments/{payment_id}/chargebacks' do
     operation :get, description: 'List payment chargebacks https://www.mollie.com/en/docs/reference/chargebacks/list', tags: ['Payments'] do
       parameter name: :payment_id, in: 'path', description: 'Payment id', type: :string
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
@@ -110,8 +104,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/payments' do
-    payments = Mollie::Payment.all(params[:offset], params[:count],
-                                   profile_id: params[:profile_id],
+    payments = Mollie::Payment.all(profile_id: params[:profile_id],
                                    testmode:   params[:testmode]
     )
 
@@ -158,7 +151,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/payments/:payment_id/refunds' do
-    refunds = Mollie::Payment::Refund.all(params[:offset], params[:count], testmode: params[:testmode], payment_id: params[:payment_id])
+    refunds = Mollie::Payment::Refund.all(testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(refunds.attributes)
   end
 
@@ -168,7 +161,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/payments/:payment_id/chargebacks' do
-    chargebacks = Mollie::Payment::Chargeback.all(params[:offset], params[:count], testmode: params[:testmode], payment_id: params[:payment_id])
+    chargebacks = Mollie::Payment::Chargeback.all(testmode: params[:testmode], payment_id: params[:payment_id])
     JSON.pretty_generate(chargebacks.attributes)
   end
 

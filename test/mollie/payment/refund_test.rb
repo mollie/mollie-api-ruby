@@ -9,7 +9,7 @@ module Mollie
       end
 
       def test_list_refunds
-        stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/refunds?count=50&offset=0")
+        stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/refunds")
           .to_return(:status => 200, :body => %{{"_embedded" : { "refunds" : [{"id":"re-id"}]}}}, :headers => {})
 
         refunds = Mollie::Payment::Refund.all(payment_id: "pay-id")

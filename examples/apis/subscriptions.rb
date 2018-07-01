@@ -66,8 +66,6 @@ class Application < Sinatra::Application
   swagger_path '/v2/customers/{customer_id}/subscriptions' do
     operation :get, description: 'https://www.mollie.com/en/docs/reference/subscriptions/get', tags: ['Subscriptions'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
@@ -87,8 +85,6 @@ class Application < Sinatra::Application
     operation :get, description: 'https://www.mollie.com/en/docs/reference/subscriptions/get', tags: ['Subscriptions'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: 'cst_GUvJFqwVCD'
       parameter name: :id, in: 'path', description: 'Subscription id', type: :string, default: 'sub_qte7Jyfc5B'
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
@@ -138,7 +134,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/customers/:customer_id/subscriptions' do
-    subscriptions = Mollie::Customer::Subscription.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
+    subscriptions = Mollie::Customer::Subscription.all(testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(subscriptions.attributes)
   end
 

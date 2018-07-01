@@ -1,8 +1,6 @@
 class Application < Sinatra::Application
   swagger_path '/v2/refunds' do
     operation :get, description: 'List refunds https://www.mollie.com/en/docs/reference/refunds/list', tags: ['Refunds'] do
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Test mode', type: :boolean
       security api_key: []
       response 200, description: 'Successful response'
@@ -11,7 +9,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/refunds' do
-    refunds = Mollie::Refund.all(params[:offset], params[:limit], testmode: params[:test_mode])
+    refunds = Mollie::Refund.all(params[:limit], testmode: params[:test_mode])
     JSON.pretty_generate(refunds.attributes)
   end
 end

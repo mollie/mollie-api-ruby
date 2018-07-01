@@ -1,10 +1,9 @@
 require 'mollie-api-ruby'
 
 begin
-  offset   = 0
   limit    = 50
   payments = Mollie::Settlement::Payment.all(
-    offset, limit,
+    limit:         limit,
     settlement_id: "stl_jDk30akdN",
     api_key:       'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
   )

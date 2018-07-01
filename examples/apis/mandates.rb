@@ -21,8 +21,6 @@ class Application < Sinatra::Application
 
     operation :get, description: 'List mandates', tags: ['Mandates'] do
       parameter name: :customer_id, in: 'path', description: 'Customer id', type: :string, default: "cst_GUvJFqwVCD"
-      parameter name: :offset, in: 'query', description: 'Offset', type: :integer
-      parameter name: :count, in: 'query', description: 'Count', type: :integer
       parameter name: :testmode, in: 'query', description: 'Testmode', type: :boolean, default: true
       security api_key: []
       response 200, description: 'Successful response'
@@ -66,7 +64,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/customers/:customer_id/mandates' do
-    mandates = Mollie::Customer::Mandate.all(params[:offset], params[:count], testmode: params[:testmode], customer_id: params[:customer_id])
+    mandates = Mollie::Customer::Mandate.all(testmode: params[:testmode], customer_id: params[:customer_id])
     JSON.pretty_generate(mandates.attributes)
   end
 

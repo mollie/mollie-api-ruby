@@ -1,10 +1,9 @@
 require 'mollie-api-ruby'
 
 begin
-  offset      = 0
   limit       = 50
   chargebacks = Mollie::Payment::Chargeback.all(
-    offset, limit,
+    limit: limit,
     payment_id: 'tr_7UhSN1zuXS',
     api_key:    'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
   )

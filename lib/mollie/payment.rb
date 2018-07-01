@@ -21,23 +21,21 @@ module Mollie
                   :expired_at,
                   :expires_at,
                   :failed_at,
-                  :currency,
                   :amount,
                   :amount_refunded,
                   :amount_remaining,
-                  :settlement_amount,
-                  :settlement_currency,
                   :description,
                   :method,
                   :metadata,
                   :locale,
+                  :country_code,
                   :profile_id,
+                  :settlement_amount,
                   :settlement_id,
                   :customer_id,
                   :sequence_type,
                   :mandate_id,
                   :subscription_id,
-                  :country_code,
                   :_links,
                   :details,
                   :redirect_url,
@@ -106,25 +104,19 @@ module Mollie
     end
 
     def amount=(amount)
-      if amount
-        @amount   = BigDecimal.new(amount['value'].to_s)
-        @currency = amount['currency']
-      end
+      @amount = Mollie::Amount.new(amount)
     end
 
     def settlement_amount=(settlement_amount)
-      if settlement_amount
-        @settlement_amount   = BigDecimal.new(settlement_amount['value'].to_s)
-        @settlement_currency = settlement_amount['currency']
-      end
+      @settlement_amount = Mollie::Amount.new(settlement_amount)
     end
 
     def amount_remaining=(amount_remaining)
-      @amount_remaining = BigDecimal.new(amount_remaining.to_s) if amount_remaining
+      @amount_remaining = Mollie::Amount.new(amount_remaining)
     end
 
     def amount_refunded=(amount_refunded)
-      @amount_refunded = BigDecimal.new(amount_refunded.to_s) if amount_refunded
+      @amount_refunded = Mollie::Amount.new(amount_refunded)
     end
 
     def checkout_url

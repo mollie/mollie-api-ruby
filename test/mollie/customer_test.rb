@@ -122,7 +122,8 @@ module Mollie
 
       assert_kind_of Mollie::Payment, payment
       assert_equal "my-id", payment.id
-      assert_equal BigDecimal.new("1.95"), payment.amount
+      assert_equal BigDecimal.new("1.95"), payment.amount.value
+      assert_equal 'EUR', payment.amount.currency
     end
   end
 end

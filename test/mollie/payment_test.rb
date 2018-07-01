@@ -59,8 +59,8 @@ module Mollie
       assert_equal 'paid', payment.status
       assert_equal true, payment.paid?
       assert_equal Time.parse('2018-03-20T09:14:37+00:00'), payment.paid_at
-      assert_equal 10.00, payment.amount
-      assert_equal 'EUR', payment.currency
+      assert_equal 10.00, payment.amount.value
+      assert_equal 'EUR', payment.amount.currency
       assert_equal 'My first payment', payment.description
       assert_equal 'ideal', payment.method
       assert_equal '12345', payment.metadata.order_id

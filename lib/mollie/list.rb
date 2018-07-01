@@ -2,10 +2,12 @@ module Mollie
   class List < Base
     include Enumerable
 
-    attr_accessor :items, :_links
+    attr_accessor :klass, :items, :_links
     alias_method :links, :_links
 
     def initialize(list_attributes, klass)
+      @klass = klass
+
       if list_attributes['_embedded']
         list_attributes['items'] ||= list_attributes['_embedded'].fetch(klass.resource_name, [])
       else
@@ -20,6 +22,24 @@ module Mollie
 
     def each(&block)
       @items.each(&block)
+    end
+
+    def next(options = {})
+      return self.new({}, klass) if links['next'].nil?
+
+      href = URI.parse(links['next']['href'])
+      query = URI.decode_www_form(href.query).to_h
+
+      klass.all(options.merge(query))
+    end
+
+    def previous(options = {})
+      return self.new({}, klass) if links['previous'].nil?
+
+      href = URI.parse(links['previous']['href'])
+      query = URI.decode_www_form(href.query).to_h
+
+      klass.all(options.merge(query))
     end
   end
 end

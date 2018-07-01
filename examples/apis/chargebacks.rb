@@ -9,7 +9,7 @@ class Application < Sinatra::Application
   end
 
   get '/v2/chargebacks' do
-    chargebacks = Mollie::Chargeback.all(params[:limit], testmode: params[:test_mode])
+    chargebacks = Mollie::Chargeback.all(testmode: params[:test_mode])
     JSON.pretty_generate(chargebacks.attributes)
   end
 end

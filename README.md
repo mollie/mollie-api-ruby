@@ -69,7 +69,7 @@ Mollie::Client.with_api_key('<your-api-key>') do
   mandates = Mollie::Customer::Mandate.all(customer_id: params[:customer_id])
   if mandates.any?
     payment = Mollie::Payment.create(
-      amount:       10.00,
+      amount:       { amount: '10.00', currency: 'EUR' },
       description:  'My first API payment',
       redirect_url: 'https://webshop.example.org/order/12345/',
       webhook_url:  'https://webshop.example.org/mollie-webhook/'
@@ -82,7 +82,7 @@ Creating a new payment.
 
 ```ruby
 payment = Mollie::Payment.create(
-  amount:       10.00,
+  amount:       { amount: '10.00', currency: 'EUR' },
   description:  'My first API payment',
   redirect_url: 'https://webshop.example.org/order/12345/',
   webhook_url:  'https://webshop.example.org/mollie-webhook/'
@@ -107,7 +107,7 @@ be refunded through our API at the moment.
 
 ```ruby
 payment = Mollie::Payment.get(payment.id)
-refund  = payment.refunds.create
+refund  = payment.refunds.create(amount: { value: '10.0', currency: 'EUR' })
 ```
 
 ## Examples ##
@@ -188,7 +188,7 @@ Change the client calls to Resource calls
 #)
 
 payment = Mollie::Payment.create(
-  amount:       10.00,
+  amount:       { amount: '10.00', currency: 'EUR' },
   description:  'My first API payment',
   redirect_url: 'https://webshop.example.org/order/12345/',
   webhook_url:  'https://webshop.example.org/mollie-webhook/'
@@ -201,7 +201,7 @@ The resources created are similar to the old resources but have an extra option 
 # payment = mollie.payments.get(payment.id)
 # refund  = mollie.payments_refunds.with(payment).create
 payment = Mollie::Payment.get("id")
-refund = payment.refunds.create
+refund = payment.refunds.create({ amount: '10.00', currency: 'EUR' })
 ```
 
 ## License ##

@@ -68,7 +68,7 @@ module Mollie
 
       if query.length > 0
         camelized_query = Util.camelize_keys(query)
-        path            += "?#{URI.encode_www_form(camelized_query)}"
+        path            += "?#{build_nested_query(camelized_query)}"
       end
 
       uri                = URI.parse(api_endpoint)
@@ -115,6 +115,30 @@ module Mollie
         exception = Mollie::Exception.new(json)
         raise exception
       end
+    end
+
+    private
+
+    def build_nested_query(value, prefix = nil)
+      case value
+      when Array
+        value.map { |v|
+          build_nested_query(v, "#{prefix}[]")
+        }.join("&")
+      when Hash
+        value.map { |k, v|
+          build_nested_query(v, prefix ? "#{prefix}[#{escape(k)}]" : escape(k))
+        }.reject(&:empty?).join('&')
+      when nil
+        prefix
+      else
+        raise ArgumentError, "value must be a Hash" if prefix.nil?
+        "#{prefix}=#{escape(value)}"
+      end
+    end
+
+    def escape(s)
+      URI.encode_www_form_component(s)
     end
   end
 end

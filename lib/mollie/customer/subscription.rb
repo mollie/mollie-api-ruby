@@ -7,8 +7,7 @@ module Mollie
       STATUS_SUSPENDED = "suspended" # Active, but mandate became invalid.
       STATUS_COMPLETED = "completed"
 
-      attr_accessor :resource,
-                    :id,
+      attr_accessor :id,
                     :customer_id,
                     :mode,
                     :created_at,

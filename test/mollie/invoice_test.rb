@@ -4,7 +4,6 @@ module Mollie
   class InvoiceTest < Test::Unit::TestCase
     def test_setting_attributes
       attributes = {
-        resource:   "invoice",
         id:         "inv_xBEbP9rvAq",
         reference:  "2016.10000",
         vat_number: "NL001234567B01",
@@ -30,7 +29,6 @@ module Mollie
 
       invoice = Invoice.new(attributes)
 
-      assert_equal "invoice", invoice.resource
       assert_equal "inv_xBEbP9rvAq", invoice.id
       assert_equal "2016.10000", invoice.reference
       assert_equal "NL001234567B01", invoice.vat_number

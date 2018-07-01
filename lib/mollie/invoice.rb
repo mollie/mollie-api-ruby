@@ -28,7 +28,7 @@ module Mollie
       end
     end
 
-    attr_accessor :resource, :id, :reference, :vat_number, :status,
+    attr_accessor :id, :reference, :vat_number, :status,
                   :issue_date, :due_date, :amount, :lines, :links
 
     def open?

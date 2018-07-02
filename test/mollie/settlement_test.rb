@@ -149,10 +149,6 @@ module Mollie
       assert_equal "0.5000", settlement.periods[:'2015'][:'11'].costs[1].amount_net.value
       assert_equal "0.1050", settlement.periods[:'2015'][:'11'].costs[1].amount_vat.value
       assert_equal "0.6050", settlement.periods[:'2015'][:'11'].costs[1].amount_gross.value
-
-      assert_equal 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/payments', settlement.payments
-      assert_equal 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/refunds', settlement.refunds
-      assert_equal 'https://api.mollie.nl/v2/settlements/stl_jDk30akdN/chargebacks', settlement.chargebacks
     end
 
     def test_open_settlement

@@ -34,17 +34,5 @@ module Mollie
     def periods=(periods)
       @periods = Util.nested_openstruct(periods) if periods.is_a?(Hash)
     end
-
-    def payments
-      Util.extract_url(links, 'payments')
-    end
-
-    def refunds
-      Util.extract_url(links, 'refunds')
-    end
-
-    def chargebacks
-      Util.extract_url(links, 'chargebacks')
-    end
   end
 end

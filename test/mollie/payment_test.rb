@@ -73,8 +73,6 @@ module Mollie
       assert_equal 'https://webshop.example.org/payments/webhook', payment.webhook_url
       assert_equal 'https://webshop.example.org/order/12345', payment.redirect_url
       assert_equal 'https://www.mollie.com/payscreen/select-method/7UhSN1zuXS', payment.checkout_url
-      assert_equal 'https://webshop.example.org/payment/tr_WDqYK6vllg/settlement', payment.settlement
-      assert_equal 'https://webshop.example.org/payment/tr_WDqYK6vllg/refunds', payment.refunds_url
     end
 
     def test_status_open

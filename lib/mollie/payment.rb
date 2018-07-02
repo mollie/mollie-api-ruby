@@ -123,14 +123,6 @@ module Mollie
       Util.extract_url(links, 'checkout')
     end
 
-    def refunds_url
-      Util.extract_url(links, 'refunds')
-    end
-
-    def settlement
-      Util.extract_url(links, 'settlement')
-    end
-
     def refunds
       Relation.new(self, Payment::Refund)
     end

@@ -4,8 +4,8 @@ module Mollie
                   :reference,
                   :created_at,
                   :settled_at,
+                  :status,
                   :amount,
-                  :currency,
                   :periods,
                   :_links
 
@@ -28,10 +28,7 @@ module Mollie
     end
 
     def amount=(amount)
-      if amount
-        @amount   = BigDecimal.new(amount['value'].to_s)
-        @currency = amount['currency']
-      end
+      @amount = Mollie::Amount.new(amount)
     end
 
     def periods=(periods)

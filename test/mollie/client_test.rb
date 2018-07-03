@@ -17,7 +17,7 @@ module Mollie
     end
 
     def test_perform_http_call_defaults
-      stub_request(:any, "https://api.mollie.nl/v2/my-method")
+      stub_request(:any, "https://api.mollie.com/v2/my-method")
         .with(:headers => { 'Accept'        => 'application/json',
                             'Content-type'  => 'application/json',
                             'Authorization' => 'Bearer test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
@@ -38,7 +38,7 @@ module Mollie
     end
 
     def test_perform_http_call_with_api_key_block
-      stub_request(:any, "https://api.mollie.nl/v2/my-method")
+      stub_request(:any, "https://api.mollie.com/v2/my-method")
         .with(:headers => { 'Accept'        => 'application/json',
                             'Content-type'  => 'application/json',
                             'Authorization' => 'Bearer my_key',
@@ -54,7 +54,7 @@ module Mollie
     end
 
     def test_get_request_convert_to_camel_case
-      stub_request(:get, "https://api.mollie.nl/v2/my-method?myParam=ok")
+      stub_request(:get, "https://api.mollie.com/v2/my-method?myParam=ok")
         .to_return(:status => 200, :body => "{}", :headers => {})
       client.perform_http_call("GET", "my-method", nil, {}, { my_param: "ok" })
     end
@@ -81,7 +81,7 @@ module Mollie
         ]
       }
 
-      stub_request(:get, "https://api.mollie.nl/v2/my-method")
+      stub_request(:get, "https://api.mollie.com/v2/my-method")
         .to_return(:status => 200, :body => response_body, :headers => {})
       response = client.perform_http_call("GET", "my-method", nil, {})
 
@@ -91,7 +91,7 @@ module Mollie
     def test_post_requests_convert_to_camel_case
       expected_body = %{{"redirectUrl":"my-url"}}
 
-      stub_request(:post, "https://api.mollie.nl/v2/my-method")
+      stub_request(:post, "https://api.mollie.com/v2/my-method")
         .with(body: expected_body)
         .to_return(:status => 200, :body => "{}", :headers => {})
 
@@ -99,7 +99,7 @@ module Mollie
     end
 
     def test_delete_requests_with_no_content_responses
-      stub_request(:delete, "https://api.mollie.nl/v2/my-method/1")
+      stub_request(:delete, "https://api.mollie.com/v2/my-method/1")
         .to_return(:status => 204, :body => "", :headers => {})
 
       client.perform_http_call("DELETE", "my-method", "1")
@@ -122,7 +122,7 @@ module Mollie
       JSON
 
       json = JSON.parse(response)
-      stub_request(:post, "https://api.mollie.nl/v2/my-method")
+      stub_request(:post, "https://api.mollie.com/v2/my-method")
         .to_return(:status => 401, :body => response, :headers => {})
 
       e = assert_raise Mollie::Exception.new(JSON.parse(response)) do

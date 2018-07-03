@@ -96,15 +96,15 @@ module Mollie
         },
         _links: {
           "payments" => {
-            "href" => "https://api.mollie.nl/v2/settlements/stl_jDk30akdN/payments",
+            "href" => "https://api.mollie.com/v2/settlements/stl_jDk30akdN/payments",
             "type" => "application/hal+json"
           },
           "refunds" => {
-            "href" => "https://api.mollie.nl/v2/settlements/stl_jDk30akdN/refunds",
+            "href" => "https://api.mollie.com/v2/settlements/stl_jDk30akdN/refunds",
             "type" => "application/hal+json"
           },
           "chargebacks" => {
-            "href" => "https://api.mollie.nl/v2/settlements/stl_jDk30akdN/chargebacks",
+            "href" => "https://api.mollie.com/v2/settlements/stl_jDk30akdN/chargebacks",
             "type" => "application/hal+json"
           }
         },
@@ -152,7 +152,7 @@ module Mollie
     end
 
     def test_open_settlement
-      stub_request(:get, "https://api.mollie.nl/v2/settlements/open")
+      stub_request(:get, "https://api.mollie.com/v2/settlements/open")
         .to_return(:status => 200, :body => %{{"id":"set-id"}}, :headers => {})
 
       settlement = Settlement.open
@@ -162,7 +162,7 @@ module Mollie
     end
 
     def test_next_settlement
-      stub_request(:get, "https://api.mollie.nl/v2/settlements/next")
+      stub_request(:get, "https://api.mollie.com/v2/settlements/next")
         .to_return(:status => 200, :body => %{{"id":"set-id"}}, :headers => {})
 
       settlement = Settlement.next

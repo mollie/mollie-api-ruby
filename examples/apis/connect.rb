@@ -34,7 +34,7 @@ class Application < Sinatra::Application
         state:                  params[:state],
         redirect_uri:           params[:redirect_uri],
         authorization_endpoint: 'https://www.mollie.com/oauth2/authorize',
-        token_endpoint:         'https://api.mollie.nl/oauth2/tokens'
+        token_endpoint:         'https://api.mollie.com/oauth2/tokens'
     )
     client.authorization_uri(state: params[:state], scope: params[:scope], approval_prompt: params[:approval_prompt])
   end
@@ -49,7 +49,7 @@ class Application < Sinatra::Application
         secret:                 params[:secret],
         redirect_uri:           params[:redirect_uri],
         authorization_endpoint: 'https://www.mollie.com/oauth2/authorize',
-        token_endpoint:         'https://api.mollie.nl/oauth2/tokens'
+        token_endpoint:         'https://api.mollie.com/oauth2/tokens'
     )
 
     client.authorization_code = params['code']

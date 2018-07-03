@@ -10,7 +10,7 @@ module Mollie
 
 
       def test_list_payments
-        stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/payments")
+        stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/payments")
           .to_return(:status => 200, :body => %{{"_embedded" : { "payments" : [{"id":"pay-id", "customer_id":"cus-id"}]}}}, :headers => {})
 
         payments = Payment.all(customer_id: "cus-id")

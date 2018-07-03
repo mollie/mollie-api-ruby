@@ -29,7 +29,7 @@ module Mollie
     end
 
     def test_list_mandates
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/mandates")
+      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/mandates")
         .to_return(:status => 200, :body => %{{"_embedded" : { "mandates" : [{"id":"man-id", "customer_id":"cus-id"}]}} }, :headers => {})
 
       mandates = Customer.new(id: "cus-id").mandates.all
@@ -38,7 +38,7 @@ module Mollie
     end
 
     def test_create_mandate
-      stub_request(:post, "https://api.mollie.nl/v2/customers/cus-id/mandates")
+      stub_request(:post, "https://api.mollie.com/v2/customers/cus-id/mandates")
         .with(body: %{{"method":"directdebit"}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "method":"directdebit"}}, :headers => {})
 
@@ -49,7 +49,7 @@ module Mollie
     end
 
     def test_delete_mandate
-      stub_request(:delete, "https://api.mollie.nl/v2/customers/cus-id/mandates/man-id")
+      stub_request(:delete, "https://api.mollie.com/v2/customers/cus-id/mandates/man-id")
         .to_return(:status => 204, :headers => {})
 
       mandate = Customer.new(id: "cus-id").mandates.delete("man-id")
@@ -57,7 +57,7 @@ module Mollie
     end
 
     def test_get_mandate
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/mandates/man-id")
+      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/mandates/man-id")
         .to_return(:status => 200, :body => %{{"id":"man-id", "customer_id":"cus-id"}}, :headers => {})
 
       mandate = Customer.new(id: "cus-id").mandates.get("man-id")
@@ -67,7 +67,7 @@ module Mollie
     end
 
     def test_list_subscriptions
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/subscriptions")
+      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/subscriptions")
         .to_return(:status => 200, :body => %{{"_embedded" : {"subscriptions" : [{"id":"sub-id", "customer_id":"cus-id"}]}} }, :headers => {})
 
       subscriptions = Customer.new(id: "cus-id").subscriptions.all
@@ -76,7 +76,7 @@ module Mollie
     end
 
     def test_create_subscription
-      stub_request(:post, "https://api.mollie.nl/v2/customers/cus-id/subscriptions")
+      stub_request(:post, "https://api.mollie.com/v2/customers/cus-id/subscriptions")
         .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "amount": { "value" : 1.95, "currency": "EUR"}}}, :headers => {})
 
@@ -87,7 +87,7 @@ module Mollie
     end
 
     def test_delete_subscription
-      stub_request(:delete, "https://api.mollie.nl/v2/customers/cus-id/subscriptions/sub-id")
+      stub_request(:delete, "https://api.mollie.com/v2/customers/cus-id/subscriptions/sub-id")
         .to_return(:status => 204, :headers => {})
 
       subscription = Customer.new(id: "cus-id").subscriptions.delete("sub-id")
@@ -95,7 +95,7 @@ module Mollie
     end
 
     def test_get_subscription
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/subscriptions/sub-id")
+      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/subscriptions/sub-id")
         .to_return(:status => 200, :body => %{{"id":"sub-id", "customer_id":"cus-id"}}, :headers => {})
 
       subscription = Customer.new(id: "cus-id").subscriptions.get("sub-id")
@@ -105,7 +105,7 @@ module Mollie
     end
 
     def test_list_payments
-      stub_request(:get, "https://api.mollie.nl/v2/customers/cus-id/payments")
+      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/payments")
         .to_return(:status => 200, :body => %{{"_embedded" : { "payments" : [{"id":"sub-id", "customer_id":"cus-id"}]}}}, :headers => {})
 
       payments = Customer.new(id: "cus-id").payments.all
@@ -114,7 +114,7 @@ module Mollie
     end
 
     def test_create_payment
-      stub_request(:post, "https://api.mollie.nl/v2/customers/cus-id/payments")
+      stub_request(:post, "https://api.mollie.com/v2/customers/cus-id/payments")
         .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}}}, :headers => {})
 

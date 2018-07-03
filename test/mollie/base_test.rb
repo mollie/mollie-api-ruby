@@ -27,7 +27,7 @@ module Mollie
     end
 
     def test_get
-      stub_request(:get, "https://api.mollie.nl/v2/testobjects/my-id")
+      stub_request(:get, "https://api.mollie.com/v2/testobjects/my-id")
         .to_return(:status => 200, :body => %{{"id":"my-id"}}, :headers => {})
 
       resource = TestObject.get("my-id")
@@ -36,7 +36,7 @@ module Mollie
     end
 
     def test_nested_get
-      stub_request(:get, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects/my-id")
+      stub_request(:get, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
         .to_return(:status => 200, :body => %{{"id":"my-id", "testobject_id":"object-id"}}, :headers => {})
 
       resource = TestObject::NestedObject.get("my-id", testobject_id: 'object-id')
@@ -46,7 +46,7 @@ module Mollie
     end
 
     def test_create
-      stub_request(:post, "https://api.mollie.nl/v2/testobjects")
+      stub_request(:post, "https://api.mollie.com/v2/testobjects")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "foo":1.00}}, :headers => {})
 
@@ -57,7 +57,7 @@ module Mollie
     end
 
     def test_nested_create
-      stub_request(:post, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects")
+      stub_request(:post, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "foo":1.00}}, :headers => {})
 
@@ -69,7 +69,7 @@ module Mollie
     end
 
     def test_update
-      stub_request(:post, "https://api.mollie.nl/v2/testobjects/my-id")
+      stub_request(:post, "https://api.mollie.com/v2/testobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "foo":1.00}}, :headers => {})
 
@@ -80,7 +80,7 @@ module Mollie
     end
 
     def test_update_instance
-      stub_request(:post, "https://api.mollie.nl/v2/testobjects/my-id")
+      stub_request(:post, "https://api.mollie.com/v2/testobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "foo":1.00}}, :headers => {})
 
@@ -92,7 +92,7 @@ module Mollie
     end
 
     def test_nested_update
-      stub_request(:post, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects/my-id")
+      stub_request(:post, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "foo":1.00}}, :headers => {})
 
@@ -104,7 +104,7 @@ module Mollie
     end
 
     def test_nested_update_instance
-      stub_request(:post, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects/my-id")
+      stub_request(:post, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "foo":1.00}}, :headers => {})
 
@@ -117,7 +117,7 @@ module Mollie
     end
 
     def test_delete
-      stub_request(:delete, "https://api.mollie.nl/v2/testobjects/my-id")
+      stub_request(:delete, "https://api.mollie.com/v2/testobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject.delete("my-id")
@@ -126,7 +126,7 @@ module Mollie
     end
 
     def test_delete_instance
-      stub_request(:delete, "https://api.mollie.nl/v2/testobjects/my-id")
+      stub_request(:delete, "https://api.mollie.com/v2/testobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject.new(id: "my-id")
@@ -135,7 +135,7 @@ module Mollie
     end
 
     def test_nested_delete
-      stub_request(:delete, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects/my-id")
+      stub_request(:delete, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject::NestedObject.delete("my-id", testobject_id: "object-id")
@@ -144,7 +144,7 @@ module Mollie
     end
 
     def test_nested_delete_instance
-      stub_request(:delete, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects/my-id")
+      stub_request(:delete, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
         .to_return(:status => 204, :headers => {})
 
       resource = TestObject::NestedObject.new(id: "my-id", testobject_id: "object-id")
@@ -153,7 +153,7 @@ module Mollie
     end
 
     def test_all
-      stub_request(:get, "https://api.mollie.nl/v2/testobjects")
+      stub_request(:get, "https://api.mollie.com/v2/testobjects")
         .to_return(:status => 200, :body => %{{"_embedded": {"testobjects": [{"id":"my-id"}]}}}, :headers => {})
 
       resource = TestObject.all
@@ -162,7 +162,7 @@ module Mollie
     end
 
     def test_nested_all
-      stub_request(:get, "https://api.mollie.nl/v2/nestedobjects")
+      stub_request(:get, "https://api.mollie.com/v2/nestedobjects")
         .to_return(:status => 200, :body => %{{"_embedded": {"nestedobjects": [{"id":"my-id"}]}}}, :headers => {})
 
       resource = TestObject::NestedObject.all
@@ -171,7 +171,7 @@ module Mollie
     end
 
     def test_nested_all_scoped
-      stub_request(:get, "https://api.mollie.nl/v2/testobjects/object-id/nestedobjects")
+      stub_request(:get, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects")
         .to_return(:status => 200, :body => %{{"_embedded": {"nestedobjects": [{"id":"my-id"}]}}}, :headers => {})
 
       resource = TestObject::NestedObject.all(testobject_id: 'object-id')

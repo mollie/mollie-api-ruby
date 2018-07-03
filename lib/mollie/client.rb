@@ -1,6 +1,6 @@
 module Mollie
   class Client
-    API_ENDPOINT = 'https://api.mollie.nl'
+    API_ENDPOINT = 'https://api.mollie.com'
     API_VERSION  = 'v2'
 
     MODE_TEST = 'test'

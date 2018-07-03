@@ -106,7 +106,7 @@ module Mollie
     end
 
     def test_list_refunds
-      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/refunds")
+      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/refunds")
         .to_return(:status => 200, :body => %{{"_embedded" : {"refunds" : [{"id":"ref-id", "payment_id":"pay-id"}]}}}, :headers => {})
 
       refunds = Payment.new(id: "pay-id").refunds.all
@@ -115,7 +115,7 @@ module Mollie
     end
 
     def test_create_refund
-      stub_request(:post, "https://api.mollie.nl/v2/payments/pay-id/refunds")
+      stub_request(:post, "https://api.mollie.com/v2/payments/pay-id/refunds")
         .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{"value": 1.95, "currency": "EUR"}}}, :headers => {})
 
@@ -127,7 +127,7 @@ module Mollie
     end
 
     def test_delete_refund
-      stub_request(:delete, "https://api.mollie.nl/v2/payments/pay-id/refunds/ref-id")
+      stub_request(:delete, "https://api.mollie.com/v2/payments/pay-id/refunds/ref-id")
         .to_return(:status => 204, :headers => {})
 
       refund = Payment.new(id: "pay-id").refunds.delete("ref-id")
@@ -135,7 +135,7 @@ module Mollie
     end
 
     def test_get_refund
-      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/refunds/ref-id")
+      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/refunds/ref-id")
         .to_return(:status => 200, :body => %{{"id":"ref-id"}}, :headers => {})
 
       refund = Payment.new(id: "pay-id").refunds.get("ref-id")
@@ -144,7 +144,7 @@ module Mollie
     end
 
     def test_list_chargebacks
-      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/chargebacks")
+      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/chargebacks")
         .to_return(:status => 200, :body => %{{"_embedded" : {"chargebacks" :[{"id":"chb-id", "payment_id":"pay-id"}]}}}, :headers => {})
 
       chargebacks = Payment.new(id: "pay-id").chargebacks.all
@@ -153,7 +153,7 @@ module Mollie
     end
 
     def test_get_chargeback
-      stub_request(:get, "https://api.mollie.nl/v2/payments/pay-id/chargebacks/chb-id")
+      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/chargebacks/chb-id")
         .to_return(:status => 200, :body => %{{"id":"chb-id"}}, :headers => {})
 
       chargeback = Payment.new(id: "pay-id").chargebacks.get("chb-id")

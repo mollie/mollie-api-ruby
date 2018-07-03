@@ -9,7 +9,7 @@ module Mollie
       end
 
       def test_list_chargebacks
-        stub_request(:get, "https://api.mollie.nl/v2/settlements/set-id/chargebacks")
+        stub_request(:get, "https://api.mollie.com/v2/settlements/set-id/chargebacks")
           .to_return(:status => 200, :body => %{{"_embedded" : { "chargebacks" : [{"id":"chg-id", "settlement_id":"set-id"}]}} }, :headers => {})
 
         chargebacks = Chargeback.all(settlement_id: "set-id")

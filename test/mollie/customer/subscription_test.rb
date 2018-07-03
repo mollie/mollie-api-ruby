@@ -15,7 +15,7 @@ module Mollie
           interval:     "3 months",
           description:  "Quarterly payment",
           method:       "creditcard",
-          canceled_at: "2016-06-01T12:23:34.0Z",
+          canceled_at:  "2016-06-01T12:23:34.0Z",
           webhook_url:  "https://example.org/payments/webhook"
         }
 

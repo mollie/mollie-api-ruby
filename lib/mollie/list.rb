@@ -25,7 +25,7 @@ module Mollie
     end
 
     def next(options = {})
-      if links.nil? || links['next'].nil?
+      if links['next'].nil?
         return self.class.new({}, klass)
       end
 
@@ -36,7 +36,7 @@ module Mollie
     end
 
     def previous(options = {})
-      if links.nil? || links['previous'].nil?
+      if links['previous'].nil?
         return self.class.new({}, klass)
       end
 

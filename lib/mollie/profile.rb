@@ -28,7 +28,9 @@ module Mollie
                   :status,
                   :review,
                   :created_at,
-                  :links
+                  :_links
+
+    alias_method :links, :_links
 
     def unverified?
       status == STATUS_UNVERIFIED
@@ -59,7 +61,9 @@ module Mollie
     end
 
     def checkout_preview_url
-      links && links['checkout_preview_url']
+      Util.extract_url(links, 'checkout_preview_url')
+    end
+
     end
   end
 end

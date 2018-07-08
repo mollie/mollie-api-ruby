@@ -12,12 +12,39 @@ module Mollie
         phone:            '+31208202070',
         category_code:    5399,
         status:           'unverified',
-        review:           {
+        review: {
           status: 'pending'
         },
         created_at: '2017-04-20T09:03:58.0Z',
-        links:            {
-          'checkout_preview_url' => 'https://www.mollie.com/beheer/account_profielen/preview-payscreen/1337',
+        _links: {
+          "self" => {
+            "href" => "https://api.mollie.com/v2/profiles/pfl_v9hTwCvYqw",
+            "type" => "application/hal+json"
+          },
+          "chargebacks" => {
+            "href" => "https://api.mollie.com/v2/chargebacks?profileId=pfl_v9hTwCvYqw",
+            "type" => "application/hal+json"
+          },
+          "methods" => {
+            "href" => "https://api.mollie.com/v2/methods?profileId=pfl_v9hTwCvYqw",
+            "type" => "application/hal+json"
+          },
+          "payments" => {
+            "href" => "https://api.mollie.com/v2/payments?profileId=pfl_v9hTwCvYqw",
+            "type" => "application/hal+json"
+          },
+          "refunds" => {
+            "href" => "https://api.mollie.com/v2/refunds?profileId=pfl_v9hTwCvYqw",
+            "type" => "application/hal+json"
+          },
+          "checkout_preview_url" => {
+            "href" => "https://www.mollie.com/payscreen/preview/pfl_v9hTwCvYqw",
+            "type" => "text/html"
+          },
+          "documentation" => {
+            "href" => "https://docs.mollie.com/reference/v2/profiles-api/create-profile",
+            "type" => "text/html"
+          }
         }
       }
 
@@ -33,7 +60,7 @@ module Mollie
       assert_equal Profile::STATUS_UNVERIFIED, profile.status
       assert_equal Profile::REVIEW_STATUS_PENDING, profile.review.status
       assert_equal Time.parse('2017-04-20T09:03:58.0Z'), profile.created_at
-      assert_equal 'https://www.mollie.com/beheer/account_profielen/preview-payscreen/1337', profile.checkout_preview_url
+      assert_equal 'https://www.mollie.com/payscreen/preview/pfl_v9hTwCvYqw', profile.checkout_preview_url
     end
 
     def test_status_unverified

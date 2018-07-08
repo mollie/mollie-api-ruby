@@ -1,10 +1,4 @@
-require 'mollie-api-ruby'
+methods = Mollie::Method.all
 
-begin
-  methods = Mollie::Method.all(
-    amount: { value: '100.00', currency: 'EUR' },
-    api_key: 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
-  )
-rescue Mollie::Exception => e
-  puts 'An error has occurred: ' << e.message
-end
+# Filter by amount and currency
+methods = Mollie::Method.all(amount: { value: '100.00', currency: 'EUR' })

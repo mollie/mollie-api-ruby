@@ -1,11 +1,4 @@
-require 'mollie-api-ruby'
+method = Mollie::Method.get("ideal")
 
-begin
-  method = Mollie::Method.get(
-    "ideal",
-    include: 'issuers',
-    api_key: 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
-  )
-rescue Mollie::Exception => e
-  puts 'An error has occurred: ' << e.message
-end
+# Include iDEAL issuers
+method = Mollie::Method.get("ideal", include: "issuers")

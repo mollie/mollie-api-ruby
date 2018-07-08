@@ -1,0 +1,1 @@
+organization = Mollie::Organization.current

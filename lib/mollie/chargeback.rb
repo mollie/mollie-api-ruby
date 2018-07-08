@@ -8,7 +8,10 @@ module Mollie
                   :created_at,
                   :settlement_id,
                   :payment_id,
-                  :reversed_at
+                  :reversed_at,
+                  :_links
+
+    alias_method :links, :_links
 
     def reversed?
       !!reversed_at

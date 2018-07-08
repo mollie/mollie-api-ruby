@@ -8,7 +8,6 @@ module Mollie
       attr_accessor :id,
                     :status,
                     :method,
-                    :customer_id,
                     :details,
                     :mandate_reference,
                     :signature_date,

@@ -58,12 +58,12 @@ module Mollie
 
     def test_get_mandate
       stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/mandates/man-id")
-        .to_return(:status => 200, :body => %{{"id":"man-id", "customer_id":"cus-id"}}, :headers => {})
+        .to_return(:status => 200, :body => %{{"id":"man-id", "method":"directdebit"}}, :headers => {})
 
       mandate = Customer.new(id: "cus-id").mandates.get("man-id")
 
       assert_equal "man-id", mandate.id
-      assert_equal "cus-id", mandate.customer_id
+      assert_equal "directdebit", mandate.method
     end
 
     def test_list_subscriptions

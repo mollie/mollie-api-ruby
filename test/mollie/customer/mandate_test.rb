@@ -5,10 +5,9 @@ module Mollie
     class MandateTest < Test::Unit::TestCase
       def test_setting_attributes
         attributes = {
-          id:               "mdt_qtUgejVgMN",
+          id:               "mdt_h3gAaD5zP",
           status:           "valid",
           method:           "creditcard",
-          customer_id:      "cst_R6JLAuqEgm",
           details:          {
             card_holder:      "John Doe",
             card_expiry_date: "2016-03-31"
@@ -34,10 +33,9 @@ module Mollie
 
         mandate = Mandate.new(attributes)
 
-        assert_equal 'mdt_qtUgejVgMN', mandate.id
+        assert_equal 'mdt_h3gAaD5zP', mandate.id
         assert_equal 'valid', mandate.status
         assert_equal 'creditcard', mandate.method
-        assert_equal 'cst_R6JLAuqEgm', mandate.customer_id
         assert_equal 'YOUR-COMPANY-MD1380', mandate.mandate_reference
         assert_equal '2018-05-07', mandate.signature_date
         assert_equal Time.parse('2016-04-13T11:32:38.0Z'), mandate.created_at

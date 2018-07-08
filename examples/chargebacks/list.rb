@@ -1,0 +1,1 @@
+chargebacks = Mollie::Chargeback.all

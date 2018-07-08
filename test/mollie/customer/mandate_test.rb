@@ -57,6 +57,33 @@ module Mollie
         mandate = Mandate.new(status: Mandate::STATUS_PENDING)
         assert mandate.pending?
       end
+
+      def test_get_customer
+        stub_request(:get, "https://api.mollie.com/v2/customers/cst_4qqhO89gsT/mandates/mdt_h3gAaD5zP")
+          .to_return(:status => 200, :body => %{
+            {
+              "resource": "mandate",
+              "id": "mdt_h3gAaD5zP",
+              "_links": {
+                "customer": {
+                  "href": "https://api.mollie.com/v2/customers/cst_4qqhO89gsT",
+                  "type": "application/hal+json"
+                }
+              }
+            }
+          }, :headers => {})
+
+        stub_request(:get, "https://api.mollie.com/v2/customers/cst_4qqhO89gsT")
+          .to_return(:status => 200, :body => %{
+            {
+              "resource": "customer",
+              "id": "cst_4qqhO89gsT"
+            }
+          }, :headers => {})
+
+        mandate = Customer::Mandate.get("mdt_h3gAaD5zP", customer_id: 'cst_4qqhO89gsT')
+        assert_equal "cst_4qqhO89gsT", mandate.customer.id
+      end
     end
   end
 end

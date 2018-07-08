@@ -57,5 +57,11 @@ module Mollie
     def extract_url(links, type)
       links && links[type] && links[type]['href']
     end
+
+    def extract_id(links, type)
+      href = extract_url(links, type)
+      uri  = URI.parse(href)
+      File.basename(uri.path)
+    end
   end
 end

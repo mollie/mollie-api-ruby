@@ -36,6 +36,11 @@ module Mollie
       def invalid?
         status == STATUS_INVALID
       end
+
+      def customer(options = {})
+        customer_id = Util.extract_id(links, "customer")
+        Customer.get(customer_id, options)
+      end
     end
   end
 end

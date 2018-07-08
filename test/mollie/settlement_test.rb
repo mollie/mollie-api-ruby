@@ -151,6 +151,26 @@ module Mollie
       assert_equal "0.6050", settlement.periods[:'2015'][:'11'].costs[1].amount_gross.value
     end
 
+    def test_status_open
+      assert Settlement.new(status: Settlement::STATUS_OPEN).open?
+      assert !Settlement.new(status: 'not-open').open?
+    end
+
+    def test_status_pending
+      assert Settlement.new(status: Settlement::STATUS_PENDING).pending?
+      assert !Settlement.new(status: 'not-pending').pending?
+    end
+
+    def test_status_paidout
+      assert Settlement.new(status: Settlement::STATUS_PAIDOUT).paidout?
+      assert !Settlement.new(status: 'not-paidout').paidout?
+    end
+
+    def test_status_failed
+      assert Settlement.new(status: Settlement::STATUS_FAILED).failed?
+      assert !Settlement.new(status: 'not-failed').failed?
+    end
+
     def test_open_settlement
       stub_request(:get, "https://api.mollie.com/v2/settlements/open")
         .to_return(:status => 200, :body => %{{"id":"set-id"}}, :headers => {})

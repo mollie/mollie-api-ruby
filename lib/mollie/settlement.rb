@@ -1,5 +1,10 @@
 module Mollie
   class Settlement < Base
+    STATUS_OPEN    = "open"
+    STATUS_PENDING = "pending"
+    STATUS_PAIDOUT = "paidout"
+    STATUS_FAILED  = "failed"
+
     attr_accessor :id,
                   :reference,
                   :created_at,
@@ -17,6 +22,22 @@ module Mollie
 
     def self.next(options = {})
       get("next", options)
+    end
+
+    def open?
+      status == STATUS_OPEN
+    end
+
+    def pending?
+      status == STATUS_PENDING
+    end
+
+    def paidout?
+      status == STATUS_PAIDOUT
+    end
+
+    def failed?
+      status == STATUS_FAILED
     end
 
     def created_at=(created_at)

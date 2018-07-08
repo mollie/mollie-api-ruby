@@ -36,6 +36,7 @@ module Mollie
                   :sequence_type,
                   :mandate_id,
                   :subscription_id,
+                  :application_fee,
                   :_links,
                   :details,
                   :redirect_url,
@@ -69,6 +70,16 @@ module Mollie
 
     def pending?
       status == STATUS_PENDING
+    end
+
+    def application_fee=(application_fee)
+      amount      = Amount.new(application_fee["amount"])
+      description = application_fee["description"]
+
+      @application_fee = OpenStruct.new(
+        amount: amount,
+        description: description
+      )
     end
 
     def details=(details)

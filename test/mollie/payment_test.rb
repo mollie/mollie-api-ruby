@@ -105,6 +105,25 @@ module Mollie
       assert !Payment.new(status: 'not-pending').pending?
     end
 
+    def test_application_fee
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+            "application_fee": {
+              "amount": {
+                "value": "42.10",
+                "currency": "EUR"
+              },
+              "description": "Example application fee"
+            }
+          }
+        }, :headers => {})
+
+      payment = Payment.get("tr_WDqYK6vllg")
+      assert_equal 42.10, payment.application_fee.amount.value
+      assert_equal "EUR", payment.application_fee.amount.currency
+    end
+
     def test_list_refunds
       stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/refunds")
         .to_return(:status => 200, :body => %{{"_embedded" : {"refunds" : [{"id":"ref-id", "payment_id":"pay-id"}]}}}, :headers => {})

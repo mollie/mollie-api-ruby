@@ -55,5 +55,17 @@ module Mollie
     def periods=(periods)
       @periods = Util.nested_openstruct(periods) if periods.is_a?(Hash)
     end
+
+    def chargebacks
+      Relation.new(self, Settlement::Chargeback)
+    end
+
+    def payments
+      Relation.new(self, Settlement::Payment)
+    end
+
+    def refunds
+      Relation.new(self, Settlement::Refund)
+    end
   end
 end

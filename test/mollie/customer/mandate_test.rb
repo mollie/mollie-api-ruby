@@ -15,7 +15,21 @@ module Mollie
           },
           mandate_reference: "YOUR-COMPANY-MD1380",
           signature_date: "2018-05-07",
-          created_at: "2016-04-13T11:32:38.0Z"
+          created_at: "2016-04-13T11:32:38.0Z",
+          _links: {
+            "self" => {
+              "href" => "https://api.mollie.com/v2/customers/cst_4qqhO89gsT/mandates/mdt_h3gAaD5zP",
+              "type" => "application/hal+json"
+            },
+            "customer" => {
+              "href" => "https://api.mollie.com/v2/customers/cst_4qqhO89gsT",
+              "type" => "application/hal+json"
+            },
+            "documentation" => {
+              "href" => "https://docs.mollie.com/reference/v2/mandates-api/get-mandate",
+              "type" => "text/html"
+            }
+          }
         }
 
         mandate = Mandate.new(attributes)

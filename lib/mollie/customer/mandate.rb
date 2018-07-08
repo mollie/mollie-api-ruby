@@ -12,7 +12,10 @@ module Mollie
                     :details,
                     :mandate_reference,
                     :signature_date,
-                    :created_at
+                    :created_at,
+                    :_links
+
+      alias_method :links, :_links
 
       def details=(details)
         @details = OpenStruct.new(details) if details.is_a?(Hash)

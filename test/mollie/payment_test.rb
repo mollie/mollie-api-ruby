@@ -179,5 +179,124 @@ module Mollie
 
       assert_equal "chb-id", chargeback.id
     end
+
+    def test_get_settlement
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "settlement_id": "stl_jDk30akdN"
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/settlements/stl_jDk30akdN")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "settlement",
+              "id": "stl_jDk30akdN"
+          }
+        }, :headers => {})
+
+      payment    = Payment.get("tr_WDqYK6vllg")
+      settlement = payment.settlement
+      assert_equal "stl_jDk30akdN", settlement.id
+    end
+
+    def test_nil_settlement
+      payment = Payment.new(id: "tr_WDqYK6vllg")
+      assert payment.settlement.nil?
+    end
+
+    def test_get_mandate
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "mandate_id": "mdt_h3gAaD5zP"
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/mandates/mdt_h3gAaD5zP")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "mandate",
+              "id": "mdt_h3gAaD5zP"
+          }
+        }, :headers => {})
+
+      payment = Payment.get("tr_WDqYK6vllg")
+      mandate = payment.mandate
+      assert_equal "mdt_h3gAaD5zP", mandate.id
+    end
+
+    def test_nil_mandate
+      payment = Payment.new(id: "tr_WDqYK6vllg")
+      assert payment.mandate.nil?
+    end
+
+    def test_get_subscription
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "subscription_id": "sub_rVKGtNd6s3",
+              "customer_id": "cst_8wmqcHMN4U"
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_rVKGtNd6s3")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "subscription",
+              "id": "sub_rVKGtNd6s3"
+          }
+        }, :headers => {})
+
+      payment = Payment.get("tr_WDqYK6vllg")
+      subscription = payment.subscription
+      assert_equal "sub_rVKGtNd6s3", subscription.id
+    end
+
+    def test_nil_subscription
+      payment = Payment.new(id: "tr_WDqYK6vllg")
+      assert payment.subscription.nil?
+
+      payment = Payment.new(id: "tr_WDqYK6vllg", customer_id: "cst_8wmqcHMN4U")
+      assert payment.subscription.nil?
+
+      payment = Payment.new(id: "tr_WDqYK6vllg", subscription_id: "sub_rVKGtNd6s3")
+      assert payment.subscription.nil?
+    end
+
+    def test_get_customer
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "customer_id": "cst_8wmqcHMN4U"
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "customer",
+              "id": "cst_8wmqcHMN4U"
+          }
+        }, :headers => {})
+
+      payment  = Payment.get("tr_WDqYK6vllg")
+      customer = payment.customer
+      assert_equal "cst_8wmqcHMN4U", customer.id
+    end
+
+    def test_nil_customer
+      payment = Payment.new(id: "tr_WDqYK6vllg")
+      assert payment.customer.nil?
+    end
   end
 end

@@ -141,5 +141,27 @@ module Mollie
     def chargebacks
       Relation.new(self, Payment::Chargeback)
     end
+
+    def customer(options = {})
+      return if customer_id.nil?
+      Customer.get(customer_id, options)
+    end
+
+    def mandate(options = {})
+      return if mandate_id.nil?
+      Customer::Mandate.get(mandate_id, options)
+    end
+
+    def settlement(options = {})
+      return if settlement_id.nil?
+      Settlement.get(settlement_id, options)
+    end
+
+    def subscription(options = {})
+      return if customer_id.nil?
+      return if subscription_id.nil?
+      options = options.merge(customer_id: customer_id)
+      Customer::Subscription.get(subscription_id, options)
+    end
   end
 end

@@ -110,17 +110,6 @@ payment = Mollie::Payment.get(payment.id)
 refund  = payment.refunds.create(amount: { value: '10.0', currency: 'EUR' })
 ```
 
-## Examples ##
-
-In order to run the examples first run `bundle install`
-
-```
-$ cd mollie-api-ruby
-$ bundle install
-$ cd examples
-$ rackup
-```
-
 ## API documentation ##
 
 If you wish to learn more about our API, please visit the [Mollie Developer Portal](https://www.mollie.com/developer/). API Documentation is available in both Dutch and English.

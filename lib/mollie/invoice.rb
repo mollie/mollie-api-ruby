@@ -64,7 +64,7 @@ module Mollie
     end
 
     def pdf
-      links && links['pdf']['href']
+      Util.extract_url(links, 'pdf')
     end
   end
 end

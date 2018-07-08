@@ -78,7 +78,7 @@ Mollie::Client.with_api_key('<your-api-key>') do
 end
 ```
 
-Creating a new payment.
+### Creating a new payment
 
 ```ruby
 payment = Mollie::Payment.create(
@@ -89,7 +89,7 @@ payment = Mollie::Payment.create(
 )
 ```
 
-Retrieving a payment.
+### Retrieving a payment
 
 ```ruby
 payment = Mollie::Payment.get(payment.id)
@@ -99,7 +99,7 @@ if payment.paid?
 end
 ```
 
-### Refunding payments ###
+### Refunding payments
 
 The API also supports refunding payments. Note that there is no confirmation and that all refunds are immediate and
 definitive. Refunds are only supported for iDEAL, credit card and Bank Transfer payments. Other types of payments cannot

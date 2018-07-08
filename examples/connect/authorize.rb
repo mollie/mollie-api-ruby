@@ -8,8 +8,9 @@ client = Rack::OAuth2::Client.new(
   authorization_endpoint: 'https://www.mollie.com/oauth2/authorize',
   token_endpoint:         'https://api.mollie.com/oauth2/tokens'
 )
+
 redirect_to client.authorization_uri(
   state:           'some_state',
   scope:           'payments.read refunds.write',
-  approval_prompt: true
+  approval_prompt: 'auto'
 )

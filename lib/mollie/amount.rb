@@ -6,8 +6,8 @@ module Mollie
       super unless attributes.nil?
     end
 
-    def value=(net)
-      @value = BigDecimal.new(net.to_s)
+    def value=(val)
+      @value = BigDecimal.new(val.to_s)
     end
   end
 end

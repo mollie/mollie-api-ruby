@@ -4,6 +4,7 @@ module Mollie
     STATUS_PENDING    = "pending"
     STATUS_PROCESSING = "processing"
     STATUS_REFUNDED   = "refunded"
+    STATUS_FAILED     = "failed"
 
     attr_accessor :id,
                   :payment,
@@ -28,6 +29,10 @@ module Mollie
 
     def refunded?
       status == STATUS_REFUNDED
+    end
+
+    def failed?
+      status == STATUS_FAILED
     end
 
     def amount=(amount)

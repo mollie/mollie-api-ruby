@@ -40,5 +40,10 @@ module Mollie
       assert Refund.new(status: Refund::STATUS_REFUNDED).refunded?
       assert !Refund.new(status: 'not-refunded').refunded?
     end
+
+    def test_failed?
+      assert Refund.new(status: Refund::STATUS_FAILED).failed?
+      assert !Refund.new(status: 'not-failed').failed?
+    end
   end
 end

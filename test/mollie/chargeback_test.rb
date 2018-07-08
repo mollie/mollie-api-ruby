@@ -24,10 +24,31 @@ module Mollie
       assert_equal "EUR", chargeback.settlement_amount.currency
     end
 
-
     def test_reversed?
       assert Chargeback.new(reversed_at: "2016-10-08T07:59:53.0Z").reversed?
       assert !Chargeback.new(reversed_at: nil).reversed?
+    end
+
+    def test_get_payment
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/chargebacks/chb_n9z0tp")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "chargeback",
+            "id": "chb_n9z0tp",
+            "paymentId": "tr_WDqYK6vllg"
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "payment",
+            "id": "tr_WDqYK6vllg"
+          }
+        }, :headers => {})
+
+      chargeback = Payment::Chargeback.get("chb_n9z0tp", payment_id: "tr_WDqYK6vllg")
+      assert_equal "tr_WDqYK6vllg", chargeback.payment.id
     end
   end
 end

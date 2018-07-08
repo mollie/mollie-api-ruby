@@ -32,5 +32,10 @@ module Mollie
     def settlement_amount=(settlement_amount)
       @settlement_amount = Mollie::Amount.new(settlement_amount)
     end
+
+    def payment(options = {})
+      Payment.get(payment_id, options)
+    end
+
   end
 end

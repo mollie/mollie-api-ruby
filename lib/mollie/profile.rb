@@ -63,7 +63,5 @@ module Mollie
     def checkout_preview_url
       Util.extract_url(links, 'checkout_preview_url')
     end
-
-    end
   end
 end

@@ -13,9 +13,7 @@ module Mollie
           .to_return(:status => 200, :body => %{{"_embedded" : { "chargebacks" : [{"id":"chg-id", "settlement_id":"set-id"}]}} }, :headers => {})
 
         chargebacks = Chargeback.all(settlement_id: "set-id")
-
         assert_equal "chg-id", chargebacks.first.id
-        assert_equal "set-id", chargebacks.first.settlement_id
       end
     end
   end

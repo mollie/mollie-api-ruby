@@ -6,7 +6,6 @@ module Mollie
                   :amount,
                   :settlement_amount,
                   :created_at,
-                  :settlement_id,
                   :payment_id,
                   :reversed_at,
                   :_links

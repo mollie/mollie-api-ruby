@@ -9,5 +9,12 @@ module Mollie
     def value=(val)
       @value = BigDecimal.new(val.to_s)
     end
+
+    def to_h
+      {
+        value: attributes['value'],
+        currency: attributes['currency']
+      }
+    end
   end
 end

@@ -7,7 +7,6 @@ module Mollie
     STATUS_FAILED     = "failed"
 
     attr_accessor :id,
-                  :payment,
                   :amount,
                   :settlement_amount,
                   :status,
@@ -45,6 +44,10 @@ module Mollie
 
     def created_at=(created_at)
       @created_at = Time.parse(created_at) rescue nil
+    end
+
+    def payment(options = {})
+      Payment.get(payment_id, options)
     end
   end
 end

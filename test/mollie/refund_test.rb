@@ -45,5 +45,27 @@ module Mollie
       assert Refund.new(status: Refund::STATUS_FAILED).failed?
       assert !Refund.new(status: 'not-failed').failed?
     end
+
+    def test_get_payment
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "refund",
+            "id": "re_4qqhO89gsT",
+            "paymentId": "tr_WDqYK6vllg"
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "payment",
+            "id": "tr_WDqYK6vllg"
+          }
+        }, :headers => {})
+
+      refund = Payment::Refund.get("re_4qqhO89gsT", payment_id: "tr_WDqYK6vllg")
+      assert_equal "tr_WDqYK6vllg", refund.payment.id
+    end
   end
 end

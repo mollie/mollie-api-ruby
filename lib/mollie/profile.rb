@@ -63,5 +63,21 @@ module Mollie
     def checkout_preview_url
       Util.extract_url(links, 'checkout_preview_url')
     end
+
+    def chargebacks(options = {})
+      Chargeback.all(options.merge(profile_id: id))
+    end
+
+    def methods(options = {})
+      Method.all(options.merge(profile_id: id))
+    end
+
+    def payments(options = {})
+      Payment.all(options.merge(profile_id: id))
+    end
+
+    def refunds(options = {})
+      Refund.all(options.merge(profile_id: id))
+    end
   end
 end

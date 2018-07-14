@@ -1,2 +1,2 @@
-profile     = Profile.new(id: "pfl_v9hTwCvYqw")
+profile     = Profile.get("pfl_v9hTwCvYqw")
 chargebacks = profile.chargebacks

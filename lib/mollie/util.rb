@@ -60,7 +60,8 @@ module Mollie
 
     def extract_id(links, type)
       href = extract_url(links, type)
-      uri  = URI.parse(href)
+      return if href.nil?
+      uri = URI.parse(href)
       File.basename(uri.path)
     end
   end

@@ -36,5 +36,11 @@ module Mollie
       Payment.get(payment_id, options)
     end
 
+    def settlement(options = {})
+      settlement_id = Util.extract_id(links, "settlement")
+      return if settlement_id.nil?
+      Settlement.get(settlement_id, options)
+    end
+
   end
 end

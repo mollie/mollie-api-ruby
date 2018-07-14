@@ -50,5 +50,56 @@ module Mollie
       chargeback = Payment::Chargeback.get("chb_n9z0tp", payment_id: "tr_WDqYK6vllg")
       assert_equal "tr_WDqYK6vllg", chargeback.payment.id
     end
+
+    def test_get_settlement
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/chargebacks/chb_n9z0tp")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "chargeback",
+            "id": "chb_n9z0tp",
+            "paymentId": "tr_WDqYK6vllg",
+            "_links": {
+              "settlement": {
+                "href": "https://api.mollie.com/v2/settlements/stl_jDk30akdN",
+                "type": "application/hal+json"
+              }
+            }
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/settlements/stl_jDk30akdN")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "settlement",
+            "id": "stl_jDk30akdN"
+          }
+        }, :headers => {})
+
+      chargeback = Payment::Chargeback.get("chb_n9z0tp", payment_id: "tr_WDqYK6vllg")
+      assert_equal "stl_jDk30akdN", chargeback.settlement.id
+    end
+
+    def test_get_settlement_missing_link
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/chargebacks/chb_n9z0tp")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "chargeback",
+            "id": "chb_n9z0tp",
+            "paymentId": "tr_WDqYK6vllg"
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/settlements/stl_jDk30akdN")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "settlement",
+            "id": "stl_jDk30akdN"
+          }
+        }, :headers => {})
+
+      chargeback = Payment::Chargeback.get("chb_n9z0tp", payment_id: "tr_WDqYK6vllg")
+      assert_nil chargeback.settlement
+    end
+
   end
 end

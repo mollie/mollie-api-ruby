@@ -6,15 +6,10 @@ module Mollie
                   :email,
                   :locale,
                   :metadata,
-                  :recently_used_methods,
                   :created_at
 
     def created_at=(created_at)
       @created_at = Time.parse(created_at.to_s)
-    end
-
-    def recently_used_methods=(methods)
-      @recently_used_methods = Array(methods).map(&:to_s)
     end
 
     def metadata=(metadata)

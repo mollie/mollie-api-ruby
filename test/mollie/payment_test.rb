@@ -105,6 +105,63 @@ module Mollie
       assert !Payment.new(status: 'not-pending').pending?
     end
 
+    def test_refund!
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "amount": {
+                "value": "42.10",
+                "currency": "EUR"
+              }
+          }
+        }, :headers => {})
+
+      stub_request(:post, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "refund",
+              "id": "re_4qqhO89gsT"
+          }
+        }, :headers => {})
+
+      payment = Payment.get("tr_WDqYK6vllg")
+      refund  = payment.refund!
+      assert_equal "re_4qqhO89gsT", refund.id
+    end
+
+    def test_refund_with_custom_amount_and_description
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "amount": {
+                "value": "42.10",
+                "currency": "EUR"
+              }
+          }
+        }, :headers => {})
+
+      stub_request(:post, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds")
+        .with(body: %{{"amount":{"value":"9.95","currency":"EUR"},"description":"Test refund"}})
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "refund",
+              "id": "re_4qqhO89gsT"
+          }
+        }, :headers => {})
+
+      payment = Payment.get("tr_WDqYK6vllg")
+      refund  = payment.refund!(
+        amount: { value: "9.95", currency: "EUR" },
+        description: 'Test refund'
+      )
+
+      assert_equal "re_4qqhO89gsT", refund.id
+    end
+
     def test_application_fee
       stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
         .to_return(:status => 200, :body => %{

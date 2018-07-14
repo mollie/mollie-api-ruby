@@ -134,6 +134,13 @@ module Mollie
       Util.extract_url(links, 'checkout')
     end
 
+    def refund!(options = {})
+      options[:payment_id] = id
+      # refund full amount by default
+      options[:amount] ||= amount.to_h
+      Payment::Refund.create(options)
+    end
+
     def refunds
       Relation.new(self, Payment::Refund)
     end

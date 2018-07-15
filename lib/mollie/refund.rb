@@ -12,7 +12,10 @@ module Mollie
                   :status,
                   :payment_id,
                   :description,
-                  :created_at
+                  :created_at,
+                  :_links
+
+    alias_method :links, :_links
 
     def queued?
       status == STATUS_QUEUED
@@ -48,6 +51,12 @@ module Mollie
 
     def payment(options = {})
       Payment.get(payment_id, options)
+    end
+
+    def settlement(options = {})
+      settlement_id = Util.extract_id(links, "settlement")
+      return if settlement_id.nil?
+      Settlement.get(settlement_id, options)
     end
   end
 end

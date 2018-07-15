@@ -191,13 +191,24 @@ module Mollie
       assert_equal "set-id", settlement.id
     end
 
+    def test_list_chargebacks
+      stub_request(:get, "https://api.mollie.com/v2/settlements/stl-id/chargebacks")
+        .to_return(:status => 200, :body => %{
+          { "_embedded" : {"chargebacks" : [{ "id": "chb-id", "settlement_id": "stl-id" }]}}
+        }, :headers => {})
+
+      chargebacks = Settlement.new(id: "stl-id").chargebacks
+      assert_equal Settlement::Chargeback, chargebacks.klass
+      assert_equal "chb-id", chargebacks.first.id
+    end
+
     def test_list_payments
       stub_request(:get, "https://api.mollie.com/v2/settlements/stl-id/payments")
         .to_return(:status => 200, :body => %{
           { "_embedded" : {"payments" : [{ "id": "pay-id", "settlement_id": "stl-id" }]}}
         }, :headers => {})
 
-      payments = Settlement.new(id: "stl-id").payments.all
+      payments = Settlement.new(id: "stl-id").payments
       assert_equal Settlement::Payment, payments.klass
       assert_equal "pay-id", payments.first.id
     end
@@ -208,20 +219,9 @@ module Mollie
           { "_embedded" : {"refunds" : [{ "id": "ref-id", "settlement_id": "stl-id" }]}}
         }, :headers => {})
 
-      refunds = Settlement.new(id: "stl-id").refunds.all
+      refunds = Settlement.new(id: "stl-id").refunds
       assert_equal Settlement::Refund, refunds.klass
       assert_equal "ref-id", refunds.first.id
-    end
-
-    def test_list_chargebacks
-      stub_request(:get, "https://api.mollie.com/v2/settlements/stl-id/chargebacks")
-        .to_return(:status => 200, :body => %{
-          { "_embedded" : {"chargebacks" : [{ "id": "chb-id", "settlement_id": "stl-id" }]}}
-        }, :headers => {})
-
-      chargebacks = Settlement.new(id: "stl-id").chargebacks.all
-      assert_equal Settlement::Chargeback, chargebacks.klass
-      assert_equal "chb-id", chargebacks.first.id
     end
   end
 end

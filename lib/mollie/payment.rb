@@ -141,12 +141,12 @@ module Mollie
       Payment::Refund.create(options)
     end
 
-    def refunds
-      Relation.new(self, Payment::Refund)
+    def refunds(options = {})
+      Payment::Refund.all(options.merge(payment_id: id))
     end
 
-    def chargebacks
-      Relation.new(self, Payment::Chargeback)
+    def chargebacks(options = {})
+      Payment::Chargeback.all(options.merge(payment_id: id))
     end
 
     def customer(options = {})

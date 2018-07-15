@@ -60,6 +60,58 @@ module Mollie
         assert Subscription.new(status: Subscription::STATUS_COMPLETED).completed?
         assert !Subscription.new(status: 'not-completed').completed?
       end
+
+      def test_get_subscription
+        stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/subscriptions/sub-id")
+          .to_return(:status => 200, :body => %{{"id":"sub-id", "customer_id":"cus-id"}}, :headers => {})
+
+        subscription = Customer::Subscription.get("sub-id", customer_id: "cus-id")
+
+        assert_equal "sub-id", subscription.id
+        assert_equal "cus-id", subscription.customer_id
+      end
+
+      def test_create_subscription
+        stub_request(:post, "https://api.mollie.com/v2/customers/cus-id/subscriptions")
+          .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
+          .to_return(:status => 201, :body => %{{"id":"my-id", "amount": { "value" : 1.95, "currency": "EUR"}}}, :headers => {})
+
+        subscription = Customer::Subscription.create(customer_id: 'cus-id', amount: { value: 1.95, currency: "EUR" })
+
+        assert_equal "my-id", subscription.id
+        assert_equal BigDecimal.new("1.95"), subscription.amount.value
+      end
+
+      def test_delete_subscription
+        stub_request(:delete, "https://api.mollie.com/v2/customers/cus-id/subscriptions/sub-id")
+          .to_return(:status => 204, :headers => {})
+
+        subscription = Customer::Subscription.delete("sub-id", customer_id: "cus-id")
+        assert_equal nil, subscription
+      end
+
+      def test_get_customer
+        stub_request(:get, "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_rVKGtNd6s3")
+          .to_return(:status => 200, :body => %{
+            {
+                "resource": "subscription",
+                "id": "sub_rVKGtNd6s3",
+                "customer_id": "cst_8wmqcHMN4U"
+            }
+          }, :headers => {})
+
+        stub_request(:get, "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U")
+          .to_return(:status => 200, :body => %{
+            {
+                "resource": "customer",
+                "id": "cst_8wmqcHMN4U"
+            }
+          }, :headers => {})
+
+        payment  = Customer::Subscription.get("sub_rVKGtNd6s3", customer_id: "cst_8wmqcHMN4U")
+        customer = payment.customer
+        assert_equal "cst_8wmqcHMN4U", customer.id
+      end
     end
   end
 end

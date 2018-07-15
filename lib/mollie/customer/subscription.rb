@@ -55,6 +55,10 @@ module Mollie
       def times=(times)
         @times = times.to_i
       end
+
+      def customer(options = {})
+        Customer.get(customer_id, options)
+      end
     end
   end
 end

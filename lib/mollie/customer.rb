@@ -16,16 +16,16 @@ module Mollie
       @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
     end
 
-    def mandates
-      Relation.new(self, Customer::Mandate)
+    def mandates(options = {})
+      Mandate.all(options.merge(customer_id: id))
     end
 
-    def payments
-      Relation.new(self, Customer::Payment)
+    def payments(options = {})
+      Payment.all(options.merge(customer_id: id))
     end
 
-    def subscriptions
-      Relation.new(self, Customer::Subscription)
+    def subscriptions(options = {})
+      Subscription.all(options.merge(customer_id: id))
     end
   end
 end

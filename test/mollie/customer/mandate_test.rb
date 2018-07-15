@@ -56,6 +56,38 @@ module Mollie
         assert mandate.pending?
       end
 
+      def test_get_mandate
+        stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/mandates/man-id")
+          .to_return(:status => 200, :body => %{{"id":"man-id", "method":"directdebit"}}, :headers => {})
+
+        mandate = Customer::Mandate.get("man-id", customer_id: "cus-id")
+
+        assert_equal "man-id", mandate.id
+        assert_equal "directdebit", mandate.method
+      end
+
+      def test_create_mandate
+        stub_request(:post, "https://api.mollie.com/v2/customers/cus-id/mandates")
+          .with(body: %{{"method":"directdebit"}})
+          .to_return(:status => 201, :body => %{{"id":"my-id", "method":"directdebit"}}, :headers => {})
+
+        mandate = Customer::Mandate.create(
+          method: "directdebit",
+          customer_id: "cus-id"
+        )
+
+        assert_equal "my-id", mandate.id
+        assert_equal "directdebit", mandate.method
+      end
+
+      def test_delete_mandate
+        stub_request(:delete, "https://api.mollie.com/v2/customers/cus-id/mandates/man-id")
+          .to_return(:status => 204, :headers => {})
+
+        mandate = Customer::Mandate.delete("man-id", customer_id: "cus-id")
+        assert_equal nil, mandate
+      end
+
       def test_get_customer
         stub_request(:get, "https://api.mollie.com/v2/customers/cst_4qqhO89gsT/mandates/mdt_h3gAaD5zP")
           .to_return(:status => 200, :body => %{

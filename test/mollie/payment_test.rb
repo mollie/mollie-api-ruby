@@ -105,6 +105,33 @@ module Mollie
       assert !Payment.new(status: 'not-pending').pending?
     end
 
+    def test_create_payment
+      stub_request(:post, "https://api.mollie.com/v2/payments")
+        .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}}}, :headers => {})
+
+      payment = Payment.create(amount: { value: 1.95, currency: "EUR" })
+
+      assert_kind_of Mollie::Payment, payment
+      assert_equal "my-id", payment.id
+      assert_equal BigDecimal.new("1.95"), payment.amount.value
+      assert_equal 'EUR', payment.amount.currency
+    end
+
+    def test_create_payment_for_customer
+      stub_request(:post, "https://api.mollie.com/v2/payments")
+        .with(body: %{{"customerId":"cst_8wmqcHMN4U","amount":{"value":1.95,"currency":"EUR"}}})
+        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}, "customerId":"cst_8wmqcHMN4U"}}, :headers => {})
+
+      payment = Payment.create(
+        customer_id: 'cst_8wmqcHMN4U',
+        amount: { value: 1.95, currency: "EUR" }
+      )
+
+      assert_kind_of Mollie::Payment, payment
+      assert_equal "cst_8wmqcHMN4U", payment.customer_id
+    end
+
     def test_refund!
       stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
         .to_return(:status => 200, :body => %{
@@ -185,56 +212,17 @@ module Mollie
       stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/refunds")
         .to_return(:status => 200, :body => %{{"_embedded" : {"refunds" : [{"id":"ref-id", "payment_id":"pay-id"}]}}}, :headers => {})
 
-      refunds = Payment.new(id: "pay-id").refunds.all
+      refunds = Payment.new(id: "pay-id").refunds
 
       assert_equal "ref-id", refunds.first.id
-    end
-
-    def test_create_refund
-      stub_request(:post, "https://api.mollie.com/v2/payments/pay-id/refunds")
-        .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
-        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{"value": 1.95, "currency": "EUR"}}}, :headers => {})
-
-      refund = Payment.new(id: "pay-id").refunds.create(amount: { value: 1.95, currency: "EUR" })
-
-      assert_equal "my-id", refund.id
-      assert_equal BigDecimal.new("1.95"), refund.amount.value
-      assert_equal 'EUR', refund.amount.currency
-    end
-
-    def test_delete_refund
-      stub_request(:delete, "https://api.mollie.com/v2/payments/pay-id/refunds/ref-id")
-        .to_return(:status => 204, :headers => {})
-
-      refund = Payment.new(id: "pay-id").refunds.delete("ref-id")
-      assert_equal nil, refund
-    end
-
-    def test_get_refund
-      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/refunds/ref-id")
-        .to_return(:status => 200, :body => %{{"id":"ref-id"}}, :headers => {})
-
-      refund = Payment.new(id: "pay-id").refunds.get("ref-id")
-
-      assert_equal "ref-id", refund.id
     end
 
     def test_list_chargebacks
       stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/chargebacks")
         .to_return(:status => 200, :body => %{{"_embedded" : {"chargebacks" :[{"id":"chb-id", "payment_id":"pay-id"}]}}}, :headers => {})
 
-      chargebacks = Payment.new(id: "pay-id").chargebacks.all
-
+      chargebacks = Payment.new(id: "pay-id").chargebacks
       assert_equal "chb-id", chargebacks.first.id
-    end
-
-    def test_get_chargeback
-      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/chargebacks/chb-id")
-        .to_return(:status => 200, :body => %{{"id":"chb-id"}}, :headers => {})
-
-      chargeback = Payment.new(id: "pay-id").chargebacks.get("chb-id")
-
-      assert_equal "chb-id", chargeback.id
     end
 
     def test_get_settlement

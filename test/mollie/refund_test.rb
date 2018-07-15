@@ -46,6 +46,22 @@ module Mollie
       assert !Refund.new(status: 'not-failed').failed?
     end
 
+    def test_get_refund
+      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/refunds/ref-id")
+        .to_return(:status => 200, :body => %{{"id":"ref-id"}}, :headers => {})
+
+      refund = Payment::Refund.get("ref-id", payment_id: "pay-id")
+      assert_equal "ref-id", refund.id
+    end
+
+    def test_delete_refund
+      stub_request(:delete, "https://api.mollie.com/v2/payments/pay-id/refunds/ref-id")
+        .to_return(:status => 204, :headers => {})
+
+      refund = Payment::Refund.delete("ref-id", payment_id: "pay-id")
+      assert_equal nil, refund
+    end
+
     def test_get_payment
       stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT")
         .to_return(:status => 200, :body => %{
@@ -66,6 +82,39 @@ module Mollie
 
       refund = Payment::Refund.get("re_4qqhO89gsT", payment_id: "tr_WDqYK6vllg")
       assert_equal "tr_WDqYK6vllg", refund.payment.id
+    end
+
+    def test_get_settlement
+      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "refund",
+            "id": "re_4qqhO89gsT",
+            "paymentId": "tr_WDqYK6vllg",
+            "_links": {
+              "settlement": {
+                "href": "https://api.mollie.com/v2/settlements/stl_jDk30akdN",
+                "type": "application/hal+json"
+              }
+            }
+          }
+        }, :headers => {})
+
+      stub_request(:get, "https://api.mollie.com/v2/settlements/stl_jDk30akdN")
+        .to_return(:status => 200, :body => %{
+          {
+            "resource": "settlement",
+            "id": "stl_jDk30akdN"
+          }
+        }, :headers => {})
+
+      chargeback = Payment::Refund.get("re_4qqhO89gsT", payment_id: "tr_WDqYK6vllg")
+      assert_equal "stl_jDk30akdN", chargeback.settlement.id
+    end
+
+    def test_nil_settlement
+      refund = Payment::Refund.new(id: "tr_WDqYK6vllg")
+      assert refund.settlement.nil?
     end
   end
 end

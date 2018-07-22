@@ -89,6 +89,11 @@ payment = Mollie::Payment.create(
 )
 ```
 
+**Note**: If you specify an amount, you must specify the *correct* number of decimals.
+We strongly recommend sending value as a string. Note that even though most currencies
+use two decimals, some use three or none, like JPY. All amounts returned in the v2
+API will use this format.
+
 ### Retrieving a payment
 
 ```ruby

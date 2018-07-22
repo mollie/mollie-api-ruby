@@ -69,7 +69,7 @@ module Mollie
     end
 
     def test_update
-      stub_request(:post, "https://api.mollie.com/v2/testobjects/my-id")
+      stub_request(:patch, "https://api.mollie.com/v2/testobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "foo":1.00}}, :headers => {})
 
@@ -80,7 +80,7 @@ module Mollie
     end
 
     def test_update_instance
-      stub_request(:post, "https://api.mollie.com/v2/testobjects/my-id")
+      stub_request(:patch, "https://api.mollie.com/v2/testobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "foo":1.00}}, :headers => {})
 
@@ -92,7 +92,7 @@ module Mollie
     end
 
     def test_nested_update
-      stub_request(:post, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
+      stub_request(:patch, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "foo":1.00}}, :headers => {})
 
@@ -104,7 +104,7 @@ module Mollie
     end
 
     def test_nested_update_instance
-      stub_request(:post, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
+      stub_request(:patch, "https://api.mollie.com/v2/testobjects/object-id/nestedobjects/my-id")
         .with(body: %{{"foo":1.95}})
         .to_return(:status => 201, :body => %{{"id":"my-id", "testobject_id":"object-id", "foo":1.00}}, :headers => {})
 

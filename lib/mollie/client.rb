@@ -84,6 +84,10 @@ module Mollie
         http_body.delete_if { |k, v| v.nil? }
         request      = Net::HTTP::Post.new(path)
         request.body = Util.camelize_keys(http_body).to_json
+      when 'PATCH'
+        http_body.delete_if { |k, v| v.nil? }
+        request      = Net::HTTP::Patch.new(path)
+        request.body = Util.camelize_keys(http_body).to_json
       when 'DELETE'
         http_body.delete_if { |k, v| v.nil? }
         request      = Net::HTTP::Delete.new(path)

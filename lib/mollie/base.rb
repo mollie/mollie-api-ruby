@@ -36,7 +36,7 @@ module Mollie
       end
 
       def update(id, data = {})
-        request("POST", id, data) do |response|
+        request("PATCH", id, data) do |response|
           new(response)
         end
       end

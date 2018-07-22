@@ -12,6 +12,7 @@ module Mollie
                   :status,
                   :amount,
                   :periods,
+                  :invoice_id,
                   :_links
 
     alias_method :links, :_links
@@ -66,6 +67,11 @@ module Mollie
 
     def chargebacks(options = {})
       Settlement::Chargeback.all(options.merge(settlement_id: id))
+    end
+
+    def invoice(options = {})
+      return if invoice_id.nil?
+      Invoice.get(invoice_id, options)
     end
   end
 end

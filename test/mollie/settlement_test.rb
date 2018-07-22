@@ -224,5 +224,34 @@ module Mollie
       assert_equal "chb-id", chargebacks.first.id
     end
 
+    def test_get_invoice
+      stub_request(:get, "https://api.mollie.com/v2/settlements/stl_jDk30akdN")
+        .to_return(
+          status: 200,
+          body: %{
+            {
+              "resource": "settlement",
+              "id": "stl_jDk30akdN",
+              "invoice_id": "inv_FrvewDA3Pr"
+            }
+          }
+        )
+
+      stub_request(:get, "https://api.mollie.com/v2/invoices/inv_FrvewDA3Pr")
+        .to_return(status: 200, body: %{
+          {
+            "resource": "invoice",
+            "id": "inv_FrvewDA3Pr"
+          }
+        })
+
+      settlement = Settlement.get("stl_jDk30akdN")
+      assert_equal "inv_FrvewDA3Pr", settlement.invoice.id
+    end
+
+    def test_nil_invoice
+      settlement = Settlement.new(id: "stl_jDk30akdN")
+      assert_nil settlement.invoice
+    end
   end
 end

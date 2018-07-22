@@ -1,1 +1,1 @@
-subscriptions = Mollie::Subscription.all
+subscriptions = Mollie::Customer::Subscription.all(customer_id: "cst_5a2pPrwaWy")

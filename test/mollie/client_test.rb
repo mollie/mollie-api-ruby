@@ -125,7 +125,7 @@ module Mollie
       stub_request(:post, "https://api.mollie.com/v2/my-method")
         .to_return(:status => 401, :body => response, :headers => {})
 
-      e = assert_raise Mollie::Exception.new(JSON.parse(response)) do
+      e = assert_raise Mollie::RequestError.new(JSON.parse(response)) do
         client.perform_http_call("POST", "my-method", nil, {})
       end
 

@@ -112,7 +112,7 @@ module Mollie
         {} # No Content
       else
         json = JSON.parse(response.body)
-        exception = Mollie::Exception.new(json)
+        exception = Mollie::RequestError.new(json)
         raise exception
       end
     end

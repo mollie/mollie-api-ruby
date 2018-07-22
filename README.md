@@ -69,7 +69,7 @@ Mollie::Client.with_api_key('<your-api-key>') do
   mandates = Mollie::Customer::Mandate.all(customer_id: params[:customer_id])
   if mandates.any?
     payment = Mollie::Payment.create(
-      amount:       { amount: '10.00', currency: 'EUR' },
+      amount:       { value: '10.00', currency: 'EUR' },
       description:  'My first API payment',
       redirect_url: 'https://webshop.example.org/order/12345/',
       webhook_url:  'https://webshop.example.org/mollie-webhook/'
@@ -82,7 +82,7 @@ end
 
 ```ruby
 payment = Mollie::Payment.create(
-  amount:       { amount: '10.00', currency: 'EUR' },
+  amount:       { value: '10.00', currency: 'EUR' },
   description:  'My first API payment',
   redirect_url: 'https://webshop.example.org/order/12345/',
   webhook_url:  'https://webshop.example.org/mollie-webhook/'

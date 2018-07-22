@@ -21,7 +21,7 @@ customer = payment.customer # => Mollie::Customer
 The Ruby client v4 adds support for multi-currency. All amounts are parsed as a
 `Mollie::Amount` object.
 
-```
+```ruby
 payment = Mollie::Payment.create(
   amount:      { value: '42.10', currency: 'EUR' },
   description: 'My first payment'
@@ -80,15 +80,15 @@ should now pass a `billing_address` (and/or `shipping_address`) object, as follo
 
 ```ruby
 {
-    amount: {currency: 'USD', value: '100.00'},
-    description: 'My first payment',
-    billing_address: {
-        street_and_number: 'Dorpstraat 1',
-        postal_code: '1122 AA',
-        city: 'Amsterdam',
-        region: 'Noord-Holland',
-        country: 'NL'
-    }
+  amount: { value: '100.00', currency: 'USD' },
+  description: 'My first payment',
+  billing_address: {
+    street_and_number: 'Dorpstraat 1',
+    postal_code: '1122 AA',
+    city: 'Amsterdam',
+    region: 'Noord-Holland',
+    country: 'NL'
+  }
 }
 ```
 
@@ -114,8 +114,8 @@ The following fields have been removed:
 These new fields have been added:
 
 * `settlement_amount` has been added to the responses of the Payments API, the Refunds API and the Chargebacks API. This optional field will contain the amount that will be settled to your account, converted to the currency your account is settled in. It follows the same syntax as the `amount` property.
-Note that for refunds and chargebacks, the `value` key of `settlement_amount` will be negative.
-Any amounts not settled by Mollie will not be reflected in this amount, e.g. PayPal or gift cards.
+  * Note that for refunds and chargebacks, the `value` key of `settlement_amount` will be negative.
+  * Any amounts not settled by Mollie will not be reflected in this amount, e.g. PayPal or gift cards.
 * `links['status']` has been added to the responses for `banktransfer` payments. Your customer can check the status of their transfer at this URL.
 * `links['pay_online']` has been added to the responses for `banktransfer` payments. At this URL your customer can finish the payment using an alternative payment method also activated on your website profile.
 
@@ -212,7 +212,7 @@ The following fields have been changed, renamed or moved:
 
 The fields `country`, `registration_date` and `registration_type` have been removed.
 The field `address` is now an `OpenStruct` with address details. See
-[Address object](https://docs.mollie.com/guides/common-data-types#address-object)
+[Address object](https://docs.mollie.com/guides/common-data-types#address-object).
 
 ## Changes in the Permissions API
 

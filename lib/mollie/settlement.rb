@@ -56,16 +56,16 @@ module Mollie
       @periods = Util.nested_openstruct(periods) if periods.is_a?(Hash)
     end
 
-    def chargebacks(options = {})
-      Settlement::Chargeback.all(options.merge(settlement_id: id))
-    end
-
     def payments(options = {})
       Settlement::Payment.all(options.merge(settlement_id: id))
     end
 
     def refunds(options = {})
       Settlement::Refund.all(options.merge(settlement_id: id))
+    end
+
+    def chargebacks(options = {})
+      Settlement::Chargeback.all(options.merge(settlement_id: id))
     end
   end
 end

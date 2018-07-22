@@ -60,10 +60,6 @@ module Mollie
       status == STATUS_PAID
     end
 
-    def refunded?
-      status == STATUS_REFUNDED
-    end
-
     def failed?
       status == STATUS_FAILED
     end

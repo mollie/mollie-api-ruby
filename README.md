@@ -107,7 +107,7 @@ be refunded through our API at the moment.
 
 ```ruby
 payment = Mollie::Payment.get(payment.id)
-refund  = payment.refunds.create(amount: { value: '10.00', currency: 'EUR' })
+refund  = payment.refund!(amount: { value: '10.00', currency: 'EUR' })
 ```
 
 ### Pagination

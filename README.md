@@ -110,6 +110,23 @@ payment = Mollie::Payment.get(payment.id)
 refund  = payment.refunds.create(amount: { value: '10.00', currency: 'EUR' })
 ```
 
+### Pagination
+
+Fetching all objects of a resource can be convenient. At the same time,
+returning too many objects at once can be unpractical from a performance
+perspective. Doing so might be too much work for the Mollie API to generate, or
+for your website to process. The maximum number of objects returned is 250.
+
+For this reason the Mollie API only returns a subset of the requested set of
+objects. In other words, the Mollie API chops the result of a certain API method
+call into pages you’re able to programmatically scroll through.
+
+```ruby
+payments = Mollie::Payment.all
+payments.next
+payments.previous
+```
+
 ## Upgrading
 
 * [Migration from v2.2.x](docs/migration_v2_2_x.md)

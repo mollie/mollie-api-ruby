@@ -85,14 +85,14 @@ module Mollie
       assert !Payment.new(status: 'not-canceled').canceled?
     end
 
+    def test_status_pending
+      assert Payment.new(status: Payment::STATUS_PENDING).pending?
+      assert !Payment.new(status: 'not-pending').pending?
+    end
+
     def test_status_expired
       assert Payment.new(status: Payment::STATUS_EXPIRED).expired?
       assert !Payment.new(status: 'not-expired').expired?
-    end
-
-    def test_status_paid
-      assert Payment.new(status: Payment::STATUS_PAID).paid?
-      assert !Payment.new(status: nil).paid?
     end
 
     def test_status_failed
@@ -100,9 +100,9 @@ module Mollie
       assert !Payment.new(status: 'not-failed').failed?
     end
 
-    def test_status_pending
-      assert Payment.new(status: Payment::STATUS_PENDING).pending?
-      assert !Payment.new(status: 'not-pending').pending?
+    def test_status_paid
+      assert Payment.new(status: Payment::STATUS_PAID).paid?
+      assert !Payment.new(status: nil).paid?
     end
 
     def test_create_payment

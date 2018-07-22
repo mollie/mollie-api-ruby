@@ -2,10 +2,10 @@ module Mollie
   class Payment < Base
     STATUS_OPEN      = "open"
     STATUS_CANCELED  = "canceled"
-    STATUS_EXPIRED   = "expired"
-    STATUS_PAID      = "paid"
-    STATUS_FAILED    = "failed"
     STATUS_PENDING   = "pending"
+    STATUS_EXPIRED   = "expired"
+    STATUS_FAILED    = "failed"
+    STATUS_PAID      = "paid"
 
     RECURRINGTYPE_NONE      = nil
     RECURRINGTYPE_FIRST     = "first"
@@ -52,20 +52,20 @@ module Mollie
       status == STATUS_CANCELED
     end
 
-    def expired?
-      status == STATUS_EXPIRED
+    def pending?
+      status == STATUS_PENDING
     end
 
-    def paid?
-      status == STATUS_PAID
+    def expired?
+      status == STATUS_EXPIRED
     end
 
     def failed?
       status == STATUS_FAILED
     end
 
-    def pending?
-      status == STATUS_PENDING
+    def paid?
+      status == STATUS_PAID
     end
 
     def application_fee=(application_fee)

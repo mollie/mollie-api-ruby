@@ -38,7 +38,18 @@ We strongly recommend sending value as a string. Note that even though most curr
 use two decimals, some use three or none, like JPY. All amounts returned in the v2
 API will use this format.
 
-## Changes in Mollie API v2
+## Error handling
+
+A `RequestError` is raised for all API error responses. The `RequestError` object
+contains the following details:
+
+* `status`: HTTP status code of the response
+* `title`: Title of the error
+* `detail`: Extra information about the error
+* `field`: Field of your request that is likely causing the error. Only available in case of 422 Unprocessable Entity errors.
+* `links`: Links to relevant API documentation
+
+# Changes in Mollie API v2
 
 * The identifier for the payment method Bancontact has been renamed from `mistercash` to `bancontact`
 * Some resources support embedding of related sub-resources. For instance, when retrieving a payment

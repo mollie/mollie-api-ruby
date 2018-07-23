@@ -91,7 +91,7 @@ payment = Mollie::Payment.create(
 )
 ```
 
-**Note**: If you specify an amount, you must specify the *correct* number of decimals.
+**Note**: If you specify an `amount`, you must specify the *correct* number of decimals.
 We strongly recommend sending `value `as a string. Note that even though most currencies
 use two decimals, some use three or none, like `JPY`. All amounts returned in the v2
 API will use this format.
@@ -109,8 +109,7 @@ end
 ### Refunding payments
 
 The API also supports refunding payments. Note that there is no confirmation and that all refunds are immediate and
-definitive. Refunds are only supported for iDEAL, credit card and Bank Transfer payments. Other types of payments cannot
-be refunded through our API at the moment.
+definitive. Refunds are only supported for [certain payment methods](https://help.mollie.com/hc/en-us/articles/115000014489-How-do-I-refund-a-payment-to-one-of-my-consumers-).
 
 ```ruby
 payment = Mollie::Payment.get(payment.id)
@@ -143,14 +142,14 @@ payments.previous
 
 If you wish to learn more about our API, please visit the [Mollie API Documentation](https://docs.mollie.com).
 
-## Want to help us make our API client even better? ##
+## Want to help us make our API client even better?
 
-Want to help us make our API client even better? We take [pull requests](https://github.com/mollie/mollie-api-node/pulls?utf8=%E2%9C%93&q=is%3Apr), sure. But how would you like to contribute to a [technology oriented organization](https://www.mollie.com/nl/blog/post/werken-bij-mollie-sfeer-kansen-en-mogelijkheden/)? Mollie is hiring developers and system engineers. [Check out our vacancies](https://jobs.mollie.com/) or [get in touch](mailto:recruitment@mollie.com).
+Want to help us make our API client even better? We take [pull requests](https://github.com/mollie/mollie-api-ruby/pulls?utf8=%E2%9C%93&q=is%3Apr), sure. But how would you like to contribute to a technology oriented organization? Mollie is hiring developers and system engineers. [Check out our vacancies](https://jobs.mollie.com/) or [get in touch](mailto:recruitment@mollie.com).
 
-## License ##
+## License
 [BSD (Berkeley Software Distribution) License](https://opensource.org/licenses/bsd-license.php). Copyright (c) 2014-2018, Mollie B.V.
 
-## Support ##
+## Support
 Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20-612 88 55
 
 + [More information about iDEAL via Mollie](https://www.mollie.com/en/payments/ideal/)

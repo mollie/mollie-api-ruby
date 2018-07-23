@@ -11,7 +11,7 @@ Several helper methods were added to retrieve nested resources. Nested resources
 now return a collection or the object itself:
 
 ```ruby
-payment  = Mollie::Payment.get("tr_7UhSN1zuXS")
+payment  = Mollie::Payment.get('tr_7UhSN1zuXS')
 refunds  = payment.refunds # => Mollie::List
 customer = payment.customer # => Mollie::Customer
 ```
@@ -27,7 +27,7 @@ payment = Mollie::Payment.create(
   description: 'My first payment'
 )
 
-payment = Mollie::Payment.get("tr_7UhSN1zuXS")
+payment = Mollie::Payment.get('tr_7UhSN1zuXS')
 payment.amount # => Mollie::Amount
 payment.amount.value # => 42.10 # BigDecimal
 payment.amount.currency # => 'EUR'

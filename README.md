@@ -1,24 +1,25 @@
 ![Mollie](https://www.mollie.nl/files/Mollie-Logo-Style-Small.png)
 
-## LOOKING FOR VERSION v2.2.X README [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/2.2.x)
-## LOOKING FOR VERSION v3.1.X README [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/3.1.x)
+# Mollie API client for Ruby
 
-# Mollie API client for Ruby #
+> LOOKING FOR VERSION v2.2.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/2.2.x)
+
+> LOOKING FOR VERSION v3.1.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/3.1.x)
 
 [![Gem Version](https://badge.fury.io/rb/mollie-api-ruby.svg)](https://badge.fury.io/rb/mollie-api-ruby)
 [![](https://travis-ci.org/mollie/mollie-api-ruby.png)](https://travis-ci.org/mollie/mollie-api-ruby)
 
 Accepting [iDEAL](https://www.mollie.com/en/payments/ideal), [Bancontact](https://www.mollie.com/en/payments/bancontact), [SOFORT Banking](https://www.mollie.com/en/payments/sofort), [Creditcard](https://www.mollie.com/en/payments/credit-card), [SEPA Bank transfer](https://www.mollie.com/en/payments/bank-transfer), [SEPA Direct debit](https://www.mollie.com/en/payments/direct-debit), [Bitcoin](https://www.mollie.com/en/payments/bitcoin), [PayPal](https://www.mollie.com/en/payments/paypal), [KBC/CBC Payment Button](https://www.mollie.com/en/payments/kbc-cbc), [Belfius Direct Net](https://www.mollie.com/en/payments/belfius), [paysafecard](https://www.mollie.com/en/payments/paysafecard), [ING Home’Pay](https://www.mollie.com/en/payments/ing-homepay), [Gift cards](https://www.mollie.com/en/payments/gift-cards), [EPS](https://www.mollie.com/en/payments/eps) and [Giropay](https://www.mollie.com/en/payments/giropay) online payments without fixed monthly costs or any punishing registration procedures. Just use the Mollie API to receive payments directly on your website or easily refund transactions to your customers.
 
-## Requirements ##
+## Requirements
 To use the Mollie API client, the following things are required:
 
-+ Get yourself a free [Mollie account](https://www.mollie.nl/aanmelden). No sign up costs.
-+ Create a new [Website profile](https://www.mollie.nl/beheer/account/profielen/) to generate API keys (live and test mode) and setup your webhook.
++ Get yourself a free [Mollie account](https://www.mollie.com/dashboard/signup). No sign up costs.
++ Create a new [Website profile](https://www.mollie.com/dashboard/settings/profiles) to generate API keys (live and test mode) and setup your webhook.
 + Now you're ready to use the Mollie API client in test mode.
 + In order to accept payments in live mode, payment methods must be activated in your account. Follow [a few of steps](https://www.mollie.nl/beheer/diensten), and let us handle the rest.
 
-## Installation ##
+## Installation
 
 By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/).
 
@@ -31,7 +32,7 @@ $ gem install mollie-api-ruby
 
 You may also git checkout or [download all the files](https://github.com/mollie/mollie-api-ruby/archive/master.zip), and include the Mollie API client manually.
 
-## How to receive payments ##
+## How to receive payments
 
 To successfully receive a payment, these steps should be implemented:
 
@@ -41,9 +42,9 @@ To successfully receive a payment, these steps should be implemented:
 
 3. The customer returns, and should be satisfied to see that the order was paid and is now being processed.
 
-## Getting started ##
+## Getting started
 
-Requiring the Mollie API Client. *Not required when used with a Gemfile*
+Require the Mollie API Client. *Not required when used with a Gemfile*
 
 ```ruby
 require 'mollie-api-ruby'
@@ -57,13 +58,13 @@ Mollie::Client.configure do |config|
 end
 ```
 
-You can also include the API Key in each request you make, for instance if you are using the Connect API
+You can also include the API Key in each request you make, for instance if you are using the Connect API:
 
 ```ruby
-Mollie::Payment.get("pay-id", api_key: '<your-api-key>')
+Mollie::Payment.get('pay-id', api_key: '<your-api-key>')
 ```
 
-If you need to do multiple calls with the same API Key, use the following helper
+If you need to do multiple calls with the same API Key, use the following helper:
 
 ```ruby
 Mollie::Client.with_api_key('<your-api-key>') do
@@ -91,8 +92,8 @@ payment = Mollie::Payment.create(
 ```
 
 **Note**: If you specify an amount, you must specify the *correct* number of decimals.
-We strongly recommend sending value as a string. Note that even though most currencies
-use two decimals, some use three or none, like JPY. All amounts returned in the v2
+We strongly recommend sending `value `as a string. Note that even though most currencies
+use two decimals, some use three or none, like `JPY`. All amounts returned in the v2
 API will use this format.
 
 ### Retrieving a payment
@@ -140,11 +141,14 @@ payments.previous
 
 ## API documentation ##
 
-If you wish to learn more about our API, please visit the [Mollie Developer Portal](https://www.mollie.com/developer/). API Documentation is available in both Dutch and English.
+If you wish to learn more about our API, please visit the [Mollie API Documentation](https://docs.mollie.com).
+
+## Want to help us make our API client even better? ##
+
+Want to help us make our API client even better? We take [pull requests](https://github.com/mollie/mollie-api-node/pulls?utf8=%E2%9C%93&q=is%3Apr), sure. But how would you like to contribute to a [technology oriented organization](https://www.mollie.com/nl/blog/post/werken-bij-mollie-sfeer-kansen-en-mogelijkheden/)? Mollie is hiring developers and system engineers. [Check out our vacancies](https://jobs.mollie.com/) or [get in touch](mailto:recruitment@mollie.com).
 
 ## License ##
-[BSD (Berkeley Software Distribution) License](https://opensource.org/licenses/bsd-license.php).
-Copyright (c) 2014-2017, Mollie B.V.
+[BSD (Berkeley Software Distribution) License](https://opensource.org/licenses/bsd-license.php). Copyright (c) 2014-2018, Mollie B.V.
 
 ## Support ##
 Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20-612 88 55

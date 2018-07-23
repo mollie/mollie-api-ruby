@@ -1,7 +1,7 @@
 # Migration from v3.x
 
-Please refer to [Migrating from v1 to v2](https://docs.mollie.com/migrating-v1-to-v2)
-for a general overview of the switch to Mollie v2 API.
+Version 4.x of the Ruby client uses the v2 Mollie API. Please refer to [Migrating from v1 to v2](https://docs.mollie.com/migrating-v1-to-v2)
+for a general overview of the changes introduced by the new Mollie API.
 
 Code examples can be found in the [/examples](/examples) folder.
 

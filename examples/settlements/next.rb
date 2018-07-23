@@ -1,0 +1,1 @@
+settlement = Mollie::Settlement.next

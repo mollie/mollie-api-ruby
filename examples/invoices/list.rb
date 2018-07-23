@@ -1,0 +1,1 @@
+invoices = Mollie::Invoice.all

@@ -1,0 +1,1 @@
+customers = Mollie::Customer.all

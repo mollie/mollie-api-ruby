@@ -6,31 +6,26 @@ module Mollie
                   :email,
                   :locale,
                   :metadata,
-                  :recently_used_methods,
-                  :created_datetime
+                  :created_at
 
-    def created_datetime=(created_datetime)
-      @created_datetime = Time.parse(created_datetime.to_s)
-    end
-
-    def recently_used_methods=(methods)
-      @recently_used_methods = Array(methods).map(&:to_s)
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at.to_s)
     end
 
     def metadata=(metadata)
       @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
     end
 
-    def payments
-      Relation.new(self, Customer::Payment)
+    def mandates(options = {})
+      Mandate.all(options.merge(customer_id: id))
     end
 
-    def mandates
-      Relation.new(self, Customer::Mandate)
+    def payments(options = {})
+      Payment.all(options.merge(customer_id: id))
     end
 
-    def subscriptions
-      Relation.new(self, Customer::Subscription)
+    def subscriptions(options = {})
+      Subscription.all(options.merge(customer_id: id))
     end
   end
 end

@@ -1,13 +1,21 @@
 module Mollie
   class Settlement < Base
+    STATUS_OPEN    = "open"
+    STATUS_PENDING = "pending"
+    STATUS_PAIDOUT = "paidout"
+    STATUS_FAILED  = "failed"
+
     attr_accessor :id,
                   :reference,
-                  :settled_datetime,
+                  :created_at,
+                  :settled_at,
+                  :status,
                   :amount,
                   :periods,
-                  :payment_ids,
-                  :refund_ids,
-                  :links
+                  :invoice_id,
+                  :_links
+
+    alias_method :links, :_links
 
     def self.open(options = {})
       get("open", options)
@@ -17,20 +25,53 @@ module Mollie
       get("next", options)
     end
 
-    def settled_datetime=(settled_datetime)
-      @settled_datetime = Time.parse(settled_datetime.to_s) rescue nil
+    def open?
+      status == STATUS_OPEN
+    end
+
+    def pending?
+      status == STATUS_PENDING
+    end
+
+    def paidout?
+      status == STATUS_PAIDOUT
+    end
+
+    def failed?
+      status == STATUS_FAILED
+    end
+
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at.to_s) rescue nil
+    end
+
+    def settled_at=(settled_at)
+      @settled_at = Time.parse(settled_at.to_s) rescue nil
     end
 
     def amount=(amount)
-      @amount = BigDecimal.new(amount.to_s) if amount
+      @amount = Mollie::Amount.new(amount)
     end
 
     def periods=(periods)
       @periods = Util.nested_openstruct(periods) if periods.is_a?(Hash)
     end
 
-    def payments
-      links && links['payments']
+    def payments(options = {})
+      Settlement::Payment.all(options.merge(settlement_id: id))
+    end
+
+    def refunds(options = {})
+      Settlement::Refund.all(options.merge(settlement_id: id))
+    end
+
+    def chargebacks(options = {})
+      Settlement::Chargeback.all(options.merge(settlement_id: id))
+    end
+
+    def invoice(options = {})
+      return if invoice_id.nil?
+      Invoice.get(invoice_id, options)
     end
   end
 end

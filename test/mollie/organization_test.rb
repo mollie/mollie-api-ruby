@@ -4,38 +4,43 @@ module Mollie
   class OrganizationTest < Test::Unit::TestCase
     def test_setting_attributes
       attributes = {
-        id:                    'org_1234567',
-        name:                  'Mollie B.V.',
-        email:                 'info@mollie.com',
-        address:               'Keizersgracht 313',
-        postal_code:           '1016EE',
-        city:                  'Amsterdam',
-        country:               'Netherlands',
-        country_code:          'NL',
-        registration_type:     'bv',
-        registration_number:   '30204462',
-        registration_datetime: '2004-04-01T09:41:00.0Z',
-        verified_datetime:     '2007-06-29T09:41:00.0Z'
+        id:                  'org_12345678',
+        name:                'Mollie B.V.',
+        email:               'info@mollie.com',
+        address: {
+          street_and_number: "Keizersgracht 313",
+          postal_code:       "1016 EE",
+          city:              "Amsterdam",
+          country:           "NL"
+        },
+        registration_number: '30204462',
+        vat_number:          'NL815839091B01',
       }
 
       organization = Organization.new(attributes)
 
-      assert_equal 'org_1234567', organization.id
+      assert_equal 'org_12345678', organization.id
       assert_equal 'Mollie B.V.', organization.name
       assert_equal 'info@mollie.com', organization.email
-      assert_equal 'Keizersgracht 313', organization.address
-      assert_equal '1016EE', organization.postal_code
-      assert_equal 'Amsterdam', organization.city
-      assert_equal 'Netherlands', organization.country
-      assert_equal 'NL', organization.country_code
-      assert_equal 'bv', organization.registration_type
+      assert_equal 'Keizersgracht 313', organization.address.street_and_number
+      assert_equal '1016 EE', organization.address.postal_code
+      assert_equal 'Amsterdam', organization.address.city
+      assert_equal 'NL', organization.address.country
       assert_equal '30204462', organization.registration_number
-      assert_equal Time.parse('2004-04-01T09:41:00.0Z'), organization.registration_datetime
-      assert_equal Time.parse('2007-06-29T09:41:00.0Z'), organization.verified_datetime
+      assert_equal 'NL815839091B01', organization.vat_number
     end
 
-    def test_verified_datetime_optional
-      assert_equal nil, Organization.new(verified_datetime: nil).verified_datetime
+    def test_current_organization
+      stub_request(:get, "https://api.mollie.com/v2/organizations/me")
+        .to_return(:status => 200, :body => %{
+          {
+              "resource": "organization",
+              "id": "org_12345678"
+          }
+        }, :headers => {})
+
+      organization = Organization.current
+      assert_equal "org_12345678", organization.id
     end
   end
 end

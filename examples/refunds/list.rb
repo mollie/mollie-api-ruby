@@ -1,0 +1,1 @@
+refunds = Mollie::Refund.all

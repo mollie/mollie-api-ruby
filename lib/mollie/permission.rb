@@ -20,7 +20,6 @@ module Mollie
 
     attr_accessor :id,
                   :description,
-                  :warning,
                   :granted
   end
 end

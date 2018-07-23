@@ -4,12 +4,18 @@ module Mollie
     STATUS_PENDING    = "pending"
     STATUS_PROCESSING = "processing"
     STATUS_REFUNDED   = "refunded"
+    STATUS_FAILED     = "failed"
 
     attr_accessor :id,
-                  :payment,
                   :amount,
+                  :settlement_amount,
                   :status,
-                  :refunded_datetime
+                  :payment_id,
+                  :description,
+                  :created_at,
+                  :_links
+
+    alias_method :links, :_links
 
     def queued?
       status == STATUS_QUEUED
@@ -27,16 +33,30 @@ module Mollie
       status == STATUS_REFUNDED
     end
 
-    def refunded_datetime=(refunded_datetime)
-      @refunded_datetime = Time.parse(refunded_datetime) rescue nil
+    def failed?
+      status == STATUS_FAILED
     end
 
     def amount=(amount)
-      @amount = BigDecimal.new(amount.to_s) if amount
+      @amount = Amount.new(amount)
     end
 
-    def payment=(payment)
-      @payment = Payment.new(payment)
+    def settlement_amount=(settlement_amount)
+      @settlement_amount = Amount.new(settlement_amount)
+    end
+
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at) rescue nil
+    end
+
+    def payment(options = {})
+      Payment.get(payment_id, options)
+    end
+
+    def settlement(options = {})
+      settlement_id = Util.extract_id(links, "settlement")
+      return if settlement_id.nil?
+      Settlement.get(settlement_id, options)
     end
   end
 end

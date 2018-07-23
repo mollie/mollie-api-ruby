@@ -2,39 +2,48 @@ module Mollie
   class List < Base
     include Enumerable
 
-    attr_accessor :total_count,
-                  :offset,
-                  :count,
-                  :links,
-                  :data
+    attr_accessor :klass, :items, :_links
+    alias_method :links, :_links
 
     def initialize(list_attributes, klass)
-      list_attributes['data'] ||= []
+      @klass = klass
+
+      if list_attributes['_embedded']
+        list_attributes['items'] ||= list_attributes['_embedded'].fetch(klass.resource_name, [])
+      else
+        list_attributes['items'] ||= []
+      end
       super list_attributes
 
-      @data = self.data.map do |attributes|
+      @items = self.items.map do |attributes|
         klass.new attributes
       end
     end
 
     def each(&block)
-      @data.each(&block)
+      @items.each(&block)
     end
 
-    def first_url
-      links && links['first']
+    def next(options = {})
+      if links['next'].nil?
+        return self.class.new({}, klass)
+      end
+
+      href = URI.parse(links['next']['href'])
+      query = URI.decode_www_form(href.query).to_h
+
+      klass.all(options.merge(query))
     end
 
-    def previous_url
-      links && links['previous']
-    end
+    def previous(options = {})
+      if links['previous'].nil?
+        return self.class.new({}, klass)
+      end
 
-    def next_url
-      links && links['next']
-    end
+      href = URI.parse(links['previous']['href'])
+      query = URI.decode_www_form(href.query).to_h
 
-    def last_url
-      links && links['last']
+      klass.all(options.merge(query))
     end
   end
 end

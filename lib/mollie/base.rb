@@ -20,10 +20,11 @@ module Mollie
         end
       end
 
-      def all(*args)
-        options       = args.last.is_a?(Hash) ? args.pop : {}
-        offset, limit = args
-        request("GET", nil, {}, { offset: offset || 0, count: limit || 50 }.merge(options)) do |response|
+      def all(options = {})
+        id      = nil
+        data    = {}
+
+        request("GET", id, data, options) do |response|
           Mollie::List.new(response, self)
         end
       end
@@ -35,7 +36,7 @@ module Mollie
       end
 
       def update(id, data = {})
-        request("POST", id, data) do |response|
+        request("PATCH", id, data) do |response|
           new(response)
         end
       end
@@ -44,9 +45,9 @@ module Mollie
         request("DELETE", id, options)
       end
 
-      def request(method, id = 0, data = {}, query = {})
-        parent_id = query.delete(self.parent_id) || data.delete(self.parent_id)
-        response  = Mollie::Client.instance.perform_http_call(method, resource_name(parent_id), id, data, query)
+      def request(method, id = 0, data = {}, options = {})
+        parent_id = options.delete(self.parent_id) || data.delete(self.parent_id)
+        response  = Mollie::Client.instance.perform_http_call(method, resource_name(parent_id), id, data, options)
         yield(response) if block_given?
       end
 

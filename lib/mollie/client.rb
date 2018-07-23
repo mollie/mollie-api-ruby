@@ -1,7 +1,7 @@
 module Mollie
   class Client
-    API_ENDPOINT = 'https://api.mollie.nl'
-    API_VERSION  = 'v1'
+    API_ENDPOINT = 'https://api.mollie.com'
+    API_VERSION  = 'v2'
 
     MODE_TEST = 'test'
     MODE_LIVE = 'live'
@@ -68,7 +68,7 @@ module Mollie
 
       if query.length > 0
         camelized_query = Util.camelize_keys(query)
-        path            += "?#{URI.encode_www_form(camelized_query)}"
+        path            += "?#{build_nested_query(camelized_query)}"
       end
 
       uri                = URI.parse(api_endpoint)
@@ -83,6 +83,10 @@ module Mollie
       when 'POST'
         http_body.delete_if { |k, v| v.nil? }
         request      = Net::HTTP::Post.new(path)
+        request.body = Util.camelize_keys(http_body).to_json
+      when 'PATCH'
+        http_body.delete_if { |k, v| v.nil? }
+        request      = Net::HTTP::Patch.new(path)
         request.body = Util.camelize_keys(http_body).to_json
       when 'DELETE'
         http_body.delete_if { |k, v| v.nil? }
@@ -111,18 +115,34 @@ module Mollie
       when 204
         {} # No Content
       else
-        response = JSON.parse(response.body)
-        if response['error']
-          exception       = Mollie::Exception.new response['error']['message']
-          exception.field = response['error']['field'] unless response['error']['field'].nil?
-        elsif response['errors']
-          exception = Mollie::Exception.new response['errors'].values.join(', ')
-        else
-          exception = Mollie::Exception.new response.body
-        end
-        exception.code = http_code
+        json = JSON.parse(response.body)
+        exception = Mollie::RequestError.new(json)
         raise exception
       end
+    end
+
+    private
+
+    def build_nested_query(value, prefix = nil)
+      case value
+      when Array
+        value.map { |v|
+          build_nested_query(v, "#{prefix}[]")
+        }.join("&")
+      when Hash
+        value.map { |k, v|
+          build_nested_query(v, prefix ? "#{prefix}[#{escape(k)}]" : escape(k))
+        }.reject(&:empty?).join('&')
+      when nil
+        prefix
+      else
+        raise ArgumentError, "value must be a Hash" if prefix.nil?
+        "#{prefix}=#{escape(value)}"
+      end
+    end
+
+    def escape(s)
+      URI.encode_www_form_component(s)
     end
   end
 end

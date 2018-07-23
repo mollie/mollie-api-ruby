@@ -1,0 +1,1 @@
+settlements = Mollie::Settlement.all

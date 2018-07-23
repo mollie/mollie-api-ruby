@@ -1,0 +1,1 @@
+payments = Mollie::Payment.all

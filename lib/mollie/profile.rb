@@ -27,9 +27,10 @@ module Mollie
                   :category_code,
                   :status,
                   :review,
-                  :created_datetime,
-                  :updated_datetime,
-                  :links
+                  :created_at,
+                  :_links
+
+    alias_method :links, :_links
 
     def unverified?
       status == STATUS_UNVERIFIED
@@ -55,24 +56,28 @@ module Mollie
       @review && @review.status == REVIEW_STATUS_REJECTED
     end
 
-    def created_datetime=(created_datetime)
-      @created_datetime = Time.parse(created_datetime.to_s) rescue nil
-    end
-
-    def updated_datetime=(updated_datetime)
-      @updated_datetime = Time.parse(updated_datetime.to_s) rescue nil
-    end
-
-    def apikeys_url
-      links && links['apikeys']
+    def created_at=(created_at)
+      @created_at = Time.parse(created_at.to_s) rescue nil
     end
 
     def checkout_preview_url
-      links && links['checkout_preview_url']
+      Util.extract_url(links, 'checkout_preview_url')
     end
 
-    def apikeys
-      Relation.new(self, Profile::ApiKey)
+    def chargebacks(options = {})
+      Chargeback.all(options.merge(profile_id: id))
+    end
+
+    def methods(options = {})
+      Method.all(options.merge(profile_id: id))
+    end
+
+    def payments(options = {})
+      Payment.all(options.merge(profile_id: id))
+    end
+
+    def refunds(options = {})
+      Refund.all(options.merge(profile_id: id))
     end
   end
 end

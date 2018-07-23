@@ -1,13 +1,10 @@
 language: ruby
 before_install: gem install bundler
 rvm:
- - 2.0.0
  - 2.1
  - 2.2
  - 2.3.0
 matrix:
-  allow_failures:
-  - rvm: 2.0.0
 deploy:
   provider: rubygems
   api_key:

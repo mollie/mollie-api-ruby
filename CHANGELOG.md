@@ -4,10 +4,11 @@
 
 All notable changes to this project will be documented in this file.
 
-#### 4.0 - 2018-07-dd
+#### 4.0 - 2018-07-23
 
   - Migrated to the v2 API
     Refer to the [migration guide](/docs/migration_v3_x.md) for a complete list of changes
+  - Dropped Ruby 2.0.0 support.
 
 #### 3.1.0 - ....
   - Removed old api

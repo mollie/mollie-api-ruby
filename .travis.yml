@@ -13,3 +13,4 @@ deploy:
   on:
     tags: true
     repo: mollie/mollie-api-ruby
+    rvm: 2.3.0

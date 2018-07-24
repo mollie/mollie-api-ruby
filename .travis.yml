@@ -6,9 +6,10 @@ rvm:
  - 2.3.0
 matrix:
 deploy:
+  gem: mollie-api-ruby
   provider: rubygems
   api_key:
-    secure: eBq3/esJILG/1rs9mYwD/6QEybpiElDihqRO6sPH17D9e+lMYVXsaBxrBQutWLB9i7V176mbN/z/VR/fHbj8/xDYEuKzTnFwaROZpckX0dmwp8SRdBA1Lleq/zeQwhjeOLSSAJBxZXTSJcKQ5YQaUvojVIh1ky+rAz20QxyYHV8=
+    secure: "cqNfiCXgCI+CzvSVvjW64rb7XNLQ2OhQ8CQwMFTgvJr16vxMXpc5qdJt5bDW//YEcrkAm1Qc86hG+3I9rdI0xs9nTntl64lOpD6rwx6I3bPDiNkc7koQMxjvP6F5xmlim72SRn9b88FWV3bEmsNKpdZDwBmmrhj85UnFSmxtw0E="
   on:
     tags: true
-    rvm: 2.3.0
+    repo: mollie/mollie-api-ruby

@@ -1,6 +1,6 @@
 module Mollie
   module Util
-    extend self
+    module_function
 
     def nested_underscore_keys(obj)
       if obj.is_a?(Hash)
@@ -21,11 +21,11 @@ module Mollie
     end
 
     def underscore(string)
-      string.to_s.gsub(/::/, '/').
-        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
-        gsub(/([a-z\d])([A-Z])/, '\1_\2').
-        tr("-", "_").
-        downcase.to_s
+      string.to_s.gsub(/::/, '/')
+            .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+            .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+            .tr('-', '_')
+            .downcase.to_s
     end
 
     # Dirty pluralize function, but currently holds for all required plurals
@@ -36,8 +36,8 @@ module Mollie
 
     def camelize(term)
       string = term.to_s
-      string = string.sub(/^(?:(?=\b|[A-Z_])|\w)/) { |match| match.downcase }
-      string.gsub!(/(?:_|(\/))([a-z\d]*)/i) { "#{$1}#{$2.capitalize}" }
+      string = string.sub(/^(?:(?=\b|[A-Z_])|\w)/, &:downcase)
+      string.gsub!(/(?:_|(\/))([a-z\d]*)/i) { "#{Regexp.last_match(1)}#{Regexp.last_match(2).capitalize}" }
       string.gsub!('/'.freeze, '::'.freeze)
       string
     end

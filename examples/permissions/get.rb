@@ -1,1 +1,1 @@
-permission = Mollie::Permission.get("payments.read")
+permission = Mollie::Permission.get('payments.read')

@@ -1,10 +1,10 @@
 module Mollie
   class Refund < Base
-    STATUS_QUEUED     = "queued"
-    STATUS_PENDING    = "pending"
-    STATUS_PROCESSING = "processing"
-    STATUS_REFUNDED   = "refunded"
-    STATUS_FAILED     = "failed"
+    STATUS_QUEUED     = 'queued'.freeze
+    STATUS_PENDING    = 'pending'.freeze
+    STATUS_PROCESSING = 'processing'.freeze
+    STATUS_REFUNDED   = 'refunded'.freeze
+    STATUS_FAILED     = 'failed'.freeze
 
     attr_accessor :id,
                   :amount,
@@ -15,7 +15,7 @@ module Mollie
                   :created_at,
                   :_links
 
-    alias_method :links, :_links
+    alias links _links
 
     def queued?
       status == STATUS_QUEUED
@@ -46,7 +46,11 @@ module Mollie
     end
 
     def created_at=(created_at)
-      @created_at = Time.parse(created_at) rescue nil
+      @created_at = begin
+                      Time.parse(created_at)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def payment(options = {})
@@ -54,7 +58,7 @@ module Mollie
     end
 
     def settlement(options = {})
-      settlement_id = Util.extract_id(links, "settlement")
+      settlement_id = Util.extract_id(links, 'settlement')
       return if settlement_id.nil?
       Settlement.get(settlement_id, options)
     end

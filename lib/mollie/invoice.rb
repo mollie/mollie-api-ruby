@@ -1,8 +1,8 @@
 module Mollie
   class Invoice < Base
-    STATUS_OPEN    = "open"
-    STATUS_PAID    = "paid"
-    STATUS_OVERDUE = "overdue"
+    STATUS_OPEN    = 'open'.freeze
+    STATUS_PAID    = 'paid'.freeze
+    STATUS_OVERDUE = 'overdue'.freeze
 
     class Line < Base
       attr_accessor :period, :description, :count, :vat_percentage, :amount
@@ -25,7 +25,7 @@ module Mollie
                   :lines,
                   :_links
 
-    alias_method :links, :_links
+    alias links _links
 
     def open?
       status == STATUS_OPEN
@@ -52,11 +52,19 @@ module Mollie
     end
 
     def issued_at=(issued_at)
-      @issued_at = Time.parse(issued_at) rescue nil
+      @issued_at = begin
+                     Time.parse(issued_at)
+                   rescue StandardError
+                     nil
+                   end
     end
 
     def due_at=(due_at)
-      @due_at = Time.parse(due_at) rescue nil
+      @due_at = begin
+                  Time.parse(due_at)
+                rescue StandardError
+                  nil
+                end
     end
 
     def lines=(lines)

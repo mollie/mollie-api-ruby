@@ -1,1 +1,1 @@
-customer = Mollie::Customer.get("cst_8wmqcHMN4U")
+customer = Mollie::Customer.get('cst_8wmqcHMN4U')

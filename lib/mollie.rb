@@ -5,7 +5,6 @@ require 'bigdecimal'
 require 'net/https'
 
 module Mollie
-
 end
 
 require 'mollie/exception'

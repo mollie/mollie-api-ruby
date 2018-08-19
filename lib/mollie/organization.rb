@@ -8,7 +8,7 @@ module Mollie
                   :vat_number
 
     def self.current(options = {})
-      self.get("me", options)
+      get('me', options)
     end
 
     def address=(address)

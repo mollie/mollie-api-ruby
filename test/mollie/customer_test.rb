@@ -27,30 +27,30 @@ module Mollie
     end
 
     def test_list_mandates
-      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/mandates")
-        .to_return(:status => 200, :body => %{{"_embedded" : { "mandates" : [{"id":"man-id", "customer_id":"cus-id"}]}} }, :headers => {})
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cus-id/mandates')
+        .to_return(status: 200, body: %({"_embedded" : { "mandates" : [{"id":"man-id", "customer_id":"cus-id"}]}} ), headers: {})
 
-      mandates = Customer.new(id: "cus-id").mandates
+      mandates = Customer.new(id: 'cus-id').mandates
 
-      assert_equal "man-id", mandates.first.id
+      assert_equal 'man-id', mandates.first.id
     end
 
     def test_list_subscriptions
-      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/subscriptions")
-        .to_return(:status => 200, :body => %{{"_embedded" : {"subscriptions" : [{"id":"sub-id", "customer_id":"cus-id"}]}} }, :headers => {})
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cus-id/subscriptions')
+        .to_return(status: 200, body: %({"_embedded" : {"subscriptions" : [{"id":"sub-id", "customer_id":"cus-id"}]}} ), headers: {})
 
-      subscriptions = Customer.new(id: "cus-id").subscriptions
+      subscriptions = Customer.new(id: 'cus-id').subscriptions
 
-      assert_equal "sub-id", subscriptions.first.id
+      assert_equal 'sub-id', subscriptions.first.id
     end
 
     def test_list_payments
-      stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/payments")
-        .to_return(:status => 200, :body => %{{"_embedded" : { "payments" : [{"id":"sub-id", "customer_id":"cus-id"}]}}}, :headers => {})
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cus-id/payments')
+        .to_return(status: 200, body: %({"_embedded" : { "payments" : [{"id":"sub-id", "customer_id":"cus-id"}]}}), headers: {})
 
-      payments = Customer.new(id: "cus-id").payments
+      payments = Customer.new(id: 'cus-id').payments
 
-      assert_equal "sub-id", payments.first.id
+      assert_equal 'sub-id', payments.first.id
     end
   end
 end

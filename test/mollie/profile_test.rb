@@ -17,33 +17,33 @@ module Mollie
         },
         created_at: '2017-04-20T09:03:58.0Z',
         _links: {
-          "self" => {
-            "href" => "https://api.mollie.com/v2/profiles/pfl_v9hTwCvYqw",
-            "type" => "application/hal+json"
+          'self' => {
+            'href' => 'https://api.mollie.com/v2/profiles/pfl_v9hTwCvYqw',
+            'type' => 'application/hal+json'
           },
-          "chargebacks" => {
-            "href" => "https://api.mollie.com/v2/chargebacks?profileId=pfl_v9hTwCvYqw",
-            "type" => "application/hal+json"
+          'chargebacks' => {
+            'href' => 'https://api.mollie.com/v2/chargebacks?profileId=pfl_v9hTwCvYqw',
+            'type' => 'application/hal+json'
           },
-          "methods" => {
-            "href" => "https://api.mollie.com/v2/methods?profileId=pfl_v9hTwCvYqw",
-            "type" => "application/hal+json"
+          'methods' => {
+            'href' => 'https://api.mollie.com/v2/methods?profileId=pfl_v9hTwCvYqw',
+            'type' => 'application/hal+json'
           },
-          "payments" => {
-            "href" => "https://api.mollie.com/v2/payments?profileId=pfl_v9hTwCvYqw",
-            "type" => "application/hal+json"
+          'payments' => {
+            'href' => 'https://api.mollie.com/v2/payments?profileId=pfl_v9hTwCvYqw',
+            'type' => 'application/hal+json'
           },
-          "refunds" => {
-            "href" => "https://api.mollie.com/v2/refunds?profileId=pfl_v9hTwCvYqw",
-            "type" => "application/hal+json"
+          'refunds' => {
+            'href' => 'https://api.mollie.com/v2/refunds?profileId=pfl_v9hTwCvYqw',
+            'type' => 'application/hal+json'
           },
-          "checkout_preview_url" => {
-            "href" => "https://www.mollie.com/payscreen/preview/pfl_v9hTwCvYqw",
-            "type" => "text/html"
+          'checkout_preview_url' => {
+            'href' => 'https://www.mollie.com/payscreen/preview/pfl_v9hTwCvYqw',
+            'type' => 'text/html'
           },
-          "documentation" => {
-            "href" => "https://docs.mollie.com/reference/v2/profiles-api/create-profile",
-            "type" => "text/html"
+          'documentation' => {
+            'href' => 'https://docs.mollie.com/reference/v2/profiles-api/create-profile',
+            'type' => 'text/html'
           }
         }
       }
@@ -89,8 +89,8 @@ module Mollie
     end
 
     def test_list_chargebacks
-      stub_request(:get, "https://api.mollie.com/v2/chargebacks?profileId=pfl_v9hTwCvYqw")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/chargebacks?profileId=pfl_v9hTwCvYqw')
+        .to_return(status: 200, body: %(
           {
               "count": 2,
               "_embedded": {
@@ -106,16 +106,16 @@ module Mollie
                   ]
               }
           }
-        }, :headers => {})
+        ), headers: {})
 
-      profile     = Profile.new(id: "pfl_v9hTwCvYqw")
+      profile     = Profile.new(id: 'pfl_v9hTwCvYqw')
       chargebacks = profile.chargebacks
-      assert_equal "chb_n9z0tp", chargebacks.first.id
+      assert_equal 'chb_n9z0tp', chargebacks.first.id
     end
 
     def test_list_methods
-      stub_request(:get, "https://api.mollie.com/v2/methods?profileId=pfl_v9hTwCvYqw")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/methods?profileId=pfl_v9hTwCvYqw')
+        .to_return(status: 200, body: %(
           {
               "count": 2,
               "_embedded": {
@@ -131,16 +131,16 @@ module Mollie
                   ]
               }
           }
-        }, :headers => {})
+        ), headers: {})
 
-      profile = Profile.new(id: "pfl_v9hTwCvYqw")
+      profile = Profile.new(id: 'pfl_v9hTwCvYqw')
       methods = profile.methods
-      assert_equal "ideal", methods.first.id
+      assert_equal 'ideal', methods.first.id
     end
 
     def test_list_payments
-      stub_request(:get, "https://api.mollie.com/v2/payments?profileId=pfl_v9hTwCvYqw")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments?profileId=pfl_v9hTwCvYqw')
+        .to_return(status: 200, body: %(
           {
               "count": 2,
               "_embedded": {
@@ -156,16 +156,16 @@ module Mollie
                   ]
               }
           }
-        }, :headers => {})
+        ), headers: {})
 
-      profile  = Profile.new(id: "pfl_v9hTwCvYqw")
+      profile  = Profile.new(id: 'pfl_v9hTwCvYqw')
       payments = profile.payments
-      assert_equal "tr_7UhSN1zuXS", payments.first.id
+      assert_equal 'tr_7UhSN1zuXS', payments.first.id
     end
 
     def test_list_refunds
-      stub_request(:get, "https://api.mollie.com/v2/refunds?profileId=pfl_v9hTwCvYqw")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/refunds?profileId=pfl_v9hTwCvYqw')
+        .to_return(status: 200, body: %(
           {
               "count": 2,
               "_embedded": {
@@ -181,12 +181,11 @@ module Mollie
                   ]
               }
           }
-        }, :headers => {})
+        ), headers: {})
 
-      profile = Profile.new(id: "pfl_v9hTwCvYqw")
+      profile = Profile.new(id: 'pfl_v9hTwCvYqw')
       refunds = profile.refunds
-      assert_equal "re_4qqhO89gsT", refunds.first.id
+      assert_equal 're_4qqhO89gsT', refunds.first.id
     end
-
   end
 end

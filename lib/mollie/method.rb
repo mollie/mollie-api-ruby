@@ -1,20 +1,20 @@
 module Mollie
   class Method < Base
-    BANCONTACT    = "bancontact"
-    BANKTRANSFER  = "banktransfer"
-    BELFIUS       = "belfius"
-    BITCOIN       = "bitcoin"
-    CREDITCARD    = "creditcard"
-    DIRECTDEBIT   = "directdebit"
-    EPS           = "eps"
-    GIFTCARD      = "giftcard"
-    GIROPAY       = "giropay"
-    IDEAL         = "ideal"
-    INGHOMEPAY    = "inghomepay"
-    KBC           = "kbc"
-    PAYPAL        = "paypal"
-    PAYSAFECARD   = "paysafecard"
-    SOFORT        = "sofort"
+    BANCONTACT    = 'bancontact'.freeze
+    BANKTRANSFER  = 'banktransfer'.freeze
+    BELFIUS       = 'belfius'.freeze
+    BITCOIN       = 'bitcoin'.freeze
+    CREDITCARD    = 'creditcard'.freeze
+    DIRECTDEBIT   = 'directdebit'.freeze
+    EPS           = 'eps'.freeze
+    GIFTCARD      = 'giftcard'.freeze
+    GIROPAY       = 'giropay'.freeze
+    IDEAL         = 'ideal'.freeze
+    INGHOMEPAY    = 'inghomepay'.freeze
+    KBC           = 'kbc'.freeze
+    PAYPAL        = 'paypal'.freeze
+    PAYSAFECARD   = 'paysafecard'.freeze
+    SOFORT        = 'sofort'.freeze
 
     attr_accessor :id,
                   :description,

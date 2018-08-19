@@ -1,6 +1,5 @@
 module Mollie
   class Chargeback < Base
-
     attr_accessor :id,
                   :payment,
                   :amount,
@@ -10,18 +9,26 @@ module Mollie
                   :reversed_at,
                   :_links
 
-    alias_method :links, :_links
+    alias links _links
 
     def reversed?
       !!reversed_at
     end
 
     def reversed_at=(reversed_at)
-      @reversed_at = Time.parse(reversed_at) rescue nil
+      @reversed_at = begin
+                       Time.parse(reversed_at)
+                     rescue StandardError
+                       nil
+                     end
     end
 
     def created_at=(created_at)
-      @created_at = Time.parse(created_at) rescue nil
+      @created_at = begin
+                      Time.parse(created_at)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def amount=(amount)
@@ -37,10 +44,9 @@ module Mollie
     end
 
     def settlement(options = {})
-      settlement_id = Util.extract_id(links, "settlement")
+      settlement_id = Util.extract_id(links, 'settlement')
       return if settlement_id.nil?
       Settlement.get(settlement_id, options)
     end
-
   end
 end

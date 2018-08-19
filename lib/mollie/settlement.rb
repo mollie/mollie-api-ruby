@@ -1,9 +1,9 @@
 module Mollie
   class Settlement < Base
-    STATUS_OPEN    = "open"
-    STATUS_PENDING = "pending"
-    STATUS_PAIDOUT = "paidout"
-    STATUS_FAILED  = "failed"
+    STATUS_OPEN    = 'open'.freeze
+    STATUS_PENDING = 'pending'.freeze
+    STATUS_PAIDOUT = 'paidout'.freeze
+    STATUS_FAILED  = 'failed'.freeze
 
     attr_accessor :id,
                   :reference,
@@ -15,14 +15,14 @@ module Mollie
                   :invoice_id,
                   :_links
 
-    alias_method :links, :_links
+    alias links _links
 
     def self.open(options = {})
-      get("open", options)
+      get('open', options)
     end
 
     def self.next(options = {})
-      get("next", options)
+      get('next', options)
     end
 
     def open?
@@ -42,11 +42,19 @@ module Mollie
     end
 
     def created_at=(created_at)
-      @created_at = Time.parse(created_at.to_s) rescue nil
+      @created_at = begin
+                      Time.parse(created_at.to_s)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def settled_at=(settled_at)
-      @settled_at = Time.parse(settled_at.to_s) rescue nil
+      @settled_at = begin
+                      Time.parse(settled_at.to_s)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def amount=(amount)

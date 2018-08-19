@@ -15,7 +15,7 @@ module Mollie
 
     class << self
       def create(data = {})
-        request("POST", nil, data) do |response|
+        request('POST', nil, data) do |response|
           new(response)
         end
       end
@@ -24,25 +24,25 @@ module Mollie
         id      = nil
         data    = {}
 
-        request("GET", id, data, options) do |response|
+        request('GET', id, data, options) do |response|
           Mollie::List.new(response, self)
         end
       end
 
       def get(id, options = {})
-        request("GET", id, {}, options) do |response|
+        request('GET', id, {}, options) do |response|
           new(response)
         end
       end
 
       def update(id, data = {})
-        request("PATCH", id, data) do |response|
+        request('PATCH', id, data) do |response|
           new(response)
         end
       end
 
       def delete(id, options = {})
-        request("DELETE", id, options)
+        request('DELETE', id, options)
       end
 
       def request(method, id = 0, data = {}, options = {})
@@ -52,15 +52,15 @@ module Mollie
       end
 
       def id_param
-        "#{name.downcase.split("::")[-1]}_id".to_sym
+        "#{name.downcase.split('::')[-1]}_id".to_sym
       end
 
       def parent_id
-        "#{name.downcase.split("::")[-2]}_id".to_sym
+        "#{name.downcase.split('::')[-2]}_id".to_sym
       end
 
       def resource_name(parent_id = nil)
-        path = name.downcase.split("::").slice(1..-1).map(&Util.method(:pluralize))
+        path = name.downcase.split('::').slice(1..-1).map(&Util.method(:pluralize))
 
         if path.size == 2 && parent_id
           path.join("/#{parent_id}/")

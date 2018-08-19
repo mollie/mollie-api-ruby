@@ -1,0 +1,10 @@
+inherit_from: .rubocop_todo.yml
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'examples/**/*'
+
+# Configuration parameters: AllowedVariables.
+Style/GlobalVars:
+  Exclude:
+    - 'test/run-test.rb'

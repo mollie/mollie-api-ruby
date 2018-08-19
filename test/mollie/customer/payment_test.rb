@@ -8,15 +8,14 @@ module Mollie
         assert_kind_of Mollie::Payment, payment
       end
 
-
       def test_list_payments
-        stub_request(:get, "https://api.mollie.com/v2/customers/cus-id/payments")
-          .to_return(:status => 200, :body => %{{"_embedded" : { "payments" : [{"id":"pay-id", "customer_id":"cus-id"}]}}}, :headers => {})
+        stub_request(:get, 'https://api.mollie.com/v2/customers/cus-id/payments')
+          .to_return(status: 200, body: %({"_embedded" : { "payments" : [{"id":"pay-id", "customer_id":"cus-id"}]}}), headers: {})
 
-        payments = Payment.all(customer_id: "cus-id")
+        payments = Payment.all(customer_id: 'cus-id')
 
-        assert_equal "pay-id", payments.first.id
-        assert_equal "cus-id", payments.first.customer_id
+        assert_equal 'pay-id', payments.first.id
+        assert_equal 'cus-id', payments.first.customer_id
       end
     end
   end

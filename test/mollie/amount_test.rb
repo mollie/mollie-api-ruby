@@ -1,7 +1,7 @@
 require 'helper'
 
 module Mollie
-  class AmountTest  < Test::Unit::TestCase
+  class AmountTest < Test::Unit::TestCase
     def test_value
       amount = Amount.new('value' => '42.10', 'currency' => 'EUR')
       assert_equal 0.421e2, amount.value

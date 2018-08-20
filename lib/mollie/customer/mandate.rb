@@ -1,9 +1,9 @@
 module Mollie
   class Customer
     class Mandate < Base
-      STATUS_VALID   = "valid"
-      STATUS_INVALID = "invalid"
-      STATUS_PENDING = "pending"
+      STATUS_VALID   = 'valid'.freeze
+      STATUS_INVALID = 'invalid'.freeze
+      STATUS_PENDING = 'pending'.freeze
 
       attr_accessor :id,
                     :status,
@@ -14,14 +14,18 @@ module Mollie
                     :created_at,
                     :_links
 
-      alias_method :links, :_links
+      alias links _links
 
       def details=(details)
         @details = OpenStruct.new(details) if details.is_a?(Hash)
       end
 
       def created_at=(created_at)
-        @created_at = Time.parse(created_at.to_s) rescue nil
+        @created_at = begin
+                        Time.parse(created_at.to_s)
+                      rescue StandardError
+                        nil
+                      end
       end
 
       def valid?
@@ -37,7 +41,7 @@ module Mollie
       end
 
       def customer(options = {})
-        customer_id = Util.extract_id(links, "customer")
+        customer_id = Util.extract_id(links, 'customer')
         Customer.get(customer_id, options)
       end
     end

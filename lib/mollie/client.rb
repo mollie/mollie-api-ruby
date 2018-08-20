@@ -1,10 +1,10 @@
 module Mollie
   class Client
-    API_ENDPOINT = 'https://api.mollie.com'
-    API_VERSION  = 'v2'
+    API_ENDPOINT = 'https://api.mollie.com'.freeze
+    API_VERSION  = 'v2'.freeze
 
-    MODE_TEST = 'test'
-    MODE_LIVE = 'live'
+    MODE_TEST = 'test'.freeze
+    MODE_LIVE = 'live'.freeze
 
     class << self
       attr_accessor :configuration
@@ -66,9 +66,9 @@ module Mollie
       api_key      = http_body.delete(:api_key) || query.delete(:api_key) || @api_key
       api_endpoint = http_body.delete(:api_endpoint) || query.delete(:api_endpoint) || @api_endpoint
 
-      if query.length > 0
+      unless query.empty?
         camelized_query = Util.camelize_keys(query)
-        path            += "?#{build_nested_query(camelized_query)}"
+        path += "?#{build_nested_query(camelized_query)}"
       end
 
       uri                = URI.parse(api_endpoint)
@@ -81,19 +81,19 @@ module Mollie
       when 'GET'
         request = Net::HTTP::Get.new(path)
       when 'POST'
-        http_body.delete_if { |k, v| v.nil? }
+        http_body.delete_if { |_k, v| v.nil? }
         request      = Net::HTTP::Post.new(path)
         request.body = Util.camelize_keys(http_body).to_json
       when 'PATCH'
-        http_body.delete_if { |k, v| v.nil? }
+        http_body.delete_if { |_k, v| v.nil? }
         request      = Net::HTTP::Patch.new(path)
         request.body = Util.camelize_keys(http_body).to_json
       when 'DELETE'
-        http_body.delete_if { |k, v| v.nil? }
+        http_body.delete_if { |_k, v| v.nil? }
         request      = Net::HTTP::Delete.new(path)
         request.body = Util.camelize_keys(http_body).to_json
       else
-        raise Mollie::Exception.new("Invalid HTTP Method: #{http_method}")
+        raise Mollie::Exception, "Invalid HTTP Method: #{http_method}"
       end
 
       request['Accept']        = 'application/json'
@@ -104,8 +104,8 @@ module Mollie
       begin
         response = client.request(request)
       rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
-        Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
-        raise Mollie::Exception.new(e.message)
+             Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+        raise Mollie::Exception, e.message
       end
 
       http_code = response.code.to_i
@@ -126,17 +126,17 @@ module Mollie
     def build_nested_query(value, prefix = nil)
       case value
       when Array
-        value.map { |v|
+        value.map do |v|
           build_nested_query(v, "#{prefix}[]")
-        }.join("&")
+        end.join('&')
       when Hash
-        value.map { |k, v|
+        value.map do |k, v|
           build_nested_query(v, prefix ? "#{prefix}[#{escape(k)}]" : escape(k))
-        }.reject(&:empty?).join('&')
+        end.reject(&:empty?).join('&')
       when nil
         prefix
       else
-        raise ArgumentError, "value must be a Hash" if prefix.nil?
+        raise ArgumentError, 'value must be a Hash' if prefix.nil?
         "#{prefix}=#{escape(value)}"
       end
     end

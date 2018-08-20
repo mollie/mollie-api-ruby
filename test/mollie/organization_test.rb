@@ -8,13 +8,13 @@ module Mollie
         name:                'Mollie B.V.',
         email:               'info@mollie.com',
         address: {
-          street_and_number: "Keizersgracht 313",
-          postal_code:       "1016 EE",
-          city:              "Amsterdam",
-          country:           "NL"
+          street_and_number: 'Keizersgracht 313',
+          postal_code:       '1016 EE',
+          city:              'Amsterdam',
+          country:           'NL'
         },
         registration_number: '30204462',
-        vat_number:          'NL815839091B01',
+        vat_number:          'NL815839091B01'
       }
 
       organization = Organization.new(attributes)
@@ -31,16 +31,16 @@ module Mollie
     end
 
     def test_current_organization
-      stub_request(:get, "https://api.mollie.com/v2/organizations/me")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/organizations/me')
+        .to_return(status: 200, body: %(
           {
               "resource": "organization",
               "id": "org_12345678"
           }
-        }, :headers => {})
+        ), headers: {})
 
       organization = Organization.current
-      assert_equal "org_12345678", organization.id
+      assert_equal 'org_12345678', organization.id
     end
   end
 end

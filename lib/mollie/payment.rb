@@ -1,15 +1,15 @@
 module Mollie
   class Payment < Base
-    STATUS_OPEN      = "open"
-    STATUS_CANCELED  = "canceled"
-    STATUS_PENDING   = "pending"
-    STATUS_EXPIRED   = "expired"
-    STATUS_FAILED    = "failed"
-    STATUS_PAID      = "paid"
+    STATUS_OPEN      = 'open'.freeze
+    STATUS_CANCELED  = 'canceled'.freeze
+    STATUS_PENDING   = 'pending'.freeze
+    STATUS_EXPIRED   = 'expired'.freeze
+    STATUS_FAILED    = 'failed'.freeze
+    STATUS_PAID      = 'paid'.freeze
 
     RECURRINGTYPE_NONE      = nil
-    RECURRINGTYPE_FIRST     = "first"
-    RECURRINGTYPE_RECURRING = "recurring"
+    RECURRINGTYPE_FIRST     = 'first'.freeze
+    RECURRINGTYPE_RECURRING = 'recurring'.freeze
 
     attr_accessor :id,
                   :mode,
@@ -42,7 +42,7 @@ module Mollie
                   :redirect_url,
                   :webhook_url
 
-    alias_method :links, :_links
+    alias links _links
 
     def open?
       status == STATUS_OPEN
@@ -69,8 +69,8 @@ module Mollie
     end
 
     def application_fee=(application_fee)
-      amount      = Amount.new(application_fee["amount"])
-      description = application_fee["description"]
+      amount      = Amount.new(application_fee['amount'])
+      description = application_fee['description']
 
       @application_fee = OpenStruct.new(
         amount: amount,
@@ -87,23 +87,43 @@ module Mollie
     end
 
     def created_at=(created_at)
-      @created_at = Time.parse(created_at.to_s) rescue nil
+      @created_at = begin
+                      Time.parse(created_at.to_s)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def paid_at=(paid_at)
-      @paid_at = Time.parse(paid_at.to_s) rescue nil
+      @paid_at = begin
+                   Time.parse(paid_at.to_s)
+                 rescue StandardError
+                   nil
+                 end
     end
 
     def canceled_at=(canceled_at)
-      @canceled_at = Time.parse(canceled_at.to_s) rescue nil
+      @canceled_at = begin
+                       Time.parse(canceled_at.to_s)
+                     rescue StandardError
+                       nil
+                     end
     end
 
     def expired_at=(expired_at)
-      @expired_at = Time.parse(expired_at.to_s) rescue nil
+      @expired_at = begin
+                      Time.parse(expired_at.to_s)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def expires_at=(expires_at)
-      @expires_at = Time.parse(expires_at.to_s) rescue nil
+      @expires_at = begin
+                      Time.parse(expires_at.to_s)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def failed_at=(failed_at)

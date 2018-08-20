@@ -9,12 +9,12 @@ module Mollie
       end
 
       def test_list_refunds
-        stub_request(:get, "https://api.mollie.com/v2/settlements/set-id/refunds")
-          .to_return(:status => 200, :body => %{{"_embedded" : {"refunds" : [{"id":"re-id"}]}}}, :headers => {})
+        stub_request(:get, 'https://api.mollie.com/v2/settlements/set-id/refunds')
+          .to_return(status: 200, body: %({"_embedded" : {"refunds" : [{"id":"re-id"}]}}), headers: {})
 
-        refunds = Mollie::Settlement::Refund.all(settlement_id: "set-id")
+        refunds = Mollie::Settlement::Refund.all(settlement_id: 'set-id')
 
-        assert_equal "re-id", refunds.first.id
+        assert_equal 're-id', refunds.first.id
       end
     end
   end

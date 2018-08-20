@@ -11,12 +11,12 @@ module Mollie
     CATEGORY_CODE_CHARITY_AND_DONATIONS              = 8398
     CATEGORY_CODE_OTHER                              = 0
 
-    STATUS_UNVERIFIED = "unverified"
-    STATUS_VERIFIED   = "verified"
-    STATUS_BLOCKED    = "blocked"
+    STATUS_UNVERIFIED = 'unverified'.freeze
+    STATUS_VERIFIED   = 'verified'.freeze
+    STATUS_BLOCKED    = 'blocked'.freeze
 
-    REVIEW_STATUS_PENDING  = "pending"
-    REVIEW_STATUS_REJECTED = "rejected"
+    REVIEW_STATUS_PENDING  = 'pending'.freeze
+    REVIEW_STATUS_REJECTED = 'rejected'.freeze
 
     attr_accessor :id,
                   :mode,
@@ -30,7 +30,7 @@ module Mollie
                   :created_at,
                   :_links
 
-    alias_method :links, :_links
+    alias links _links
 
     def unverified?
       status == STATUS_UNVERIFIED
@@ -57,7 +57,11 @@ module Mollie
     end
 
     def created_at=(created_at)
-      @created_at = Time.parse(created_at.to_s) rescue nil
+      @created_at = begin
+                      Time.parse(created_at.to_s)
+                    rescue StandardError
+                      nil
+                    end
     end
 
     def checkout_preview_url

@@ -1,4 +1,4 @@
-$:.push File.expand_path('../lib', __FILE__)
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 require 'mollie/version'
 
@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
   s.test_files = Dir['test/**/*']
 
-  s.add_development_dependency("rake")
-  s.add_development_dependency("test-unit")
-  s.add_development_dependency("webmock")
+  s.add_development_dependency('rake')
+  s.add_development_dependency('rubocop', '~> 0.57.2')
+  s.add_development_dependency('test-unit')
+  s.add_development_dependency('webmock')
 end

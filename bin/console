@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "mollie"
+require 'bundler/setup'
+require 'mollie'
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
@@ -10,6 +10,6 @@ require "mollie"
 # require "pry"
 # Pry.start
 
-require "irb"
-require "pp"
+require 'irb'
+require 'pp'
 IRB.start(__FILE__)

@@ -1,11 +1,11 @@
 module Mollie
   class Customer
     class Subscription < Base
-      STATUS_ACTIVE    = "active"
-      STATUS_PENDING   = "pending" # Waiting for a valid mandate.
-      STATUS_CANCELED  = "canceled"
-      STATUS_SUSPENDED = "suspended" # Active, but mandate became invalid.
-      STATUS_COMPLETED = "completed"
+      STATUS_ACTIVE    = 'active'.freeze
+      STATUS_PENDING   = 'pending'.freeze # Waiting for a valid mandate.
+      STATUS_CANCELED  = 'canceled'.freeze
+      STATUS_SUSPENDED = 'suspended'.freeze # Active, but mandate became invalid.
+      STATUS_COMPLETED = 'completed'.freeze
 
       attr_accessor :id,
                     :customer_id,
@@ -41,11 +41,19 @@ module Mollie
       end
 
       def created_at=(created_at)
-        @created_at = Time.parse(created_at.to_s) rescue nil
+        @created_at = begin
+                        Time.parse(created_at.to_s)
+                      rescue StandardError
+                        nil
+                      end
       end
 
       def canceled_at=(canceled_at)
-        @canceled_at = Time.parse(canceled_at.to_s) rescue nil
+        @canceled_at = begin
+                         Time.parse(canceled_at.to_s)
+                       rescue StandardError
+                         nil
+                       end
       end
 
       def amount=(amount)

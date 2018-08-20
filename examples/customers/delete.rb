@@ -1,1 +1,1 @@
-Mollie::Customer.delete("cst_8wmqcHMN4U")
+Mollie::Customer.delete('cst_8wmqcHMN4U')

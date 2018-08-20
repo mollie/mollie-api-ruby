@@ -7,7 +7,7 @@ module Mollie
     end
 
     def value=(val)
-      @value = BigDecimal.new(val.to_s)
+      @value = BigDecimal(val.to_s)
     end
 
     def to_h

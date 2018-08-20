@@ -4,49 +4,49 @@ module Mollie
   class PaymentTest < Test::Unit::TestCase
     def test_setting_attributes
       attributes = {
-        resource:   "payment",
-        id:         "tr_7UhSN1zuXS",
-        mode:       "test",
-        created_at: "2018-03-20T09:13:37+00:00",
+        resource:   'payment',
+        id:         'tr_7UhSN1zuXS',
+        mode:       'test',
+        created_at: '2018-03-20T09:13:37+00:00',
         amount: {
-          "value"    => "10.00",
-          "currency" => "EUR"
+          'value'    => '10.00',
+          'currency' => 'EUR'
         },
-        description:  "My first payment",
-        method:       "ideal",
-        country_code: "NL",
+        description:  'My first payment',
+        method:       'ideal',
+        country_code: 'NL',
         metadata: {
-          order_id: "12345"
+          order_id: '12345'
         },
         details:       {
           consumer_name:    "Hr E G H K\u00fcppers en\/of MW M.J. K\u00fcppers-Veeneman",
-          consumer_account: "NL53INGB0618365937",
-          consumer_bic:     "INGBNL2A"
+          consumer_account: 'NL53INGB0618365937',
+          consumer_bic:     'INGBNL2A'
         },
-        status:        "paid",
-        paid_at:       "2018-03-20T09:14:37+00:00",
+        status:        'paid',
+        paid_at:       '2018-03-20T09:14:37+00:00',
         is_cancelable: false,
-        expires_at:    "2018-03-20T09:28:37+00:00",
-        locale:        "nl_NL",
-        profile_id:    "pfl_QkEhN94Ba",
-        sequence_type: "oneoff",
-        redirect_url:  "https://webshop.example.org/order/12345",
-        webhook_url:   "https://webshop.example.org/payments/webhook",
+        expires_at:    '2018-03-20T09:28:37+00:00',
+        locale:        'nl_NL',
+        profile_id:    'pfl_QkEhN94Ba',
+        sequence_type: 'oneoff',
+        redirect_url:  'https://webshop.example.org/order/12345',
+        webhook_url:   'https://webshop.example.org/payments/webhook',
         _links:        {
-          "self" => {
-            "href" => "https://api.mollie.com/v2/payments/tr_7UhSN1zuXS",
-            "type" => "application/json"
+          'self' => {
+            'href' => 'https://api.mollie.com/v2/payments/tr_7UhSN1zuXS',
+            'type' => 'application/json'
           },
-          "checkout" => {
-            "href" => "https://www.mollie.com/payscreen/select-method/7UhSN1zuXS",
-            "type" => "text/html"
+          'checkout' => {
+            'href' => 'https://www.mollie.com/payscreen/select-method/7UhSN1zuXS',
+            'type' => 'text/html'
           },
-          "settlement" => {
-            "href" => "https://webshop.example.org/payment/tr_WDqYK6vllg/settlement",
+          'settlement' => {
+            'href' => 'https://webshop.example.org/payment/tr_WDqYK6vllg/settlement'
           },
-          "refunds" => {
-            "href" => "https://webshop.example.org/payment/tr_WDqYK6vllg/refunds",
-            "type" => "text/html"
+          'refunds' => {
+            'href' => 'https://webshop.example.org/payment/tr_WDqYK6vllg/refunds',
+            'type' => 'text/html'
           }
         }
       }
@@ -106,35 +106,35 @@ module Mollie
     end
 
     def test_create_payment
-      stub_request(:post, "https://api.mollie.com/v2/payments")
-        .with(body: %{{"amount":{"value":1.95,"currency":"EUR"}}})
-        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}}}, :headers => {})
+      stub_request(:post, 'https://api.mollie.com/v2/payments')
+        .with(body: %({"amount":{"value":1.95,"currency":"EUR"}}))
+        .to_return(status: 201, body: %({"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}}), headers: {})
 
-      payment = Payment.create(amount: { value: 1.95, currency: "EUR" })
+      payment = Payment.create(amount: { value: 1.95, currency: 'EUR' })
 
       assert_kind_of Mollie::Payment, payment
-      assert_equal "my-id", payment.id
-      assert_equal BigDecimal.new("1.95"), payment.amount.value
+      assert_equal 'my-id', payment.id
+      assert_equal BigDecimal('1.95'), payment.amount.value
       assert_equal 'EUR', payment.amount.currency
     end
 
     def test_create_payment_for_customer
-      stub_request(:post, "https://api.mollie.com/v2/payments")
-        .with(body: %{{"customerId":"cst_8wmqcHMN4U","amount":{"value":1.95,"currency":"EUR"}}})
-        .to_return(:status => 201, :body => %{{"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}, "customerId":"cst_8wmqcHMN4U"}}, :headers => {})
+      stub_request(:post, 'https://api.mollie.com/v2/payments')
+        .with(body: %({"customerId":"cst_8wmqcHMN4U","amount":{"value":1.95,"currency":"EUR"}}))
+        .to_return(status: 201, body: %({"id":"my-id", "amount":{ "value" : 1.95, "currency" : "EUR"}, "customerId":"cst_8wmqcHMN4U"}), headers: {})
 
       payment = Payment.create(
         customer_id: 'cst_8wmqcHMN4U',
-        amount: { value: 1.95, currency: "EUR" }
+        amount: { value: 1.95, currency: 'EUR' }
       )
 
       assert_kind_of Mollie::Payment, payment
-      assert_equal "cst_8wmqcHMN4U", payment.customer_id
+      assert_equal 'cst_8wmqcHMN4U', payment.customer_id
     end
 
     def test_refund!
-      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
           {
               "resource": "payment",
               "id": "tr_WDqYK6vllg",
@@ -143,24 +143,24 @@ module Mollie
                 "currency": "EUR"
               }
           }
-        }, :headers => {})
+        ), headers: {})
 
-      stub_request(:post, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds")
-        .to_return(:status => 200, :body => %{
+      stub_request(:post, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds')
+        .to_return(status: 200, body: %(
           {
               "resource": "refund",
               "id": "re_4qqhO89gsT"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      payment = Payment.get("tr_WDqYK6vllg")
+      payment = Payment.get('tr_WDqYK6vllg')
       refund  = payment.refund!
-      assert_equal "re_4qqhO89gsT", refund.id
+      assert_equal 're_4qqhO89gsT', refund.id
     end
 
     def test_refund_with_custom_amount_and_description
-      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
           {
               "resource": "payment",
               "id": "tr_WDqYK6vllg",
@@ -169,29 +169,29 @@ module Mollie
                 "currency": "EUR"
               }
           }
-        }, :headers => {})
+        ), headers: {})
 
-      stub_request(:post, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds")
-        .with(body: %{{"amount":{"value":"9.95","currency":"EUR"},"description":"Test refund"}})
-        .to_return(:status => 200, :body => %{
+      stub_request(:post, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds')
+        .with(body: %({"amount":{"value":"9.95","currency":"EUR"},"description":"Test refund"}))
+        .to_return(status: 200, body: %(
           {
               "resource": "refund",
               "id": "re_4qqhO89gsT"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      payment = Payment.get("tr_WDqYK6vllg")
+      payment = Payment.get('tr_WDqYK6vllg')
       refund  = payment.refund!(
-        amount: { value: "9.95", currency: "EUR" },
+        amount: { value: '9.95', currency: 'EUR' },
         description: 'Test refund'
       )
 
-      assert_equal "re_4qqhO89gsT", refund.id
+      assert_equal 're_4qqhO89gsT', refund.id
     end
 
     def test_application_fee
-      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
           {
             "application_fee": {
               "amount": {
@@ -201,146 +201,146 @@ module Mollie
               "description": "Example application fee"
             }
           }
-        }, :headers => {})
+        ), headers: {})
 
-      payment = Payment.get("tr_WDqYK6vllg")
+      payment = Payment.get('tr_WDqYK6vllg')
       assert_equal 42.10, payment.application_fee.amount.value
-      assert_equal "EUR", payment.application_fee.amount.currency
+      assert_equal 'EUR', payment.application_fee.amount.currency
     end
 
     def test_list_refunds
-      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/refunds")
-        .to_return(:status => 200, :body => %{{"_embedded" : {"refunds" : [{"id":"ref-id", "payment_id":"pay-id"}]}}}, :headers => {})
+      stub_request(:get, 'https://api.mollie.com/v2/payments/pay-id/refunds')
+        .to_return(status: 200, body: %({"_embedded" : {"refunds" : [{"id":"ref-id", "payment_id":"pay-id"}]}}), headers: {})
 
-      refunds = Payment.new(id: "pay-id").refunds
+      refunds = Payment.new(id: 'pay-id').refunds
 
-      assert_equal "ref-id", refunds.first.id
+      assert_equal 'ref-id', refunds.first.id
     end
 
     def test_list_chargebacks
-      stub_request(:get, "https://api.mollie.com/v2/payments/pay-id/chargebacks")
-        .to_return(:status => 200, :body => %{{"_embedded" : {"chargebacks" :[{"id":"chb-id", "payment_id":"pay-id"}]}}}, :headers => {})
+      stub_request(:get, 'https://api.mollie.com/v2/payments/pay-id/chargebacks')
+        .to_return(status: 200, body: %({"_embedded" : {"chargebacks" :[{"id":"chb-id", "payment_id":"pay-id"}]}}), headers: {})
 
-      chargebacks = Payment.new(id: "pay-id").chargebacks
-      assert_equal "chb-id", chargebacks.first.id
+      chargebacks = Payment.new(id: 'pay-id').chargebacks
+      assert_equal 'chb-id', chargebacks.first.id
     end
 
     def test_get_settlement
-      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
           {
               "resource": "payment",
               "id": "tr_WDqYK6vllg",
               "settlement_id": "stl_jDk30akdN"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      stub_request(:get, "https://api.mollie.com/v2/settlements/stl_jDk30akdN")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/settlements/stl_jDk30akdN')
+        .to_return(status: 200, body: %(
           {
               "resource": "settlement",
               "id": "stl_jDk30akdN"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      payment    = Payment.get("tr_WDqYK6vllg")
+      payment    = Payment.get('tr_WDqYK6vllg')
       settlement = payment.settlement
-      assert_equal "stl_jDk30akdN", settlement.id
+      assert_equal 'stl_jDk30akdN', settlement.id
     end
 
     def test_nil_settlement
-      payment = Payment.new(id: "tr_WDqYK6vllg")
+      payment = Payment.new(id: 'tr_WDqYK6vllg')
       assert payment.settlement.nil?
     end
 
     def test_get_mandate
-      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
           {
               "resource": "payment",
               "id": "tr_WDqYK6vllg",
               "mandate_id": "mdt_h3gAaD5zP"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      stub_request(:get, "https://api.mollie.com/v2/mandates/mdt_h3gAaD5zP")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/mandates/mdt_h3gAaD5zP')
+        .to_return(status: 200, body: %(
           {
               "resource": "mandate",
               "id": "mdt_h3gAaD5zP"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      payment = Payment.get("tr_WDqYK6vllg")
+      payment = Payment.get('tr_WDqYK6vllg')
       mandate = payment.mandate
-      assert_equal "mdt_h3gAaD5zP", mandate.id
+      assert_equal 'mdt_h3gAaD5zP', mandate.id
     end
 
     def test_nil_mandate
-      payment = Payment.new(id: "tr_WDqYK6vllg")
+      payment = Payment.new(id: 'tr_WDqYK6vllg')
       assert payment.mandate.nil?
     end
 
     def test_get_subscription
-      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
           {
               "resource": "payment",
               "id": "tr_WDqYK6vllg",
               "subscription_id": "sub_rVKGtNd6s3",
               "customer_id": "cst_8wmqcHMN4U"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      stub_request(:get, "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_rVKGtNd6s3")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_rVKGtNd6s3')
+        .to_return(status: 200, body: %(
           {
               "resource": "subscription",
               "id": "sub_rVKGtNd6s3"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      payment = Payment.get("tr_WDqYK6vllg")
+      payment = Payment.get('tr_WDqYK6vllg')
       subscription = payment.subscription
-      assert_equal "sub_rVKGtNd6s3", subscription.id
+      assert_equal 'sub_rVKGtNd6s3', subscription.id
     end
 
     def test_nil_subscription
-      payment = Payment.new(id: "tr_WDqYK6vllg")
+      payment = Payment.new(id: 'tr_WDqYK6vllg')
       assert payment.subscription.nil?
 
-      payment = Payment.new(id: "tr_WDqYK6vllg", customer_id: "cst_8wmqcHMN4U")
+      payment = Payment.new(id: 'tr_WDqYK6vllg', customer_id: 'cst_8wmqcHMN4U')
       assert payment.subscription.nil?
 
-      payment = Payment.new(id: "tr_WDqYK6vllg", subscription_id: "sub_rVKGtNd6s3")
+      payment = Payment.new(id: 'tr_WDqYK6vllg', subscription_id: 'sub_rVKGtNd6s3')
       assert payment.subscription.nil?
     end
 
     def test_get_customer
-      stub_request(:get, "https://api.mollie.com/v2/payments/tr_WDqYK6vllg")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
           {
               "resource": "payment",
               "id": "tr_WDqYK6vllg",
               "customer_id": "cst_8wmqcHMN4U"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      stub_request(:get, "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U")
-        .to_return(:status => 200, :body => %{
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U')
+        .to_return(status: 200, body: %(
           {
               "resource": "customer",
               "id": "cst_8wmqcHMN4U"
           }
-        }, :headers => {})
+        ), headers: {})
 
-      payment  = Payment.get("tr_WDqYK6vllg")
+      payment  = Payment.get('tr_WDqYK6vllg')
       customer = payment.customer
-      assert_equal "cst_8wmqcHMN4U", customer.id
+      assert_equal 'cst_8wmqcHMN4U', customer.id
     end
 
     def test_nil_customer
-      payment = Payment.new(id: "tr_WDqYK6vllg")
+      payment = Payment.new(id: 'tr_WDqYK6vllg')
       assert payment.customer.nil?
     end
   end

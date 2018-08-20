@@ -9,13 +9,13 @@ module Mollie
       end
 
       def test_list_payments
-        stub_request(:get, "https://api.mollie.com/v2/settlements/set-id/payments")
-          .to_return(:status => 200, :body => %{{"_embedded" : { "payments" : [{"id":"pay-id", "settlement_id":"set-id"}]}}}, :headers => {})
+        stub_request(:get, 'https://api.mollie.com/v2/settlements/set-id/payments')
+          .to_return(status: 200, body: %({"_embedded" : { "payments" : [{"id":"pay-id", "settlement_id":"set-id"}]}}), headers: {})
 
-        payments = Payment.all(settlement_id: "set-id")
+        payments = Payment.all(settlement_id: 'set-id')
 
-        assert_equal "pay-id", payments.first.id
-        assert_equal "set-id", payments.first.settlement_id
+        assert_equal 'pay-id', payments.first.id
+        assert_equal 'set-id', payments.first.settlement_id
       end
     end
   end

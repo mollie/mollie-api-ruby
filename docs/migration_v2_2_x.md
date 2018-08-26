@@ -50,7 +50,7 @@ Change the client calls to Resource calls
 #)
 
 payment = Mollie::Payment.create(
-  amount:       { amount: '10.00', currency: 'EUR' },
+  amount:       { value: '10.00', currency: 'EUR' },
   description:  'My first API payment',
   redirect_url: 'https://webshop.example.org/order/12345/',
   webhook_url:  'https://webshop.example.org/mollie-webhook/'

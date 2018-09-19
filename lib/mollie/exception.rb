@@ -2,7 +2,7 @@ module Mollie
   class Exception < StandardError
   end
 
-  class RequestError < RuntimeError
+  class RequestError < Mollie::Exception
     attr_accessor :status, :title, :detail, :field, :links
 
     def initialize(error)

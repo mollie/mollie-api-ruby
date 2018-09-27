@@ -36,6 +36,7 @@ module Mollie
                   :sequence_type,
                   :mandate_id,
                   :subscription_id,
+                  :order_id,
                   :application_fee,
                   :_links,
                   :details,
@@ -185,6 +186,11 @@ module Mollie
       return if subscription_id.nil?
       options = options.merge(customer_id: customer_id)
       Customer::Subscription.get(subscription_id, options)
+    end
+
+    def order(options = {})
+      return if order_id.nil?
+      Order.get(order_id, options)
     end
   end
 end

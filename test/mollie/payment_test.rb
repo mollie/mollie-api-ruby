@@ -343,5 +343,33 @@ module Mollie
       payment = Payment.new(id: 'tr_WDqYK6vllg')
       assert payment.customer.nil?
     end
+
+    def test_get_order
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "order_id": "ord_kEn1PlbGa"
+          }
+        ), headers: {})
+
+      stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
+        .to_return(status: 200, body: %(
+          {
+              "resource": "order",
+              "id": "ord_kEn1PlbGa"
+          }
+        ), headers: {})
+
+      payment = Payment.get('tr_WDqYK6vllg')
+      order = payment.order
+      assert_equal 'ord_kEn1PlbGa', order.id
+    end
+
+    def test_nil_order
+      payment = Payment.new(id: 'tr_WDqYK6vllg')
+      assert payment.order.nil?
+    end
   end
 end

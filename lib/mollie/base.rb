@@ -44,6 +44,7 @@ module Mollie
       def delete(id, options = {})
         request('DELETE', id, options)
       end
+      alias cancel delete
 
       def request(method, id = 0, data = {}, options = {})
         parent_id = options.delete(self.parent_id) || data.delete(self.parent_id)
@@ -88,5 +89,6 @@ module Mollie
       end
       self.class.delete(id, options)
     end
+    alias cancel delete
   end
 end

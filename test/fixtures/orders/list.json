@@ -1,0 +1,34 @@
+{
+    "count": 3,
+    "_embedded": {
+        "orders": [
+            {
+                "resource": "order",
+                "id": "ord_one"
+            },
+            {
+                "resource": "order",
+                "id": "ord_two"
+            },
+            {
+                "resource": "order",
+                "id": "ord_three"
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "https://api.mollie.com/v2/orders",
+            "type": "application/hal+json"
+        },
+        "previous": null,
+        "next": {
+            "href": "https://api.mollie.com/v2/orders?from=ord_stTC2WHAuS",
+            "type": "application/hal+json"
+        },
+        "documentation": {
+            "href": "https://docs.mollie.com/reference/v2/orders-api/list-orders",
+            "type": "text/html"
+        }
+    }
+}

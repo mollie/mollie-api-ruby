@@ -10,7 +10,9 @@ module Mollie
                   :amount,
                   :settlement_amount,
                   :status,
+                  :lines,
                   :payment_id,
+                  :order_id,
                   :description,
                   :created_at,
                   :_links
@@ -45,6 +47,10 @@ module Mollie
       @settlement_amount = Amount.new(settlement_amount)
     end
 
+    def lines=(lines)
+      @lines = lines.map { |line| Order::Line.new(line) }
+    end
+
     def created_at=(created_at)
       @created_at = begin
                       Time.parse(created_at)
@@ -61,6 +67,11 @@ module Mollie
       settlement_id = Util.extract_id(links, 'settlement')
       return if settlement_id.nil?
       Settlement.get(settlement_id, options)
+    end
+
+    def order(options = {})
+      return if order_id.nil?
+      Order.get(order_id, options)
     end
   end
 end

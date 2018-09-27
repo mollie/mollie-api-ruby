@@ -20,6 +20,14 @@ module Mollie
       end
     end
 
+    def [](index)
+      @items[index]
+    end
+
+    def size
+      @items.size
+    end
+
     def each(&block)
       @items.each(&block)
     end

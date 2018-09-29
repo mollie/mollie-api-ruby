@@ -217,7 +217,7 @@ module Mollie
       stub_request(:delete, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
         .to_return(status: 200, body: GET_ORDER, headers: {})
 
-      order = Mollie::Order.get('ord_kEn1PlbGa')
+      order = Order.get('ord_kEn1PlbGa')
       assert_nil order.cancel
     end
 

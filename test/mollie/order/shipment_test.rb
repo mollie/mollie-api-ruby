@@ -78,7 +78,7 @@ module Mollie
           order_id: 'ord_kEn1PlbGa',
           lines: [
             {
-              id: "odl_dgtxyl",
+              id: 'odl_dgtxyl',
               quantity: 1
             },
             {

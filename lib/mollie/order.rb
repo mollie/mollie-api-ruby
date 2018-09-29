@@ -1,13 +1,13 @@
 module Mollie
   class Order < Base
-    STATUS_PENDING    = 'pending'
-    STATUS_AUTHORIZED = 'authorized'
-    STATUS_PAID       = 'paid'
-    STATUS_SHIPPING   = 'shipping'
-    STATUS_EXPIRED    = 'expired'
-    STATUS_CANCELED   = 'canceled'
-    STATUS_COMPLETED  = 'completed'
-    STATUS_REFUNDED   = 'refunded'
+    STATUS_PENDING    = 'pending'.freeze
+    STATUS_AUTHORIZED = 'authorized'.freeze
+    STATUS_PAID       = 'paid'.freeze
+    STATUS_SHIPPING   = 'shipping'.freeze
+    STATUS_EXPIRED    = 'expired'.freeze
+    STATUS_CANCELED   = 'canceled'.freeze
+    STATUS_COMPLETED  = 'completed'.freeze
+    STATUS_REFUNDED   = 'refunded'.freeze
 
     attr_accessor :id, :profile_id, :method, :mode, :amount, :amount_captured,
                   :amount_refunded, :status, :is_cancelable, :billing_address,

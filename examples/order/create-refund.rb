@@ -11,5 +11,5 @@ refund = order.refund!(
       quantity: 1
     }
   ],
-  description: "Required quantity not in stock, refunding one photo book."
+  description: 'Required quantity not in stock, refunding one photo book.'
 )

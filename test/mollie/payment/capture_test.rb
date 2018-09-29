@@ -6,15 +6,15 @@ module Mollie
       GET_CAPTURE = read_fixture('captures/get.json')
       LIST_CAPTURES = read_fixture('captures/list.json')
 
-      PAYMENT_STUB    = %({ "resource": "payment", "id": "tr_WDqYK6vllg" })
-      SHIPMENT_STUB   = %({ "resource": "shipment", "id": "shp_3wmsgCJN4U" })
-      SETTLEMENT_STUB = %({ "resource": "settlement", "id": "stl_jDk30akdN" })
+      PAYMENT_STUB    = %({ "resource": "payment", "id": "tr_WDqYK6vllg" }).freeze
+      SHIPMENT_STUB   = %({ "resource": "shipment", "id": "shp_3wmsgCJN4U" }).freeze
+      SETTLEMENT_STUB = %({ "resource": "settlement", "id": "stl_jDk30akdN" }).freeze
 
       def test_get_capture
         stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/captures/cpt_4qqhO89gsT')
           .to_return(status: 200, body: GET_CAPTURE, headers: {})
 
-        capture  = Payment::Capture.get('cpt_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')
+        capture = Payment::Capture.get('cpt_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')
         assert_equal 'cpt_4qqhO89gsT', capture.id
         assert_equal 'live', capture.mode
         assert_equal BigDecimal('1027.99'), capture.amount.value

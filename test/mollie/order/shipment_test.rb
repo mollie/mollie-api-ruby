@@ -3,209 +3,15 @@ require 'helper'
 module Mollie
   class Order
     class ShipmentTest < Test::Unit::TestCase
-
-      ORDER_STUB = %(
-        {
-            "resource": "order",
-            "id": "ord_kEn1PlbGa"
-        }
-      )
-
-      SHIPMENT_STUB = %(
-        {
-            "resource": "shipment",
-            "id": "shp_3wmsgCJN4U",
-            "orderId": "ord_kEn1PlbGa",
-            "createdAt": "2018-08-09T14:33:54+00:00",
-            "tracking": {
-                "carrier": "PostNL",
-                "code": "3SKABA000000000",
-                "url": "http://postnl.nl/tracktrace/?B=3SKABA000000000&P=1016EE&D=NL&T=C"
-            },
-            "lines": [
-                {
-                    "resource": "orderline",
-                    "id": "odl_dgtxyl",
-                    "orderId": "ord_pbjz8x",
-                    "name": "LEGO 42083 Bugatti Chiron",
-                    "productUrl": "https://shop.lego.com/nl-NL/Bugatti-Chiron-42083",
-                    "imageUrl": "https://sh-s7-live-s.legocdn.com/is/image//LEGO/42083_alt1?$main$",
-                    "sku": "5702016116977",
-                    "type": "physical",
-                    "status": "shipping",
-                    "quantity": 2,
-                    "unitPrice": {
-                        "value": "399.00",
-                        "currency": "EUR"
-                    },
-                    "vatRate": "21.00",
-                    "vatAmount": {
-                        "value": "121.14",
-                        "currency": "EUR"
-                    },
-                    "discountAmount": {
-                        "value": "100.00",
-                        "currency": "EUR"
-                    },
-                    "totalAmount": {
-                        "value": "698.00",
-                        "currency": "EUR"
-                    },
-                    "createdAt": "2018-08-02T09:29:56+00:00"
-                },
-                {
-                    "resource": "orderline",
-                    "id": "odl_jp31jz",
-                    "orderId": "ord_pbjz8x",
-                    "name": "LEGO 42056 Porsche 911 GT3 RS",
-                    "productUrl": "https://shop.lego.com/nl-NL/Porsche-911-GT3-RS-42056",
-                    "imageUrl": "https://sh-s7-live-s.legocdn.com/is/image/LEGO/42056?$PDPDefault$",
-                    "sku": "5702015594028",
-                    "type": "physical",
-                    "status": "shipping",
-                    "quantity": 1,
-                    "unitPrice": {
-                        "value": "329.99",
-                        "currency": "EUR"
-                    },
-                    "vatRate": "21.00",
-                    "vatAmount": {
-                        "value": "57.27",
-                        "currency": "EUR"
-                    },
-                    "totalAmount": {
-                        "value": "329.99",
-                        "currency": "EUR"
-                    },
-                    "createdAt": "2018-08-02T09:29:56+00:00"
-                }
-            ],
-            "_links": {
-                "self": {
-                    "href": "https://api.mollie.com/v2/order/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U",
-                    "type": "application/hal+json"
-                },
-                "order": {
-                    "href": "https://api.mollie.com/v2/orders/ord_kEn1PlbGa",
-                    "type": "application/hal+json"
-                },
-                "documentation": {
-                    "href": "https://docs.mollie.com/reference/v2/shipments-api/get-shipment",
-                    "type": "text/html"
-                }
-            }
-        }
-      )
-
-      CREATE_SHIPMENT_STUB = %(
-        {
-            "lines": [
-                {
-                    "id": "odl_dgtxyl",
-                    "quantity": 1
-                },
-                {
-                    "id": "odl_jp31jz"
-                }
-            ],
-            "tracking": {
-                "carrier": "PostNL",
-                "code": "3SKABA000000000",
-                "url": "http://postnl.nl/tracktrace/?B=3SKABA000000000&P=1016EE&D=NL&T=C"
-            }
-        }
-      )
-
-      LIST_SHIPMENTS_STUB = %(
-        {
-            "count": 1,
-            "_embedded": {
-                "shipments": [
-                    {
-                        "resource": "shipment",
-                        "id": "shp_3wmsgCJN4U",
-                        "orderId": "ord_kEn1PlbGa",
-                        "createdAt": "2018-08-09T14:33:54+00:00",
-                        "tracking": {
-                            "carrier": "PostNL",
-                            "code": "3SKABA000000000",
-                            "url": "http://postnl.nl/tracktrace/?B=3SKABA000000000&P=1016EE&D=NL&T=C"
-                        },
-                        "lines": [
-                            {
-                                "resource": "orderline",
-                                "id": "odl_dgtxyl",
-                                "orderId": "ord_pbjz8x",
-                                "name": "LEGO 42083 Bugatti Chiron",
-                                "productUrl": "https://shop.lego.com/nl-NL/Bugatti-Chiron-42083",
-                                "imageUrl": "https://sh-s7-live-s.legocdn.com/is/image//LEGO/42083_alt1?$main$",
-                                "sku": "5702016116977",
-                                "type": "physical",
-                                "status": "shipping",
-                                "quantity": 2,
-                                "unitPrice": {
-                                    "value": "399.00",
-                                    "currency": "EUR"
-                                },
-                                "vatRate": "21.00",
-                                "vatAmount": {
-                                    "value": "121.14",
-                                    "currency": "EUR"
-                                },
-                                "discountAmount": {
-                                    "value": "100.00",
-                                    "currency": "EUR"
-                                },
-                                "totalAmount": {
-                                    "value": "698.00",
-                                    "currency": "EUR"
-                                },
-                                "createdAt": "2018-08-02T09:29:56+00:00"
-                            }
-                        ],
-                        "_links": {
-                            "self": {
-                                "href": "https://api.mollie.com/v2/order/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U",
-                                "type": "application/hal+json"
-                            },
-                            "order": {
-                                "href": "https://api.mollie.com/v2/orders/ord_kEn1PlbGa",
-                                "type": "application/hal+json"
-                            },
-                            "documentation": {
-                                "href": "https://docs.mollie.com/reference/v2/shipments-api/get-shipment",
-                                "type": "text/html"
-                            }
-                        }
-                    }
-                ]
-            },
-            "_links": {
-                "self": {
-                    "href": "https://api.mollie.com/v2/order/ord_kEn1PlbGa/shipments",
-                    "type": "application/hal+json"
-                },
-                "documentation": {
-                    "href": "https://docs.mollie.com/reference/v2/shipments-api/list-shipments",
-                    "type": "text/html"
-                }
-            }
-        }
-      )
-
-      UPDATE_SHIPMENT_STUB = %(
-        {
-            "tracking": {
-                "carrier": "PostNL",
-                "code": "3SKABA000000000",
-                "url": "http://postnl.nl/tracktrace/?B=3SKABA000000000&P=1016EE&D=NL&T=C"
-            }
-        }
-      )
+      GET_ORDER       = read_fixture('orders/get.json')
+      GET_SHIPMENT    = read_fixture('shipments/get.json')
+      CREATE_SHIPMENT = read_fixture('shipments/create.json')
+      LIST_SHIPMENTS  = read_fixture('shipments/list.json')
+      UPDATE_SHIPMENT = read_fixture('shipments/update.json')
 
       def test_get_shipment
         stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U')
-          .to_return(status: 200, body: SHIPMENT_STUB, headers: {})
+          .to_return(status: 200, body: GET_SHIPMENT, headers: {})
 
         shipment = Order::Shipment.get('shp_3wmsgCJN4U', order_id: 'ord_kEn1PlbGa')
         assert_equal 'shp_3wmsgCJN4U', shipment.id
@@ -215,7 +21,7 @@ module Mollie
 
       def test_tracking_details
         stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U')
-          .to_return(status: 200, body: SHIPMENT_STUB, headers: {})
+          .to_return(status: 200, body: GET_SHIPMENT, headers: {})
 
         shipment = Order::Shipment.get('shp_3wmsgCJN4U', order_id: 'ord_kEn1PlbGa')
         assert_equal 'shp_3wmsgCJN4U', shipment.id
@@ -236,7 +42,7 @@ module Mollie
 
       def test_order_lines
         stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U')
-          .to_return(status: 200, body: SHIPMENT_STUB, headers: {})
+          .to_return(status: 200, body: GET_SHIPMENT, headers: {})
 
         shipment = Order::Shipment.get('shp_3wmsgCJN4U', order_id: 'ord_kEn1PlbGa')
         assert shipment.lines.size == 2
@@ -265,8 +71,8 @@ module Mollie
 
       def test_create_shipment
         stub_request(:post, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/shipments')
-          .with(body: CREATE_SHIPMENT_STUB.delete("\n "))
-          .to_return(status: 201, body: SHIPMENT_STUB, headers: {})
+          .with(body: CREATE_SHIPMENT.delete("\n "))
+          .to_return(status: 201, body: GET_SHIPMENT, headers: {})
 
         shipment = Order::Shipment.create(
           order_id: 'ord_kEn1PlbGa',
@@ -292,7 +98,7 @@ module Mollie
 
       def test_list_shipments
         stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/shipments')
-          .to_return(status: 200, body: LIST_SHIPMENTS_STUB, headers: {})
+          .to_return(status: 200, body: LIST_SHIPMENTS, headers: {})
 
         shipments = Order::Shipment.all(order_id: 'ord_kEn1PlbGa')
         assert_equal 1, shipments.size
@@ -302,8 +108,8 @@ module Mollie
 
       def test_update_shipment
         stub_request(:patch, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U')
-          .with(body: UPDATE_SHIPMENT_STUB.delete("\n "))
-          .to_return(status: 200, body: SHIPMENT_STUB, headers: {})
+          .with(body: UPDATE_SHIPMENT.delete("\n "))
+          .to_return(status: 200, body: GET_SHIPMENT, headers: {})
 
         shipment = Order::Shipment.update(
           'shp_3wmsgCJN4U',
@@ -321,16 +127,15 @@ module Mollie
 
       def test_get_order
         stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U')
-          .to_return(status: 200, body: SHIPMENT_STUB, headers: {})
+          .to_return(status: 200, body: GET_SHIPMENT, headers: {})
 
         stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
-          .to_return(status: 200, body: ORDER_STUB, headers: {})
+          .to_return(status: 200, body: GET_ORDER, headers: {})
 
         shipment = Order::Shipment.get('shp_3wmsgCJN4U', order_id: 'ord_kEn1PlbGa')
         order = shipment.order
         assert_equal 'ord_kEn1PlbGa', order.id
       end
-
     end
   end
 end

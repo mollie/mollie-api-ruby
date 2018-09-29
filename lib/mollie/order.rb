@@ -9,12 +9,32 @@ module Mollie
     STATUS_COMPLETED  = 'completed'.freeze
     STATUS_REFUNDED   = 'refunded'.freeze
 
-    attr_accessor :id, :profile_id, :method, :mode, :amount, :amount_captured,
-                  :amount_refunded, :status, :is_cancelable, :billing_address,
-                  :consumer_date_of_birth, :order_number, :shipping_address,
-                  :locale, :metadata, :redirect_url, :webhook_url, :created_at,
-                  :expires_at, :expired_at, :paid_at, :authorized_at,
-                  :canceled_at, :completed_at, :lines, :_links
+    attr_accessor :id,
+                  :profile_id,
+                  :method,
+                  :mode,
+                  :amount,
+                  :amount_captured,
+                  :amount_refunded,
+                  :status,
+                  :is_cancelable,
+                  :billing_address,
+                  :consumer_date_of_birth,
+                  :order_number,
+                  :shipping_address,
+                  :locale,
+                  :metadata,
+                  :redirect_url,
+                  :webhook_url,
+                  :created_at,
+                  :expires_at,
+                  :expired_at,
+                  :paid_at,
+                  :authorized_at,
+                  :canceled_at,
+                  :completed_at,
+                  :lines,
+                  :_links
 
     alias links _links
 

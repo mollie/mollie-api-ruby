@@ -28,6 +28,10 @@ module Mollie
         is_cancelable == true
       end
 
+      def discounted?
+        !@discount_amount.nil?
+      end
+
       def amount_shipped=(amount)
         @amount_shipped = Mollie::Amount.new(amount)
       end

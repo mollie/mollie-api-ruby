@@ -48,11 +48,6 @@ module Mollie
       assert !Order.new(status: 'not-completed').completed?
     end
 
-    def test_status_refunded
-      assert Order.new(status: Order::STATUS_REFUNDED).refunded?
-      assert !Order.new(status: 'not-refunded').refunded?
-    end
-
     def test_get_order
       stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
         .to_return(status: 200, body: GET_ORDER, headers: {})

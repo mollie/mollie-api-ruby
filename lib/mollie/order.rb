@@ -7,7 +7,6 @@ module Mollie
     STATUS_EXPIRED    = 'expired'.freeze
     STATUS_CANCELED   = 'canceled'.freeze
     STATUS_COMPLETED  = 'completed'.freeze
-    STATUS_REFUNDED   = 'refunded'.freeze
 
     attr_accessor :id,
                   :profile_id,
@@ -64,10 +63,6 @@ module Mollie
 
     def completed?
       status == STATUS_COMPLETED
-    end
-
-    def refunded?
-      status == STATUS_REFUNDED
     end
 
     def cancelable?

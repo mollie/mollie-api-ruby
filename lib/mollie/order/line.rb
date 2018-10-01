@@ -1,12 +1,28 @@
 module Mollie
   class Order
     class Line < Base
-      attr_accessor :id, :order_id, :type, :name, :status, :is_cancelable,
-                    :quantity, :quantity_shipped, :amount_shipped,
-                    :quantity_refunded, :amount_refunded, :quantity_canceled,
-                    :amount_canceled, :unit_price, :discount_amount,
-                    :total_amount, :vat_rate, :vat_amount, :sku, :image_url,
-                    :product_url, :created_at
+      attr_accessor :id,
+                    :order_id,
+                    :type,
+                    :name,
+                    :status,
+                    :is_cancelable,
+                    :quantity,
+                    :quantity_shipped,
+                    :amount_shipped,
+                    :quantity_refunded,
+                    :amount_refunded,
+                    :quantity_canceled,
+                    :amount_canceled,
+                    :unit_price,
+                    :discount_amount,
+                    :total_amount,
+                    :vat_rate,
+                    :vat_amount,
+                    :sku,
+                    :image_url,
+                    :product_url,
+                    :created_at
 
       def cancelable?
         is_cancelable == true

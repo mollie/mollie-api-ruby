@@ -14,6 +14,9 @@ module Mollie
                     :amount_refunded,
                     :quantity_canceled,
                     :amount_canceled,
+                    :shippable_quantity,
+                    :refundable_quantity,
+                    :cancelable_quantity,
                     :unit_price,
                     :discount_amount,
                     :total_amount,
@@ -31,6 +34,14 @@ module Mollie
 
       def discounted?
         !@discount_amount.nil?
+      end
+
+      def shippable?
+        shippable_quantity.to_i > 0
+      end
+
+      def refundable?
+        refundable_quantity.to_i > 0
       end
 
       def product_url

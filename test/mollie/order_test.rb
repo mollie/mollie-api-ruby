@@ -161,6 +161,13 @@ module Mollie
       assert_equal BigDecimal('399.0'), line.unit_price.value
       assert_equal 'EUR', line.unit_price.currency
 
+      assert_equal 0, line.shippable_quantity
+      assert_equal 0, line.refundable_quantity
+      assert_equal 2, line.cancelable_quantity
+      assert_equal false, line.shippable?
+      assert_equal false, line.refundable?
+      assert_equal true, line.cancelable?
+
       assert_equal BigDecimal('100.0'), line.discount_amount.value
       assert_equal 'EUR', line.discount_amount.currency
 

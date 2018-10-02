@@ -79,7 +79,7 @@
             },
             "shippableQuantity": 0,
             "refundableQuantity": 0,
-            "cancelableQuantity": 0,
+            "cancelableQuantity": 2,
             "unitPrice": {
                 "value": "399.00",
                 "currency": "EUR"

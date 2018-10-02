@@ -67,18 +67,18 @@ module Mollie
         .to_return(status: 200, body: read_fixture('refunds/get.json'), headers: {})
 
       refund = Payment::Refund.get('re_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')
-      assert refund.lines.one?
+      assert refund.lines.size == 2
 
       line = refund.lines.first
-      assert_equal 'odl_dgtxyl', line.id
+      assert_equal 'odl_d1ec55', line.id
       assert_equal 'ord_stTC2WHAuS', line.order_id
       assert_equal 'LEGO 42083 Bugatti Chiron', line.name
       assert_equal 'https://shop.lego.com/nl-NL/Bugatti-Chiron-42083', line.product_url
       assert_equal 'https://sh-s7-live-s.legocdn.com/is/image//LEGO/42083_alt1?$main$', line.image_url
       assert_equal '5702016116977', line.sku
       assert_equal 'physical', line.type
-      assert_equal 'refunded', line.status
-      assert_equal nil, line.is_cancelable
+      assert_equal 'completed', line.status
+      assert_equal false, line.is_cancelable
       assert_equal false, line.cancelable?
       assert_equal 2, line.quantity
       assert_equal '21.00', line.vat_rate
@@ -95,7 +95,7 @@ module Mollie
       assert_equal BigDecimal('698.0'), line.total_amount.value
       assert_equal 'EUR', line.total_amount.currency
 
-      assert_equal Time.parse('2018-08-02T09:29:56+00:00'), line.created_at
+      assert_equal Time.parse('2018-09-23T17:23:13+00:00'), line.created_at
     end
 
     def test_get_payment

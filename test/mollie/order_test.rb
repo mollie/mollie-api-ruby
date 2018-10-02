@@ -59,9 +59,9 @@ module Mollie
       assert_equal 'live', order.mode
       assert_equal BigDecimal('1027.99'), order.amount.value
       assert_equal 'EUR', order.amount.currency
-      assert_equal BigDecimal('0'), order.amount_captured.value
+      assert_equal BigDecimal('1002.99'), order.amount_captured.value
       assert_equal 'EUR', order.amount_captured.currency
-      assert_equal BigDecimal('0'), order.amount_refunded.value
+      assert_equal BigDecimal('25.0'), order.amount_refunded.value
       assert_equal 'EUR', order.amount_refunded.currency
       assert_equal 'created', order.status
       assert_equal true, order.is_cancelable
@@ -69,8 +69,8 @@ module Mollie
       assert_equal 'nl_NL', order.locale
       assert_equal '1337', order.metadata.order_id
       assert_equal 'Lego cars', order.metadata.description
-      assert_equal 'https://redirect-url', order.redirect_url
-      assert_equal 'https://webhook-url', order.webhook_url
+      assert_equal 'https://example.org/redirect', order.redirect_url
+      assert_equal 'https://example.org/webhook', order.webhook_url
       assert_equal Time.parse('2018-08-02T09:29:56+00:00'), order.created_at
       assert_equal Time.parse('2018-08-30T09:29:56+00:00'), order.expires_at
       assert_equal Time.parse('2018-08-30T09:29:56+00:02'), order.expired_at

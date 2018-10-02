@@ -49,13 +49,15 @@ module Mollie
 
         line = shipment.lines.first
         assert_equal 'odl_dgtxyl', line.id
-        assert_equal 'ord_pbjz8x', line.order_id
+        assert_equal 'ord_kEn1PlbGa', line.order_id
         assert_equal 'LEGO 42083 Bugatti Chiron', line.name
         assert_equal 'https://shop.lego.com/nl-NL/Bugatti-Chiron-42083', line.product_url
         assert_equal 'https://sh-s7-live-s.legocdn.com/is/image//LEGO/42083_alt1?$main$', line.image_url
         assert_equal '5702016116977', line.sku
         assert_equal 'physical', line.type
         assert_equal 'shipping', line.status
+        assert_equal true, line.is_cancelable
+        assert_equal true, line.cancelable?
         assert_equal 2, line.quantity
         assert_equal BigDecimal('399.00'), line.unit_price.value
         assert_equal 'EUR', line.unit_price.currency
@@ -66,7 +68,7 @@ module Mollie
         assert_equal 'EUR', line.discount_amount.currency
         assert_equal BigDecimal('698.00'), line.total_amount.value
         assert_equal 'EUR', line.total_amount.currency
-        assert_equal Time.parse('2018-08-02T09:29:56+00:00'), line.created_at
+        assert_equal Time.parse('2018-09-23T17:23:13+00:00'), line.created_at
       end
 
       def test_create_shipment

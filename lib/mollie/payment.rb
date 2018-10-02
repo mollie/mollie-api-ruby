@@ -1,11 +1,12 @@
 module Mollie
   class Payment < Base
-    STATUS_OPEN      = 'open'.freeze
-    STATUS_CANCELED  = 'canceled'.freeze
-    STATUS_PENDING   = 'pending'.freeze
-    STATUS_EXPIRED   = 'expired'.freeze
-    STATUS_FAILED    = 'failed'.freeze
-    STATUS_PAID      = 'paid'.freeze
+    STATUS_OPEN       = 'open'.freeze
+    STATUS_CANCELED   = 'canceled'.freeze
+    STATUS_PENDING    = 'pending'.freeze
+    STATUS_EXPIRED    = 'expired'.freeze
+    STATUS_FAILED     = 'failed'.freeze
+    STATUS_PAID       = 'paid'.freeze
+    STATUS_AUTHORIZED = 'authorized'.freeze
 
     RECURRINGTYPE_NONE      = nil
     RECURRINGTYPE_FIRST     = 'first'.freeze
@@ -67,6 +68,10 @@ module Mollie
 
     def paid?
       status == STATUS_PAID
+    end
+
+    def authorized?
+      status == STATUS_AUTHORIZED
     end
 
     def application_fee=(application_fee)

@@ -105,6 +105,11 @@ module Mollie
       assert !Payment.new(status: nil).paid?
     end
 
+    def test_status_authorized
+      assert Payment.new(status: Payment::STATUS_AUTHORIZED).authorized?
+      assert !Payment.new(status: 'not-authorized').authorized?
+    end
+
     def test_create_payment
       stub_request(:post, 'https://api.mollie.com/v2/payments')
         .with(body: %({"amount":{"value":1.95,"currency":"EUR"}}))

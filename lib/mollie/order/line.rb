@@ -20,9 +20,10 @@ module Mollie
                     :vat_rate,
                     :vat_amount,
                     :sku,
-                    :image_url,
-                    :product_url,
-                    :created_at
+                    :created_at,
+                    :_links
+
+      alias links _links
 
       def cancelable?
         is_cancelable == true
@@ -30,6 +31,14 @@ module Mollie
 
       def discounted?
         !@discount_amount.nil?
+      end
+
+      def product_url
+        Util.extract_url(links, 'product_url')
+      end
+
+      def image_url
+        Util.extract_url(links, 'image_url')
       end
 
       def amount_shipped=(amount)

@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+#### 4.1 - 2018-10-08
+
+  - Add Capture, Order, and Shipment APIs (#92)
+
 #### 4.0 - 2018-07-23
 
   - Migrated to the v2 API

@@ -32,11 +32,14 @@ module Mollie
       list = Mollie::List.new(attributes, Payment)
 
       assert_equal 2, list.count
+      assert_equal 2, list.size
       assert_kind_of Payment, list.to_a[0]
       assert_equal 'tr_1', list.to_a[0].id
+      assert_equal 'tr_1', list[0].id
 
       assert_kind_of Payment, list.to_a[1]
       assert_equal 'tr_2', list.to_a[1].id
+      assert_equal 'tr_2', list[1].id
     end
 
     def test_next_page

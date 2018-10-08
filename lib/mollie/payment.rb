@@ -1,11 +1,12 @@
 module Mollie
   class Payment < Base
-    STATUS_OPEN      = 'open'.freeze
-    STATUS_CANCELED  = 'canceled'.freeze
-    STATUS_PENDING   = 'pending'.freeze
-    STATUS_EXPIRED   = 'expired'.freeze
-    STATUS_FAILED    = 'failed'.freeze
-    STATUS_PAID      = 'paid'.freeze
+    STATUS_OPEN       = 'open'.freeze
+    STATUS_CANCELED   = 'canceled'.freeze
+    STATUS_PENDING    = 'pending'.freeze
+    STATUS_EXPIRED    = 'expired'.freeze
+    STATUS_FAILED     = 'failed'.freeze
+    STATUS_PAID       = 'paid'.freeze
+    STATUS_AUTHORIZED = 'authorized'.freeze
 
     RECURRINGTYPE_NONE      = nil
     RECURRINGTYPE_FIRST     = 'first'.freeze
@@ -36,6 +37,7 @@ module Mollie
                   :sequence_type,
                   :mandate_id,
                   :subscription_id,
+                  :order_id,
                   :application_fee,
                   :_links,
                   :details,
@@ -66,6 +68,10 @@ module Mollie
 
     def paid?
       status == STATUS_PAID
+    end
+
+    def authorized?
+      status == STATUS_AUTHORIZED
     end
 
     def application_fee=(application_fee)
@@ -185,6 +191,11 @@ module Mollie
       return if subscription_id.nil?
       options = options.merge(customer_id: customer_id)
       Customer::Subscription.get(subscription_id, options)
+    end
+
+    def order(options = {})
+      return if order_id.nil?
+      Order.get(order_id, options)
     end
   end
 end

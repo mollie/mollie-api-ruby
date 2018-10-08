@@ -23,6 +23,10 @@ Lint/DuplicateMethods:
     - 'lib/mollie/customer/mandate.rb'
     - 'lib/mollie/customer/subscription.rb'
     - 'lib/mollie/invoice.rb'
+    - 'lib/mollie/order.rb'
+    - 'lib/mollie/order/line.rb'
+    - 'lib/mollie/order/shipment.rb'
+    - 'lib/mollie/payment/capture.rb'
     - 'lib/mollie/organization.rb'
     - 'lib/mollie/payment.rb'
     - 'lib/mollie/profile.rb'
@@ -37,6 +41,8 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
   Max: 295
+  Exclude:
+    - 'test/**/*'
 
 # Offense count: 1
 Metrics/CyclomaticComplexity:

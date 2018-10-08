@@ -105,6 +105,11 @@ module Mollie
       assert !Payment.new(status: nil).paid?
     end
 
+    def test_status_authorized
+      assert Payment.new(status: Payment::STATUS_AUTHORIZED).authorized?
+      assert !Payment.new(status: 'not-authorized').authorized?
+    end
+
     def test_create_payment
       stub_request(:post, 'https://api.mollie.com/v2/payments')
         .with(body: %({"amount":{"value":1.95,"currency":"EUR"}}))
@@ -342,6 +347,34 @@ module Mollie
     def test_nil_customer
       payment = Payment.new(id: 'tr_WDqYK6vllg')
       assert payment.customer.nil?
+    end
+
+    def test_get_order
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg",
+              "order_id": "ord_kEn1PlbGa"
+          }
+        ), headers: {})
+
+      stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
+        .to_return(status: 200, body: %(
+          {
+              "resource": "order",
+              "id": "ord_kEn1PlbGa"
+          }
+        ), headers: {})
+
+      payment = Payment.get('tr_WDqYK6vllg')
+      order = payment.order
+      assert_equal 'ord_kEn1PlbGa', order.id
+    end
+
+    def test_nil_order
+      payment = Payment.new(id: 'tr_WDqYK6vllg')
+      assert payment.order.nil?
     end
   end
 end

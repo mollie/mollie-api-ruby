@@ -62,6 +62,42 @@ module Mollie
       assert_equal nil, refund
     end
 
+    def test_order_lines
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT')
+        .to_return(status: 200, body: read_fixture('refunds/get.json'), headers: {})
+
+      refund = Payment::Refund.get('re_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')
+      assert refund.lines.size == 2
+
+      line = refund.lines.first
+      assert_equal 'odl_d1ec55', line.id
+      assert_equal 'ord_stTC2WHAuS', line.order_id
+      assert_equal 'LEGO 42083 Bugatti Chiron', line.name
+      assert_equal 'https://shop.lego.com/nl-NL/Bugatti-Chiron-42083', line.product_url
+      assert_equal 'https://sh-s7-live-s.legocdn.com/is/image//LEGO/42083_alt1?$main$', line.image_url
+      assert_equal '5702016116977', line.sku
+      assert_equal 'physical', line.type
+      assert_equal 'completed', line.status
+      assert_equal false, line.is_cancelable
+      assert_equal false, line.cancelable?
+      assert_equal 2, line.quantity
+      assert_equal '21.00', line.vat_rate
+
+      assert_equal BigDecimal('399.0'), line.unit_price.value
+      assert_equal 'EUR', line.unit_price.currency
+
+      assert_equal BigDecimal('121.14'), line.vat_amount.value
+      assert_equal 'EUR', line.vat_amount.currency
+
+      assert_equal BigDecimal('100.0'), line.discount_amount.value
+      assert_equal 'EUR', line.discount_amount.currency
+
+      assert_equal BigDecimal('698.0'), line.total_amount.value
+      assert_equal 'EUR', line.total_amount.currency
+
+      assert_equal Time.parse('2018-09-23T17:23:13+00:00'), line.created_at
+    end
+
     def test_get_payment
       stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT')
         .to_return(status: 200, body: %(
@@ -115,6 +151,34 @@ module Mollie
     def test_nil_settlement
       refund = Payment::Refund.new(id: 'tr_WDqYK6vllg')
       assert refund.settlement.nil?
+    end
+
+    def test_get_order
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT')
+        .to_return(status: 200, body: %(
+          {
+              "resource": "refund",
+              "id": "re_4qqhO89gsT",
+              "order_id": "ord_kEn1PlbGa"
+          }
+        ), headers: {})
+
+      stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
+        .to_return(status: 200, body: %(
+          {
+              "resource": "order",
+              "id": "ord_kEn1PlbGa"
+          }
+        ), headers: {})
+
+      refund = Payment::Refund.get('re_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')
+      order = refund.order
+      assert_equal 'ord_kEn1PlbGa', order.id
+    end
+
+    def test_nil_order
+      refund = Payment::Refund.new(id: 're_4qqhO89gsT')
+      assert refund.order.nil?
     end
   end
 end

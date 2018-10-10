@@ -74,6 +74,10 @@ module Mollie
       status == STATUS_AUTHORIZED
     end
 
+    def cancelable?
+      is_cancelable
+    end
+
     def application_fee=(application_fee)
       amount      = Amount.new(application_fee['amount'])
       description = application_fee['description']

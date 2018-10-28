@@ -180,6 +180,10 @@ module Mollie
       Payment::Chargeback.all(options.merge(payment_id: id))
     end
 
+    def captures(options = {})
+      Payment::Capture.all(options.merge(payment_id: id))
+    end
+
     def customer(options = {})
       return if customer_id.nil?
       Customer.get(customer_id, options)

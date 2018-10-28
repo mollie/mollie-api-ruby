@@ -13,6 +13,7 @@ module Mollie
           amount:       { 'value' => '25.00', 'currency' => 'EUR' },
           times:        4,
           interval:     '3 months',
+          next_payment_date: '2016-09-01',
           description:  'Quarterly payment',
           method:       'creditcard',
           mandate_id:   'mdt_38HS4fsS',
@@ -31,6 +32,7 @@ module Mollie
         assert_equal 'EUR', subscription.amount.currency
         assert_equal 4, subscription.times
         assert_equal '3 months', subscription.interval
+        assert_equal Date.parse('2016-09-01'), subscription.next_payment_date
         assert_equal 'Quarterly payment', subscription.description
         assert_equal 'creditcard', subscription.method
         assert_equal 'mdt_38HS4fsS', subscription.mandate_id

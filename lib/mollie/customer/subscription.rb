@@ -15,6 +15,7 @@ module Mollie
                     :amount,
                     :times,
                     :interval,
+                    :next_payment_date,
                     :description,
                     :method,
                     :mandate_id,
@@ -63,6 +64,14 @@ module Mollie
 
       def times=(times)
         @times = times.to_i
+      end
+
+      def next_payment_date=(next_payment_date)
+        @next_payment_date = begin
+                               Date.parse(next_payment_date)
+                             rescue StandardError
+                               nil
+                             end
       end
 
       def customer(options = {})

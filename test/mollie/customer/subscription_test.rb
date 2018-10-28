@@ -15,6 +15,7 @@ module Mollie
           interval:     '3 months',
           description:  'Quarterly payment',
           method:       'creditcard',
+          mandate_id:   'mdt_38HS4fsS',
           canceled_at:  '2016-06-01T12:23:34.0Z',
           webhook_url:  'https://example.org/payments/webhook'
         }
@@ -32,6 +33,7 @@ module Mollie
         assert_equal '3 months', subscription.interval
         assert_equal 'Quarterly payment', subscription.description
         assert_equal 'creditcard', subscription.method
+        assert_equal 'mdt_38HS4fsS', subscription.mandate_id
         assert_equal Time.parse('2016-06-01T12:23:34.0Z'), subscription.canceled_at
         assert_equal 'https://example.org/payments/webhook', subscription.webhook_url
       end

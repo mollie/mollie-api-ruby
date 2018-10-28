@@ -17,6 +17,7 @@ module Mollie
                     :interval,
                     :description,
                     :method,
+                    :mandate_id,
                     :canceled_at,
                     :webhook_url
 

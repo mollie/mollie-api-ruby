@@ -23,6 +23,7 @@ module Mollie
                   :expires_at,
                   :failed_at,
                   :amount,
+                  :amount_captured,
                   :amount_refunded,
                   :amount_remaining,
                   :description,
@@ -146,6 +147,10 @@ module Mollie
 
     def settlement_amount=(settlement_amount)
       @settlement_amount = Mollie::Amount.new(settlement_amount)
+    end
+
+    def amount_captured
+      @amount_captured = Mollie::Amount.new(amount_captured)
     end
 
     def amount_remaining=(amount_remaining)

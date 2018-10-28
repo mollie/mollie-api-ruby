@@ -111,6 +111,13 @@ module Mollie
       assert !Payment.new(status: 'not-authorized').authorized?
     end
 
+    def test_refunded?
+      assert Payment.new(amount_refunded: { value: '10.00', currency: 'EUR' }).refunded?
+      assert Payment.new(amount_refunded: { value: '0.01', currency: 'EUR' }).refunded?
+      assert_false Payment.new(amount_refunded: { value: '0', currency: 'EUR' }).refunded?
+      assert_false Payment.new([]).refunded?
+    end
+
     def test_create_payment
       stub_request(:post, 'https://api.mollie.com/v2/payments')
         .with(body: %({"amount":{"value":1.95,"currency":"EUR"}}))

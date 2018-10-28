@@ -75,6 +75,14 @@ module Mollie
       status == STATUS_AUTHORIZED
     end
 
+    def refunded?
+      if amount_refunded
+        amount_refunded.value > 0
+      else
+        false
+      end
+    end
+
     def cancelable?
       is_cancelable
     end

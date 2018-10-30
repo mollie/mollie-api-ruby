@@ -16,6 +16,7 @@ module Mollie
                   :mode,
                   :created_at,
                   :status,
+                  :authorized_at,
                   :paid_at,
                   :is_cancelable,
                   :canceled_at,
@@ -111,6 +112,14 @@ module Mollie
                     rescue StandardError
                       nil
                     end
+    end
+
+    def authorized_at=(authorized_at)
+      @authorized_at = begin
+                         Time.parse(authorized_at.to_s)
+                       rescue StandardError
+                         nil
+                       end
     end
 
     def paid_at=(paid_at)

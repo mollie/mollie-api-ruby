@@ -24,6 +24,7 @@ module Mollie
           consumer_bic:     'INGBNL2A'
         },
         status:        'paid',
+        authorized_at: '2018-03-19T09:14:37+00:00',
         paid_at:       '2018-03-20T09:14:37+00:00',
         is_cancelable: false,
         expires_at:    '2018-03-20T09:28:37+00:00',
@@ -58,6 +59,7 @@ module Mollie
       assert_equal Time.parse('2018-03-20T09:13:37+00:00'), payment.created_at
       assert_equal 'paid', payment.status
       assert_equal true, payment.paid?
+      assert_equal Time.parse('2018-03-19T09:14:37+00:00'), payment.authorized_at
       assert_equal Time.parse('2018-03-20T09:14:37+00:00'), payment.paid_at
       assert_equal 10.00, payment.amount.value
       assert_equal 'EUR', payment.amount.currency

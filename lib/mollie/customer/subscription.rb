@@ -14,6 +14,7 @@ module Mollie
                     :status,
                     :amount,
                     :times,
+                    :times_remaining,
                     :interval,
                     :next_payment_date,
                     :description,

@@ -16,6 +16,7 @@ module Mollie
                   :mode,
                   :created_at,
                   :status,
+                  :authorized_at,
                   :paid_at,
                   :is_cancelable,
                   :canceled_at,
@@ -23,6 +24,7 @@ module Mollie
                   :expires_at,
                   :failed_at,
                   :amount,
+                  :amount_captured,
                   :amount_refunded,
                   :amount_remaining,
                   :description,
@@ -74,6 +76,14 @@ module Mollie
       status == STATUS_AUTHORIZED
     end
 
+    def refunded?
+      if amount_refunded
+        amount_refunded.value > 0
+      else
+        false
+      end
+    end
+
     def cancelable?
       is_cancelable
     end
@@ -102,6 +112,14 @@ module Mollie
                     rescue StandardError
                       nil
                     end
+    end
+
+    def authorized_at=(authorized_at)
+      @authorized_at = begin
+                         Time.parse(authorized_at.to_s)
+                       rescue StandardError
+                         nil
+                       end
     end
 
     def paid_at=(paid_at)
@@ -148,6 +166,10 @@ module Mollie
       @settlement_amount = Mollie::Amount.new(settlement_amount)
     end
 
+    def amount_captured
+      @amount_captured = Mollie::Amount.new(amount_captured)
+    end
+
     def amount_remaining=(amount_remaining)
       @amount_remaining = Mollie::Amount.new(amount_remaining)
     end
@@ -173,6 +195,10 @@ module Mollie
 
     def chargebacks(options = {})
       Payment::Chargeback.all(options.merge(payment_id: id))
+    end
+
+    def captures(options = {})
+      Payment::Capture.all(options.merge(payment_id: id))
     end
 
     def customer(options = {})

@@ -24,6 +24,7 @@ module Mollie
           consumer_bic:     'INGBNL2A'
         },
         status:        'paid',
+        authorized_at: '2018-03-19T09:14:37+00:00',
         paid_at:       '2018-03-20T09:14:37+00:00',
         is_cancelable: false,
         expires_at:    '2018-03-20T09:28:37+00:00',
@@ -58,6 +59,7 @@ module Mollie
       assert_equal Time.parse('2018-03-20T09:13:37+00:00'), payment.created_at
       assert_equal 'paid', payment.status
       assert_equal true, payment.paid?
+      assert_equal Time.parse('2018-03-19T09:14:37+00:00'), payment.authorized_at
       assert_equal Time.parse('2018-03-20T09:14:37+00:00'), payment.paid_at
       assert_equal 10.00, payment.amount.value
       assert_equal 'EUR', payment.amount.currency
@@ -109,6 +111,13 @@ module Mollie
     def test_status_authorized
       assert Payment.new(status: Payment::STATUS_AUTHORIZED).authorized?
       assert !Payment.new(status: 'not-authorized').authorized?
+    end
+
+    def test_refunded?
+      assert Payment.new(amount_refunded: { value: '10.00', currency: 'EUR' }).refunded?
+      assert Payment.new(amount_refunded: { value: '0.01', currency: 'EUR' }).refunded?
+      assert_false Payment.new(amount_refunded: { value: '0', currency: 'EUR' }).refunded?
+      assert_false Payment.new([]).refunded?
     end
 
     def test_create_payment
@@ -229,6 +238,14 @@ module Mollie
 
       chargebacks = Payment.new(id: 'pay-id').chargebacks
       assert_equal 'chb-id', chargebacks.first.id
+    end
+
+    def test_list_captures
+      stub_request(:get, 'https://api.mollie.com/v2/payments/pay-id/captures')
+        .to_return(status: 200, body: %({"_embedded" : {"captures" :[{"id":"cpt-id", "payment_id":"pay-id"}]}}), headers: {})
+
+      captures = Payment.new(id: 'pay-id').captures
+      assert_equal 'cpt-id', captures.first.id
     end
 
     def test_get_settlement

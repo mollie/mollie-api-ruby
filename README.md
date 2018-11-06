@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://info.mollie.com/hubfs/github/ruby/logo.png" width="128" height="128"/>
 </p>
-<h1 align="center">Ruby API client for Mollie</h1>
+<h1 align="center">Mollie API client for Ruby</h1>
 
 <img src="https://info.mollie.com/hubfs/github/ruby/editor.png" />
 

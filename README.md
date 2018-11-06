@@ -1,6 +1,9 @@
-![Mollie](https://www.mollie.nl/files/Mollie-Logo-Style-Small.png)
+<p align="center">
+  <img src="https://info.mollie.com/hubfs/github/ruby/logo.png" width="128" height="128"/>
+</p>
+<h1 align="center">Ruby API client for Mollie</h1>
 
-# Mollie API client for Ruby
+<img src="https://info.mollie.com/hubfs/github/ruby/editor.png" />
 
 > LOOKING FOR VERSION v2.2.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/2.2.x)
 

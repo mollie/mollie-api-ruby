@@ -47,20 +47,20 @@ order = Mollie::Order.create(
       quantity: 2,
       vatRate: '21.00',
       unitPrice: {
-        "currency": 'EUR',
-        "value": '399.00'
+        currency: 'EUR',
+        value: '399.00'
       },
       totalAmount: {
-        "currency": 'EUR',
-        "value": '698.00'
+        currency: 'EUR',
+        value: '698.00'
       },
       discountAmount: {
-        "currency": 'EUR',
-        "value": '100.00'
+        currency: 'EUR',
+        value: '100.00'
       },
       vatAmount: {
-        "currency": 'EUR',
-        "value": '121.14'
+        currency: 'EUR',
+        value: '121.14'
       }
     },
     {

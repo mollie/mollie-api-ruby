@@ -1,3 +1,3 @@
 module Mollie
-  VERSION = "3.1.4-beta"
+  VERSION = "3.1.5"
 end

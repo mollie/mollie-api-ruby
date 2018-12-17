@@ -3,6 +3,7 @@ require 'time'
 require 'ostruct'
 require 'bigdecimal'
 require 'net/https'
+require 'certifi'
 
 module Mollie
 end

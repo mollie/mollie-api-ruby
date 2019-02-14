@@ -79,6 +79,10 @@ module Mollie
       def customer(options = {})
         Customer.get(customer_id, options)
       end
+
+      def metadata=(metadata)
+        @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
+      end
     end
   end
 end

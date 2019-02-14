@@ -20,7 +20,7 @@ module Mollie
           mandate_id:   'mdt_38HS4fsS',
           canceled_at:  '2016-06-01T12:23:34.0Z',
           webhook_url:  'https://example.org/payments/webhook',
-          metadata:     'Subscription ID #2930',
+          metadata:     { my_field: 'value' },
         }
 
         subscription = Subscription.new(attributes)
@@ -41,7 +41,9 @@ module Mollie
         assert_equal 'mdt_38HS4fsS', subscription.mandate_id
         assert_equal Time.parse('2016-06-01T12:23:34.0Z'), subscription.canceled_at
         assert_equal 'https://example.org/payments/webhook', subscription.webhook_url
-        assert_equal 'Subscription ID #2930', subscription.metadata
+
+        assert_equal 'value', subscription.metadata.my_field
+        assert_equal nil, subscription.metadata.non_existing
       end
 
       def test_status_active

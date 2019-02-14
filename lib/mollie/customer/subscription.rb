@@ -21,7 +21,8 @@ module Mollie
                     :method,
                     :mandate_id,
                     :canceled_at,
-                    :webhook_url
+                    :webhook_url,
+                    :metadata
 
       def active?
         status == STATUS_ACTIVE

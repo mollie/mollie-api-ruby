@@ -4,5 +4,6 @@ subscription = Mollie::Customer::Subscription.create(
   times:       4,
   interval:    '3 months',
   description: 'Quarterly payment',
-  webhook_url: 'https://webshop.example.org/payments/webhook/'
+  metadata:    { my_field: 'value' },
+  webhook_url: 'https://webshop.example.org/payments/webhook/',
 )

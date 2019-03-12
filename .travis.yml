@@ -1,10 +1,9 @@
 language: ruby
-before_install: gem install bundler -v 1.17.3
 rvm:
- - 2.1
- - 2.2
- - 2.3.0
-matrix:
+  - 2.3.8
+  - 2.4.5
+  - 2.5.3
+  - 2.6.1
 deploy:
   gem: mollie-api-ruby
   provider: rubygems
@@ -13,4 +12,4 @@ deploy:
   on:
     tags: true
     repo: mollie/mollie-api-ruby
-    rvm: 2.3.0
+    rvm: 2.6.1

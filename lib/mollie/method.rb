@@ -14,6 +14,7 @@ module Mollie
     KBC            = 'kbc'.freeze
     PAYPAL         = 'paypal'.freeze
     PAYSAFECARD    = 'paysafecard'.freeze
+    PRZELEWY24     = 'przelewy24'.freeze
     SOFORT         = 'sofort'.freeze
     KLARNASLICEIT  = 'klarnasliceit'.freeze
     KLARNAPAYLATER = 'klarnapaylater'.freeze

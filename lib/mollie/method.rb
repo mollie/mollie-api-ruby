@@ -3,7 +3,6 @@ module Mollie
     BANCONTACT     = 'bancontact'.freeze
     BANKTRANSFER   = 'banktransfer'.freeze
     BELFIUS        = 'belfius'.freeze
-    BITCOIN        = 'bitcoin'.freeze
     CREDITCARD     = 'creditcard'.freeze
     DIRECTDEBIT    = 'directdebit'.freeze
     EPS            = 'eps'.freeze

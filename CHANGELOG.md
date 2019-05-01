@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+#### 4.2 - 2019-05-01
+
+  - Removed the Bitcoin payment method.
+
 #### 4.1 - 2018-10-08
 
   - Add Capture, Order, and Shipment APIs (#92)

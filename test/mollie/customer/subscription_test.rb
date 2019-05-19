@@ -118,8 +118,8 @@ module Mollie
             }
           ), headers: {})
 
-        payment  = Customer::Subscription.get('sub_rVKGtNd6s3', customer_id: 'cst_8wmqcHMN4U')
-        customer = payment.customer
+        subscription = Customer::Subscription.get('sub_rVKGtNd6s3', customer_id: 'cst_8wmqcHMN4U')
+        customer = subscription.customer
         assert_equal 'cst_8wmqcHMN4U', customer.id
       end
     end

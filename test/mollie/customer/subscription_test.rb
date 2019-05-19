@@ -122,6 +122,27 @@ module Mollie
         customer = subscription.customer
         assert_equal 'cst_8wmqcHMN4U', customer.id
       end
+
+      def test_application_fee
+        stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_rVKGtNd6s3')
+          .to_return(status: 200, body: %(
+            {
+              "resource": "subscription",
+              "id": "sub_rVKGtNd6s3",
+              "application_fee": {
+                "amount": {
+                  "value": "42.10",
+                  "currency": "EUR"
+                },
+                "description": "Example application fee"
+              }
+            }
+          ), headers: {})
+
+        subscription = Customer::Subscription.get('sub_rVKGtNd6s3', customer_id: 'cst_8wmqcHMN4U')
+        assert_equal 42.10, subscription.application_fee.amount.value
+        assert_equal'EUR', subscription.application_fee.amount.currency
+      end
     end
   end
 end

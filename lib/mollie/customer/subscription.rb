@@ -22,7 +22,8 @@ module Mollie
                     :mandate_id,
                     :canceled_at,
                     :webhook_url,
-                    :metadata
+                    :metadata,
+                    :application_fee
 
       def active?
         status == STATUS_ACTIVE
@@ -82,6 +83,16 @@ module Mollie
 
       def metadata=(metadata)
         @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
+      end
+
+      def application_fee=(application_fee)
+        amount      = Amount.new(application_fee['amount'])
+        description = application_fee['description']
+
+        @application_fee = OpenStruct.new(
+          amount: amount,
+          description: description
+        )
       end
     end
   end

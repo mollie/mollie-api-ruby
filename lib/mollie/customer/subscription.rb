@@ -23,7 +23,10 @@ module Mollie
                     :canceled_at,
                     :webhook_url,
                     :metadata,
+                    :_links,
                     :application_fee
+      
+      alias links _links
 
       def active?
         status == STATUS_ACTIVE

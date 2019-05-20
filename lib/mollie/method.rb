@@ -1,5 +1,6 @@
 module Mollie
   class Method < Base
+    APPLEPAY       = 'applepay'.freeze
     BANCONTACT     = 'bancontact'.freeze
     BANKTRANSFER   = 'banktransfer'.freeze
     BELFIUS        = 'belfius'.freeze

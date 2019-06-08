@@ -14,8 +14,8 @@ module Mollie
     end
 
     class << self
-      def create(data = {})
-        request('POST', nil, data) do |response|
+      def create(data = {}, options = {})
+        request('POST', nil, data, options) do |response|
           new(response)
         end
       end

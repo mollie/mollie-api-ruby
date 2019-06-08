@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### 4.3.1 - 2019-06-08
+
+  - Added the option to pass additional request options when creating a new resource.
+
 #### 4.2 - 2019-05-01
 
   - Removed the Bitcoin payment method.

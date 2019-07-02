@@ -23,9 +23,9 @@ module Mollie
                     :canceled_at,
                     :webhook_url,
                     :metadata,
-                    :_links,
-                    :application_fee
-      
+                    :application_fee,
+                    :_links
+
       alias links _links
 
       def active?

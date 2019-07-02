@@ -2,6 +2,7 @@ module Mollie
   class Organization < Base
     attr_accessor :id,
                   :name,
+                  :locale,
                   :email,
                   :address,
                   :registration_number,

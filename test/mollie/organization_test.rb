@@ -6,6 +6,7 @@ module Mollie
       attributes = {
         id:                  'org_12345678',
         name:                'Mollie B.V.',
+        locale:              'nl_NL',
         email:               'info@mollie.com',
         address: {
           street_and_number: 'Keizersgracht 313',
@@ -31,6 +32,7 @@ module Mollie
 
       assert_equal 'org_12345678', organization.id
       assert_equal 'Mollie B.V.', organization.name
+      assert_equal 'nl_NL', organization.locale
       assert_equal 'info@mollie.com', organization.email
       assert_equal 'Keizersgracht 313', organization.address.street_and_number
       assert_equal '1016 EE', organization.address.postal_code

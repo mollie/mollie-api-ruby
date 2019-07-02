@@ -6,9 +6,10 @@ module Mollie
       attributes = {
         id:          'creditcard',
         description: 'Credit card',
-        image:       {
-          'size1x' => 'https://www.mollie.com/images/payscreen/methods/creditcard.png',
-          'size2x' => 'https://www.mollie.com/images/payscreen/methods/creditcard@2x.png'
+        image: {
+          'size1x' => 'https://www.mollie.com/external/icons/payment-methods/creditcard.png',
+          'size2x' => 'https://www.mollie.com/external/icons/payment-methods/creditcard%402x.png',
+          'svg'    => 'https://www.mollie.com/external/icons/payment-methods/creditcard.svg'
         }
       }
 
@@ -16,8 +17,9 @@ module Mollie
 
       assert_equal 'creditcard', method.id
       assert_equal 'Credit card', method.description
-      assert_equal 'https://www.mollie.com/images/payscreen/methods/creditcard.png', method.normal_image
-      assert_equal 'https://www.mollie.com/images/payscreen/methods/creditcard@2x.png', method.bigger_image
+      assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard.png', method.normal_image
+      assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard%402x.png', method.bigger_image
+      assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard.svg', method.image['svg']
     end
   end
 end

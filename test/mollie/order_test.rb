@@ -143,6 +143,8 @@ module Mollie
       assert_equal '5702016116977', line.sku
       assert_equal 'physical', line.type
       assert_equal 'created', line.status
+      assert_equal '1337', line.metadata.order_id
+      assert_equal 'Bugatti Chiron', line.metadata.description
       assert_equal true, line.is_cancelable
       assert_equal true, line.cancelable?
       assert_equal 2, line.quantity

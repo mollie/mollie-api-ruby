@@ -6,6 +6,7 @@ module Mollie
       def test_setting_attributes
         attributes = {
           id:               'mdt_h3gAaD5zP',
+          mode:             'test',
           status:           'valid',
           method:           'creditcard',
           details:          {
@@ -34,6 +35,7 @@ module Mollie
         mandate = Mandate.new(attributes)
 
         assert_equal 'mdt_h3gAaD5zP', mandate.id
+        assert_equal 'test', mandate.mode
         assert_equal 'valid', mandate.status
         assert_equal 'creditcard', mandate.method
         assert_equal 'YOUR-COMPANY-MD1380', mandate.mandate_reference

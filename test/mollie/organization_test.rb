@@ -14,7 +14,17 @@ module Mollie
           country:           'NL'
         },
         registration_number: '30204462',
-        vat_number:          'NL815839091B01'
+        vat_number:          'NL815839091B01',
+        _links: {
+          'self' => {
+            'href' => 'https://api.mollie.com/v2/organizations/org_12345678',
+            'type' => 'application/hal+json'
+            },
+          'documentation' => {
+            'href' => 'https://docs.mollie.com/reference/v2/organizations-api/get-organization',
+            'type' => 'text/html'
+          }
+        }
       }
 
       organization = Organization.new(attributes)
@@ -28,6 +38,7 @@ module Mollie
       assert_equal 'NL', organization.address.country
       assert_equal '30204462', organization.registration_number
       assert_equal 'NL815839091B01', organization.vat_number
+      assert_equal 'https://api.mollie.com/v2/organizations/org_12345678', organization.links['self']['href']
     end
 
     def test_current_organization

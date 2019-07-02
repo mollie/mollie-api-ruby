@@ -21,8 +21,18 @@ module Mollie
 
     attr_accessor :id,
                   :description,
+                  :minimum_amount,
+                  :maximum_amount,
                   :image,
                   :issuers
+
+    def minimum_amount=(minimum_amount)
+      @minimum_amount = Mollie::Amount.new(minimum_amount)
+    end
+
+    def maximum_amount=(maximum_amount)
+      @maximum_amount = Mollie::Amount.new(maximum_amount)
+    end
 
     def normal_image
       image['size1x']

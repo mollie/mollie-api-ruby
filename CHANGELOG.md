@@ -4,6 +4,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.4.0 - 2019-07-11
+
+  - Mandate: add `mode` attribute
+  - Organization: add `_links` helper method
+  - Organization: add `locale` attribute
+  - OrderLine: add `metadata` attribute
+  - Method: add `minimumAmount` and `maximumAmount` attributes
+
 ### 4.3.1 - 2019-06-08
 
   - Added the option to pass additional request options when creating a new resource.

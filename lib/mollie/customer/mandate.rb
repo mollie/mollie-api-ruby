@@ -6,6 +6,7 @@ module Mollie
       STATUS_PENDING = 'pending'.freeze
 
       attr_accessor :id,
+                    :mode,
                     :status,
                     :method,
                     :details,

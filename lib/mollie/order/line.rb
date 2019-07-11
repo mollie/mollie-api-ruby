@@ -6,6 +6,7 @@ module Mollie
                     :type,
                     :name,
                     :status,
+                    :metadata,
                     :is_cancelable,
                     :quantity,
                     :quantity_shipped,
@@ -50,6 +51,10 @@ module Mollie
 
       def image_url
         Util.extract_url(links, 'image_url')
+      end
+
+      def metadata=(metadata)
+        @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
       end
 
       def amount_shipped=(amount)

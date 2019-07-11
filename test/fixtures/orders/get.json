@@ -26,6 +26,7 @@
     "mode": "live",
     "locale": "nl_NL",
     "billingAddress": {
+        "organizationName": "Mollie B.V.",
         "streetAndNumber": "Keizersgracht 313",
         "postalCode": "1016 EE",
         "city": "Amsterdam",
@@ -36,6 +37,7 @@
     },
     "orderNumber": "18475",
     "shippingAddress": {
+        "organizationName": "Mollie B.V.",
         "streetAndNumber": "Keizersgracht 313",
         "postalCode": "1016 EE",
         "city": "Amsterdam",
@@ -60,6 +62,10 @@
             "sku": "5702016116977",
             "type": "physical",
             "status": "created",
+            "metadata": {
+               "order_id": "1337",
+               "description": "Bugatti Chiron"
+            },
             "isCancelable": true,
             "quantity": 2,
             "quantityShipped": 0,

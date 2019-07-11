@@ -6,6 +6,7 @@ module Mollie
       attributes = {
         id:                  'org_12345678',
         name:                'Mollie B.V.',
+        locale:              'nl_NL',
         email:               'info@mollie.com',
         address: {
           street_and_number: 'Keizersgracht 313',
@@ -14,13 +15,24 @@ module Mollie
           country:           'NL'
         },
         registration_number: '30204462',
-        vat_number:          'NL815839091B01'
+        vat_number:          'NL815839091B01',
+        _links: {
+          'self' => {
+            'href' => 'https://api.mollie.com/v2/organizations/org_12345678',
+            'type' => 'application/hal+json'
+            },
+          'documentation' => {
+            'href' => 'https://docs.mollie.com/reference/v2/organizations-api/get-organization',
+            'type' => 'text/html'
+          }
+        }
       }
 
       organization = Organization.new(attributes)
 
       assert_equal 'org_12345678', organization.id
       assert_equal 'Mollie B.V.', organization.name
+      assert_equal 'nl_NL', organization.locale
       assert_equal 'info@mollie.com', organization.email
       assert_equal 'Keizersgracht 313', organization.address.street_and_number
       assert_equal '1016 EE', organization.address.postal_code
@@ -28,6 +40,7 @@ module Mollie
       assert_equal 'NL', organization.address.country
       assert_equal '30204462', organization.registration_number
       assert_equal 'NL815839091B01', organization.vat_number
+      assert_equal 'https://api.mollie.com/v2/organizations/org_12345678', organization.links['self']['href']
     end
 
     def test_current_organization

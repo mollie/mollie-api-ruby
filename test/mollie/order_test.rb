@@ -102,6 +102,7 @@ module Mollie
         .to_return(status: 200, body: GET_ORDER, headers: {})
 
       order = Order.get('ord_kEn1PlbGa')
+      assert_equal 'Mollie B.V.', order.billing_address.organization_name
       assert_equal 'Keizersgracht 313', order.billing_address.street_and_number
       assert_equal '1016 EE', order.billing_address.postal_code
       assert_equal 'Amsterdam', order.billing_address.city
@@ -116,6 +117,7 @@ module Mollie
         .to_return(status: 200, body: GET_ORDER, headers: {})
 
       order = Order.get('ord_kEn1PlbGa')
+      assert_equal 'Mollie B.V.', order.shipping_address.organization_name
       assert_equal 'Keizersgracht 313', order.shipping_address.street_and_number
       assert_equal '1016 EE', order.shipping_address.postal_code
       assert_equal 'Amsterdam', order.shipping_address.city
@@ -141,6 +143,8 @@ module Mollie
       assert_equal '5702016116977', line.sku
       assert_equal 'physical', line.type
       assert_equal 'created', line.status
+      assert_equal '1337', line.metadata.order_id
+      assert_equal 'Bugatti Chiron', line.metadata.description
       assert_equal true, line.is_cancelable
       assert_equal true, line.cancelable?
       assert_equal 2, line.quantity

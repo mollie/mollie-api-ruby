@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.4.1 - 2019-08-12
+
+  - Payment: Require customer_id when retrieving a mandate.
+
 ## 4.4.0 - 2019-07-11
 
   - Mandate: add `mode` attribute

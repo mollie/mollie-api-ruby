@@ -282,11 +282,12 @@ module Mollie
           {
               "resource": "payment",
               "id": "tr_WDqYK6vllg",
+              "customer_id": "cst_4qqhO89gsT",
               "mandate_id": "mdt_h3gAaD5zP"
           }
         ), headers: {})
 
-      stub_request(:get, 'https://api.mollie.com/v2/mandates/mdt_h3gAaD5zP')
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cst_4qqhO89gsT/mandates/mdt_h3gAaD5zP')
         .to_return(status: 200, body: %(
           {
               "resource": "mandate",

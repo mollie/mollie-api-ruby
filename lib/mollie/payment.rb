@@ -207,7 +207,9 @@ module Mollie
     end
 
     def mandate(options = {})
+      return if customer_id.nil?
       return if mandate_id.nil?
+      options = options.merge(customer_id: customer_id)
       Customer::Mandate.get(mandate_id, options)
     end
 

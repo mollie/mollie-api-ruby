@@ -143,6 +143,20 @@ module Mollie
         assert_equal 42.10, subscription.application_fee.amount.value
         assert_equal'EUR', subscription.application_fee.amount.currency
       end
+
+      def test_get_payments
+        stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_8JfGzs6v3K')
+          .to_return(status: 200, body: read_fixture('subscriptions/get.json'), headers: {})
+
+        stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_8JfGzs6v3K/payments')
+          .to_return(status: 200, body: read_fixture('subscriptions/get_payments.json'), headers: {})
+
+        subscription = Customer::Subscription.get('sub_8JfGzs6v3K', customer_id: 'cst_8wmqcHMN4U')
+        payments = subscription.payments
+
+        assert_equal payments.klass, Payment
+        assert_equal payments.first.id, 'tr_DtKxVP2AgW'
+      end
     end
   end
 end

@@ -62,7 +62,12 @@ module Mollie
     end
 
     def perform_http_call(http_method, api_method, id = nil, http_body = {}, query = {})
-      path         = "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
+      path = if api_method.start_with?(API_ENDPOINT)
+        URI.parse(api_method).path
+      else
+        "/#{API_VERSION}/#{api_method}/#{id}".chomp('/')
+      end
+
       api_key      = http_body.delete(:api_key) || query.delete(:api_key) || @api_key
       api_endpoint = http_body.delete(:api_endpoint) || query.delete(:api_endpoint) || @api_endpoint
 

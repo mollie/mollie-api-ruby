@@ -84,6 +84,13 @@ module Mollie
         Customer.get(customer_id, options)
       end
 
+      def payments(options = {})
+        resource_url = Util.extract_url(links, 'payments')
+        return if resource_url.nil?
+        response = Mollie::Client.instance.perform_http_call('GET', resource_url, nil, {}, options)
+        Mollie::List.new(response, Payment)
+      end
+
       def metadata=(metadata)
         @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
       end

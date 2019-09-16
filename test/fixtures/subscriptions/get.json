@@ -1,0 +1,45 @@
+{
+    "resource": "subscription",
+    "id": "sub_8JfGzs6v3K",
+    "mode": "live",
+    "createdAt": "2016-06-01T12:23:34+00:00",
+    "status": "active",
+    "amount": {
+        "value": "25.00",
+        "currency": "EUR"
+    },
+    "times": 4,
+    "timesRemaining": 4,
+    "interval": "3 months",
+    "startDate": "2016-06-01",
+    "nextPaymentDate": "2016-09-01",
+    "description": "Quarterly payment",
+    "method": null,
+    "mandateId": "mdt_aGQNkteF6w",
+    "webhookUrl": "https://webshop.example.org/payments/webhook",
+    "metadata": {
+        "plan": "small"
+    },
+    "_links": {
+        "self": {
+            "href": "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_8JfGzs6v3K",
+            "type": "application/hal+json"
+        },
+        "customer": {
+            "href": "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U",
+            "type": "application/hal+json"
+        },
+        "payments": {
+            "href": "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/subscriptions/sub_8JfGzs6v3K/payments",
+            "type": "application/hal+json"
+        },
+        "profile": {
+            "href": "https://api.mollie.com/v2/profiles/pfl_URR55HPMGx",
+            "type": "application/hal+json"
+        },
+        "documentation": {
+            "href": "https://docs.mollie.com/reference/v2/subscriptions-api/get-subscription",
+            "type": "text/html"
+        }
+    }
+}

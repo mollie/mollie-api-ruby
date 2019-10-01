@@ -30,6 +30,7 @@ require 'mollie/refund'
 require 'mollie/settlement'
 
 require 'mollie/customer/payment'
+require 'mollie/onboarding'
 require 'mollie/order/line'
 require 'mollie/order/refund'
 require 'mollie/order/shipment'

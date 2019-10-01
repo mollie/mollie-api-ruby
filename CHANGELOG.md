@@ -4,6 +4,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.6.0 - 2019-10-01
+
+  - Add Onboarding APIs (Get onboarding status, Submit onboarding data)
+
+## 4.5.0 - 2019-09-16
+
+  - Add helper method to retrieve payments for subscription.
+
 ## 4.4.1 - 2019-08-12
 
   - Payment: Require customer_id when retrieving a mandate.

@@ -11,10 +11,12 @@ module Mollie
     end
 
     class Configuration
-      attr_accessor :api_key
+      attr_accessor :api_key, :open_timeout, :read_timeout
 
       def initialize
         @api_key = ''
+        @open_timeout = 60
+        @read_timeout = 60
       end
     end
 
@@ -76,11 +78,13 @@ module Mollie
         path += "?#{build_nested_query(camelized_query)}"
       end
 
-      uri                = URI.parse(api_endpoint)
-      client             = Net::HTTP.new(uri.host, uri.port)
-      client.use_ssl     = true
-      client.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      client.ca_file     = (File.expand_path '../cacert.pem', File.dirname(__FILE__))
+      uri                 = URI.parse(api_endpoint)
+      client              = Net::HTTP.new(uri.host, uri.port)
+      client.use_ssl      = true
+      client.verify_mode  = OpenSSL::SSL::VERIFY_PEER
+      client.ca_file      = (File.expand_path '../cacert.pem', File.dirname(__FILE__))
+      client.read_timeout = self.class.configuration.read_timeout
+      client.open_timeout = self.class.configuration.open_timeout
 
       case http_method
       when 'GET'

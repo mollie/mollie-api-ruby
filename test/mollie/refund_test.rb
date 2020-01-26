@@ -180,5 +180,13 @@ module Mollie
       refund = Payment::Refund.new(id: 're_4qqhO89gsT')
       assert refund.order.nil?
     end
+
+    def test_metadata_struct
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT')
+        .to_return(status: 200, body: read_fixture('refunds/get.json'), headers: {})
+
+      refund = Payment::Refund.get('re_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')
+      assert_equal 12345, refund.metadata.bookkeeping_id
+    end
   end
 end

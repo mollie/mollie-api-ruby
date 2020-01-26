@@ -8,6 +8,9 @@
     "status": "pending",
     "createdAt": "2018-09-25T17:40:23+00:00",
     "description": "Required quantity not in stock, refunding one photo book.",
+    "metadata": {
+        "bookkeeping_id": 12345
+    },
     "orderId": "ord_stTC2WHAuS",
     "paymentId": "tr_WDqYK6vllg",
     "settlementAmount": {

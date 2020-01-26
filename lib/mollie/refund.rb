@@ -14,6 +14,7 @@ module Mollie
                   :payment_id,
                   :order_id,
                   :description,
+                  :metadata,
                   :created_at,
                   :_links
 
@@ -45,6 +46,10 @@ module Mollie
 
     def settlement_amount=(settlement_amount)
       @settlement_amount = Amount.new(settlement_amount)
+    end
+
+    def metadata=(metadata)
+      @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
     end
 
     def lines=(lines)

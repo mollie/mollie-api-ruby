@@ -7,6 +7,7 @@ module Mollie
                   :address,
                   :registration_number,
                   :vat_number,
+                  :vat_regulation,
                   :_links
 
     alias links _links

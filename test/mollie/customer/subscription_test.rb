@@ -154,8 +154,8 @@ module Mollie
         subscription = Customer::Subscription.get('sub_8JfGzs6v3K', customer_id: 'cst_8wmqcHMN4U')
         payments = subscription.payments
 
-        assert_equal payments.klass, Payment
-        assert_equal payments.first.id, 'tr_DtKxVP2AgW'
+        assert_equal Mollie::Payment, payments.klass
+        assert_equal 'tr_DtKxVP2AgW', payments.first.id
       end
     end
   end

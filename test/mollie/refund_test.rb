@@ -126,13 +126,7 @@ module Mollie
           {
             "resource": "refund",
             "id": "re_4qqhO89gsT",
-            "paymentId": "tr_WDqYK6vllg",
-            "_links": {
-              "settlement": {
-                "href": "https://api.mollie.com/v2/settlements/stl_jDk30akdN",
-                "type": "application/hal+json"
-              }
-            }
+            "settlementId": "stl_jDk30akdN"
           }
         ), headers: {})
 

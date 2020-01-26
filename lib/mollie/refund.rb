@@ -8,6 +8,7 @@ module Mollie
 
     attr_accessor :id,
                   :amount,
+                  :settlement_id,
                   :settlement_amount,
                   :status,
                   :lines,
@@ -69,7 +70,6 @@ module Mollie
     end
 
     def settlement(options = {})
-      settlement_id = Util.extract_id(links, 'settlement')
       return if settlement_id.nil?
       Settlement.get(settlement_id, options)
     end

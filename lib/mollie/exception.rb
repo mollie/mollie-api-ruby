@@ -17,4 +17,7 @@ module Mollie
       "#{status} #{title}: #{detail}"
     end
   end
+
+  class ResourceNotFoundError < RequestError
+  end
 end

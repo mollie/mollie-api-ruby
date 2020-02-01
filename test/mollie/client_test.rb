@@ -135,5 +135,35 @@ module Mollie
       assert_equal(json['field'],  e.field)
       assert_equal(json['_links'], e.links)
     end
+
+    def test_404_response
+      response = <<-JSON
+      {
+        "status": 404,
+        "title": "Not Found",
+        "detail": "No payment exists with token tr_WDqYK6vllg.",
+        "_links": {
+          "documentation": {
+            "href": "https://docs.mollie.com/guides/handling-errors",
+            "type": "text/html"
+          }
+        }
+      }
+      JSON
+
+      json = JSON.parse(response)
+      stub_request(:post, 'https://api.mollie.com/v2/my-method')
+        .to_return(status: 404, body: response, headers: {})
+
+      e = assert_raise ResourceNotFoundError.new(JSON.parse(response)) do
+        client.perform_http_call('POST', 'my-method', nil, {})
+      end
+
+      assert_equal(json['status'], e.status)
+      assert_equal(json['title'],  e.title)
+      assert_equal(json['detail'], e.detail)
+      assert_equal(json['field'],  e.field)
+      assert_equal(json['_links'], e.links)
+    end
   end
 end

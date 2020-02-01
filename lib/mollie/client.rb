@@ -123,6 +123,10 @@ module Mollie
         Util.nested_underscore_keys(JSON.parse(response.body))
       when 204
         {} # No Content
+      when 404
+        json = JSON.parse(response.body)
+        exception = ResourceNotFoundError.new(json)
+        raise exception
       else
         json = JSON.parse(response.body)
         exception = Mollie::RequestError.new(json)

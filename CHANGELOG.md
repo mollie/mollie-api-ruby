@@ -4,6 +4,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.7.0 - 2020-02-03
+
+  - Implemented various API features from the changelog up to and including Tuesday, September 24th, 2019.
+
+## 4.6.2 - 2019-11-21
+
+  - Added timeouts configuration for Net::HTTP
+
+## 4.6.1 - 2019-11-20
+
+  - Update root certificates
+
 ## 4.6.0 - 2019-10-01
 
   - Add Onboarding APIs (Get onboarding status, Submit onboarding data)

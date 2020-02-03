@@ -126,13 +126,7 @@ module Mollie
           {
             "resource": "refund",
             "id": "re_4qqhO89gsT",
-            "paymentId": "tr_WDqYK6vllg",
-            "_links": {
-              "settlement": {
-                "href": "https://api.mollie.com/v2/settlements/stl_jDk30akdN",
-                "type": "application/hal+json"
-              }
-            }
+            "settlementId": "stl_jDk30akdN"
           }
         ), headers: {})
 
@@ -179,6 +173,14 @@ module Mollie
     def test_nil_order
       refund = Payment::Refund.new(id: 're_4qqhO89gsT')
       assert refund.order.nil?
+    end
+
+    def test_metadata_struct
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT')
+        .to_return(status: 200, body: read_fixture('refunds/get.json'), headers: {})
+
+      refund = Payment::Refund.get('re_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')
+      assert_equal 12345, refund.metadata.bookkeeping_id
     end
   end
 end

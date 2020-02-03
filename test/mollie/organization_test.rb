@@ -16,6 +16,7 @@ module Mollie
         },
         registration_number: '30204462',
         vat_number:          'NL815839091B01',
+        vat_regulation:      'dutch',
         _links: {
           'self' => {
             'href' => 'https://api.mollie.com/v2/organizations/org_12345678',
@@ -40,6 +41,7 @@ module Mollie
       assert_equal 'NL', organization.address.country
       assert_equal '30204462', organization.registration_number
       assert_equal 'NL815839091B01', organization.vat_number
+      assert_equal 'dutch', organization.vat_regulation
       assert_equal 'https://api.mollie.com/v2/organizations/org_12345678', organization.links['self']['href']
     end
 

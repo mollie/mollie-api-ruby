@@ -8,12 +8,14 @@ module Mollie
 
     attr_accessor :id,
                   :amount,
+                  :settlement_id,
                   :settlement_amount,
                   :status,
                   :lines,
                   :payment_id,
                   :order_id,
                   :description,
+                  :metadata,
                   :created_at,
                   :_links
 
@@ -47,6 +49,10 @@ module Mollie
       @settlement_amount = Amount.new(settlement_amount)
     end
 
+    def metadata=(metadata)
+      @metadata = OpenStruct.new(metadata) if metadata.is_a?(Hash)
+    end
+
     def lines=(lines)
       @lines = lines.map { |line| Order::Line.new(line) }
     end
@@ -64,7 +70,6 @@ module Mollie
     end
 
     def settlement(options = {})
-      settlement_id = Util.extract_id(links, 'settlement')
       return if settlement_id.nil?
       Settlement.get(settlement_id, options)
     end

@@ -65,6 +65,7 @@ module Mollie
       assert_equal 'EUR', order.amount_refunded.currency
       assert_equal 'created', order.status
       assert_equal true, order.is_cancelable
+      assert_equal false, order.shopper_country_must_match_billing_country
       assert_equal '18475', order.order_number
       assert_equal 'nl_NL', order.locale
       assert_equal '1337', order.metadata.order_id

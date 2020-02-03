@@ -27,5 +27,20 @@ module Mollie
       assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard%402x.png', method.bigger_image
       assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard.svg', method.image['svg']
     end
+
+    def test_pricing
+      stub_request(:get, 'https://api.mollie.com/v2/methods/creditcard?include=pricing')
+        .to_return(status: 200, body: read_fixture('methods/get-includes-pricing.json'), headers: {})
+
+      creditcard = Method.get('creditcard', include: 'pricing')
+      creditcard_pricing = creditcard.pricing
+
+      assert_equal 3, creditcard_pricing.size
+      assert_equal 'Commercial & non-European cards', creditcard_pricing.first.description
+      assert_equal BigDecimal('0.25'), creditcard_pricing.first.fixed.value
+      assert_equal 'EUR', creditcard_pricing.first.fixed.currency
+      assert_equal '2.8', creditcard_pricing.first.variable
+      assert_equal 'other', creditcard_pricing.first.fee_region
+    end
   end
 end

@@ -24,7 +24,8 @@ module Mollie
                   :minimum_amount,
                   :maximum_amount,
                   :image,
-                  :issuers
+                  :issuers,
+                  :pricing
 
     def minimum_amount=(minimum_amount)
       @minimum_amount = Mollie::Amount.new(minimum_amount)
@@ -40,6 +41,17 @@ module Mollie
 
     def bigger_image
       image['size2x']
+    end
+
+    def pricing=(pricing)
+      @pricing = pricing.map do |price|
+        OpenStruct.new(
+          description: price['description'],
+          fixed: Mollie::Amount.new(price['fixed']),
+          variable: price['variable'],
+          fee_region: price['fee_region']
+        )
+      end
     end
   end
 end

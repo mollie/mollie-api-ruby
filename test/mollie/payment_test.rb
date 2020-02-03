@@ -223,6 +223,14 @@ module Mollie
       assert_equal 'EUR', payment.application_fee.amount.currency
     end
 
+    def test_restrict_payment_methods_to_country
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: read_fixture('payments/get.json'), headers: {})
+
+      payment = Payment.get('tr_WDqYK6vllg')
+      assert_equal 'NL', payment.restrict_payment_methods_to_country
+    end
+
     def test_list_refunds
       stub_request(:get, 'https://api.mollie.com/v2/payments/pay-id/refunds')
         .to_return(status: 200, body: %({"_embedded" : {"refunds" : [{"id":"ref-id", "payment_id":"pay-id"}]}}), headers: {})

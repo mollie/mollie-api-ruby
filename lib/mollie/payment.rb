@@ -31,6 +31,7 @@ module Mollie
                   :method,
                   :metadata,
                   :locale,
+                  :restrict_payment_methods_to_country,
                   :country_code,
                   :profile_id,
                   :settlement_amount,

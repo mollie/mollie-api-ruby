@@ -30,8 +30,9 @@ module Mollie
       end
 
       def shipment(options = {})
-        return if shipment_id.nil?
-        Order::Shipment.get(shipment_id, options)
+        resource_url = Util.extract_url(links, 'shipment')
+        response = Client.instance.perform_http_call('GET', resource_url, nil, {}, options)
+        Order::Shipment.new(response)
       end
 
       def settlement(options = {})

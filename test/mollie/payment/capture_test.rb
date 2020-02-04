@@ -53,7 +53,7 @@ module Mollie
         stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/captures/cpt_4qqhO89gsT')
           .to_return(status: 200, body: GET_CAPTURE, headers: {})
 
-        stub_request(:get, 'https://api.mollie.com/v2/shipments/shp_3wmsgCJN4U')
+        stub_request(:get, 'https://api.mollie.com/v2/orders/ord_8wmqcHMN4U/shipments/shp_3wmsgCJN4U')
           .to_return(status: 200, body: SHIPMENT_STUB, headers: {})
 
         capture = Payment::Capture.get('cpt_4qqhO89gsT', payment_id: 'tr_WDqYK6vllg')

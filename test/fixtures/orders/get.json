@@ -35,6 +35,8 @@
         "familyName": "Skywalker",
         "email": "luke@skywalker.com"
     },
+    "shopperCountryMustMatchBillingCountry": false,
+    "consumerDateOfBirth": "1993-10-21",
     "orderNumber": "18475",
     "shippingAddress": {
         "organizationName": "Mollie B.V.",

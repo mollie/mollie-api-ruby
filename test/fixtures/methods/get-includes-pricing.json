@@ -1,0 +1,57 @@
+{
+  "resource": "method",
+  "id": "creditcard",
+  "description": "Credit card",
+  "minimumAmount": {
+    "value": "0.01",
+    "currency": "EUR"
+  },
+  "maximumAmount": {
+    "value": "2000.00",
+    "currency": "EUR"
+  },
+  "image": {
+    "size1x": "https://www.mollie.com/external/icons/payment-methods/creditcard.png",
+    "size2x": "https://www.mollie.com/external/icons/payment-methods/creditcard%402x.png",
+    "svg": "https://www.mollie.com/external/icons/payment-methods/creditcard.svg"
+  },
+  "pricing": [
+    {
+      "description": "Commercial & non-European cards",
+      "fixed": {
+        "value": "0.25",
+        "currency": "EUR"
+      },
+      "variable": "2.8",
+      "feeRegion": "other"
+    },
+    {
+      "description": "European cards",
+      "fixed": {
+        "value": "0.25",
+        "currency": "EUR"
+      },
+      "variable": "1.8",
+      "feeRegion": "eu-cards"
+    },
+    {
+      "description": "Maestro",
+      "fixed": {
+        "value": "0.39",
+        "currency": "EUR"
+      },
+      "variable": "0",
+      "feeRegion": "maestro"
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "https://api.mollie.com/v2/methods/creditcard?include=pricing",
+      "type": "application/hal+json"
+    },
+    "documentation": {
+      "href": "https://docs.mollie.com/reference/v2/methods-api/get-method",
+      "type": "text/html"
+    }
+  }
+}

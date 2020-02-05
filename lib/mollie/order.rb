@@ -18,6 +18,7 @@ module Mollie
                   :status,
                   :is_cancelable,
                   :billing_address,
+                  :shopper_country_must_match_billing_country,
                   :consumer_date_of_birth,
                   :order_number,
                   :shipping_address,

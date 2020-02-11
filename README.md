@@ -5,9 +5,9 @@
 
 <img src="https://info.mollie.com/hubfs/github/ruby/editor.png" />
 
-> LOOKING FOR VERSION v2.2.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/2.2.x)
+> LOOKING FOR VERSION v2.2.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/v2.2.1)
 
-> LOOKING FOR VERSION v3.1.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/3.1.x)
+> LOOKING FOR VERSION v3.1.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/v3.1.6)
 
 [![Gem Version](https://badge.fury.io/rb/mollie-api-ruby.svg)](https://badge.fury.io/rb/mollie-api-ruby)
 [![](https://travis-ci.org/mollie/mollie-api-ruby.png)](https://travis-ci.org/mollie/mollie-api-ruby)

@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.7.1 - 2020-02-13
+
+  - Fix `Capture#shipment` API call.
+
 ## 4.7.0 - 2020-02-03
 
   - Implemented various API features from the changelog up to and including Tuesday, September 24th, 2019.

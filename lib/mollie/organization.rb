@@ -19,5 +19,9 @@ module Mollie
     def address=(address)
       @address = OpenStruct.new(address) if address.is_a?(Hash)
     end
+
+    def dashboard_url
+      Util.extract_url(links, 'dashboard')
+    end
   end
 end

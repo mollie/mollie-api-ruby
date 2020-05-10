@@ -90,7 +90,8 @@ module Mollie
                     currency: 'EUR'
                   }
                 }
-              ]
+              ],
+              invoice_id: 'inv_FrvewDA3Pr'
             }
           }
         },
@@ -149,6 +150,8 @@ module Mollie
       assert_equal '0.5000', settlement.periods[:'2015'][:'11'].costs[1].amount_net.value
       assert_equal '0.1050', settlement.periods[:'2015'][:'11'].costs[1].amount_vat.value
       assert_equal '0.6050', settlement.periods[:'2015'][:'11'].costs[1].amount_gross.value
+
+      assert_equal 'inv_FrvewDA3Pr', settlement.periods[:'2015'][:'11'].invoice_id
     end
 
     def test_status_open

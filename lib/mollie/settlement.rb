@@ -77,6 +77,10 @@ module Mollie
       Settlement::Chargeback.all(options.merge(settlement_id: id))
     end
 
+    def captures(options = {})
+      Settlement::Capture.all(options.merge(settlement_id: id))
+    end
+
     def invoice(options = {})
       return if invoice_id.nil?
       Invoice.get(invoice_id, options)

@@ -1,3 +1,3 @@
 module Mollie
-  VERSION = '4.7.1'.freeze
+  VERSION = '4.8.0'.freeze
 end

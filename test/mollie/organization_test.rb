@@ -21,7 +21,11 @@ module Mollie
           'self' => {
             'href' => 'https://api.mollie.com/v2/organizations/org_12345678',
             'type' => 'application/hal+json'
-            },
+          },
+          'dashboard' => {
+            'href' => 'https://mollie.com/dashboard/org_12345678',
+            'type' => 'text/html'
+          },
           'documentation' => {
             'href' => 'https://docs.mollie.com/reference/v2/organizations-api/get-organization',
             'type' => 'text/html'
@@ -43,6 +47,7 @@ module Mollie
       assert_equal 'NL815839091B01', organization.vat_number
       assert_equal 'dutch', organization.vat_regulation
       assert_equal 'https://api.mollie.com/v2/organizations/org_12345678', organization.links['self']['href']
+      assert_equal 'https://mollie.com/dashboard/org_12345678', organization.dashboard_url
     end
 
     def test_current_organization

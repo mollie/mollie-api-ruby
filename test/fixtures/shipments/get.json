@@ -86,7 +86,7 @@
     ],
     "_links": {
         "self": {
-            "href": "https://api.mollie.com/v2/shipments/shp_bjylrn",
+            "href": "https://api.mollie.com/v2/order/ord_kEn1PlbGa/shipments/shp_3wmsgCJN4U",
             "type": "application/hal+json"
         },
         "order": {

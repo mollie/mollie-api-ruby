@@ -227,6 +227,17 @@ module Mollie
       assert_equal 'chb-id', chargebacks.first.id
     end
 
+    def test_list_captures
+      stub_request(:get, 'https://api.mollie.com/v2/settlements/stl-id/captures')
+        .to_return(status: 200, body: %(
+          { "_embedded" : {"captures" : [{ "id": "cpt-id", "settlement_id": "stl-id" }]}}
+        ), headers: {})
+
+      captures = Settlement.new(id: 'stl-id').captures
+      assert_equal Settlement::Capture, captures.klass
+      assert_equal 'cpt-id', captures.first.id
+    end
+
     def test_get_invoice
       stub_request(:get, 'https://api.mollie.com/v2/settlements/stl_jDk30akdN')
         .to_return(

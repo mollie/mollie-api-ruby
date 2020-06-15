@@ -20,7 +20,7 @@ module Mollie
     end
 
     def dashboard
-      Util.extract_url(links, 'onboarding')
+      Util.extract_url(links, 'dashboard')
     end
 
     def organization(options = {})

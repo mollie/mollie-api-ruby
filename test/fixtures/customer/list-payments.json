@@ -1,0 +1,30 @@
+{
+    "count": 2,
+    "_embedded": {
+        "payments": [
+            {
+                "resource": "payment",
+                "id":"tr_1"
+            },
+            {
+                "resource": "payment",
+                "id":"tr_2"
+            }
+        ]
+    },
+    "_links": {
+        "documentation": {
+            "href": "https://docs.mollie.com/reference/v2/customers-api/list-customer-payments",
+            "type": "text/html"
+        },
+        "self": {
+            "href": "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?limit=2",
+            "type": "application/hal+json"
+        },
+        "previous": null,
+        "next": {
+            "href": "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?from=tr_3&limit=2",
+            "type": "application/hal+json"
+        }
+    }
+}

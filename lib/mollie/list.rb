@@ -38,7 +38,8 @@ module Mollie
       href = URI.parse(links['next']['href'])
       query = URI.decode_www_form(href.query).to_h
 
-      klass.all(options.merge(query))
+      response = Mollie::Client.instance.perform_http_call('GET', links['next']['href'], nil, {}, options.merge(query))
+      self.class.new(response, klass)
     end
 
     def previous(options = {})
@@ -47,7 +48,8 @@ module Mollie
       href = URI.parse(links['previous']['href'])
       query = URI.decode_www_form(href.query).to_h
 
-      klass.all(options.merge(query))
+      response = Mollie::Client.instance.perform_http_call('GET', links['previous']['href'], nil, {}, options.merge(query))
+      self.class.new(response, klass)
     end
   end
 end

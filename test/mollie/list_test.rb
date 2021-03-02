@@ -83,5 +83,65 @@ module Mollie
       list = Mollie::List.new(attributes, Payment)
       assert_equal 2, list.previous.count
     end
+
+    def test_pagination_for_nested_resources
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U')
+        .to_return(
+          status: 200,
+          body: read_fixture('customer/get.json'),
+          headers: {}
+        )
+
+      # First page of customer payments
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?limit=2')
+        .to_return(
+          status: 200,
+          body: read_fixture('customer/list-payments.json'),
+          headers: {}
+        )
+
+      # Second page
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?from=tr_3&limit=2')
+        .to_return(
+          status: 200,
+          body: read_fixture('customer/list-payments-next.json'),
+          headers: {}
+        )
+
+      # Previous page
+      stub_request(:get, 'https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?from=tr_1&limit=2')
+        .to_return(
+          status: 200,
+          body: read_fixture('customer/list-payments.json'),
+          headers: {}
+        )
+
+      customer = Mollie::Customer.get('cst_8wmqcHMN4U')
+
+      # First page of customer payments
+      payments = customer.payments(limit: 2)
+
+      assert_equal ["tr_1", "tr_2"], payments.map { |p| p.id }
+      assert_equal "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?from=tr_3&limit=2",
+        payments.links["next"]["href"]
+      assert_equal nil, payments.links["previous"]
+
+      # Second page
+      payments = payments.next
+
+      assert_equal ["tr_3", "tr_4"], payments.map { |p| p.id }
+      assert_equal nil, payments.links["next"]
+      assert_equal "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?from=tr_1&limit=2",
+      payments.links["previous"]["href"]
+
+      # Previous page
+      payments = payments.previous
+
+      assert_equal ["tr_1", "tr_2"], payments.map { |p| p.id }
+      assert_equal "https://api.mollie.com/v2/customers/cst_8wmqcHMN4U/payments?from=tr_3&limit=2",
+        payments.links["next"]["href"]
+      assert_equal nil, payments.links["previous"]
+    end
+
   end
 end

@@ -25,7 +25,8 @@ module Mollie
                   :maximum_amount,
                   :image,
                   :issuers,
-                  :pricing
+                  :pricing,
+                  :status
 
     def minimum_amount=(minimum_amount)
       @minimum_amount = Mollie::Amount.new(minimum_amount)

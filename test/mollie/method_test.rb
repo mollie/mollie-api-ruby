@@ -8,6 +8,7 @@ module Mollie
         description: 'Credit card',
         minimum_amount: { value: '0.01', currency: 'EUR' },
         maximum_amount: { value: '2000.00', currency: 'EUR' },
+        status: 'approved',
         image: {
           'size1x' => 'https://www.mollie.com/external/icons/payment-methods/creditcard.png',
           'size2x' => 'https://www.mollie.com/external/icons/payment-methods/creditcard%402x.png',
@@ -23,6 +24,7 @@ module Mollie
       assert_equal 'EUR', method.minimum_amount.currency
       assert_equal BigDecimal('2000.00'), method.maximum_amount.value
       assert_equal 'EUR', method.maximum_amount.currency
+      assert_equal 'approved', method.status
       assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard.png', method.normal_image
       assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard%402x.png', method.bigger_image
       assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard.svg', method.image['svg']

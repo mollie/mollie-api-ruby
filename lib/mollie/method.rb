@@ -28,6 +28,11 @@ module Mollie
                   :pricing,
                   :status
 
+    def self.all_available(options = {})
+      response = Client.instance.perform_http_call("GET", "methods", "all", {}, options)
+      Mollie::List.new(response, Mollie::Method)
+    end
+
     def minimum_amount=(minimum_amount)
       @minimum_amount = Mollie::Amount.new(minimum_amount)
     end

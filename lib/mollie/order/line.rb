@@ -29,6 +29,10 @@ module Mollie
 
       alias links _links
 
+      def self.update(id, data = {})
+        request('PATCH', id, data) { |response| Order.new(response) }
+      end
+
       def cancelable?
         is_cancelable == true
       end

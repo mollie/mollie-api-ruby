@@ -6,6 +6,7 @@ module Mollie
       GET_ORDER   = read_fixture('orders/get.json')
       CANCEL_LINE = read_fixture('orders/cancel_line.json')
       CANCEL_QTY  = read_fixture('orders/cancel_line_qty.json')
+      UPDATE_LINE = read_fixture('orders/update_line.json')
 
       def test_discounted
         stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
@@ -40,6 +41,23 @@ module Mollie
         assert_nil order.lines.first.cancel(quantity: 1)
       end
 
+      def test_update_orderline
+        stub_request(:patch, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa/lines/odl_dgtxyl')
+          .with(body: { sku: "new-sku-12345678" }.to_json)
+          .to_return(status: 200, body: UPDATE_LINE, headers: {})
+
+        order = Mollie::Order::Line.update(
+          'odl_dgtxyl',
+          order_id: 'ord_kEn1PlbGa',
+          sku: "new-sku-12345678"
+        )
+
+        # The `update order line`-API returns an `order` instead of `orderline`
+        assert_equal Mollie::Order, order.class
+
+        line = order.lines.find { |line| line.id == 'odl_dgtxyl' }
+        assert_equal "new-sku-12345678", line.sku
+      end
     end
   end
 end

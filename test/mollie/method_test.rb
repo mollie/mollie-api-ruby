@@ -30,6 +30,17 @@ module Mollie
       assert_equal 'https://www.mollie.com/external/icons/payment-methods/creditcard.svg', method.image['svg']
     end
 
+    def test_all_available
+      stub_request(:get, 'https://api.mollie.com/v2/methods/all')
+        .to_return(status: 200, body: read_fixture('methods/all.json'), headers: {})
+
+      available_methods = Method.all_available
+      assert_equal 3, available_methods.size
+
+      ideal_method = available_methods.first
+      assert_equal "pending-boarding", ideal_method.status
+    end
+
     def test_pricing
       stub_request(:get, 'https://api.mollie.com/v2/methods/creditcard?include=pricing')
         .to_return(status: 200, body: read_fixture('methods/get-includes-pricing.json'), headers: {})

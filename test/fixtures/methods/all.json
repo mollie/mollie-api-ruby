@@ -1,0 +1,92 @@
+{
+    "count": 3,
+    "_embedded": {
+        "methods": [
+            {
+                "resource": "method",
+                "id": "ideal",
+                "description": "iDEAL",
+                "minimumAmount": {
+                    "value": "0.01",
+                    "currency": "EUR"
+                },
+                "maximumAmount": {
+                    "value": "50000.00",
+                    "currency": "EUR"
+                },
+                "image": {
+                    "size1x": "https://www.mollie.com/external/icons/payment-methods/ideal.png",
+                    "size2x": "https://www.mollie.com/external/icons/payment-methods/ideal%402x.png",
+                    "svg": "https://www.mollie.com/external/icons/payment-methods/ideal.svg"
+                },
+                "status": "pending-boarding",
+                "_links": {
+                    "self": {
+                        "href": "https://api.mollie.com/v2/methods/ideal",
+                        "type": "application/hal+json"
+                    }
+                }
+            },
+            {
+                "resource": "method",
+                "id": "creditcard",
+                "description": "Credit card",
+                "minimumAmount": {
+                    "value": "0.01",
+                    "currency": "EUR"
+                },
+                "maximumAmount": {
+                    "value": "2000.00",
+                    "currency": "EUR"
+                },
+                "image": {
+                    "size1x": "https://www.mollie.com/external/icons/payment-methods/creditcard.png",
+                    "size2x": "https://www.mollie.com/external/icons/payment-methods/creditcard%402x.png",
+                    "svg": "https://www.mollie.com/external/icons/payment-methods/creditcard.svg"
+                },
+                "status": "pending-boarding",
+                "_links": {
+                    "self": {
+                        "href": "https://api.mollie.com/v2/methods/creditcard",
+                        "type": "application/hal+json"
+                    }
+                }
+            },
+            {
+                "resource": "method",
+                "id": "bancontact",
+                "description": "Bancontact",
+                "minimumAmount": {
+                    "value": "0.02",
+                    "currency": "EUR"
+                },
+                "maximumAmount": {
+                    "value": "50000.00",
+                    "currency": "EUR"
+                },
+                "image": {
+                    "size1x": "https://www.mollie.com/external/icons/payment-methods/bancontact.png",
+                    "size2x": "https://www.mollie.com/external/icons/payment-methods/bancontact%402x.png",
+                    "svg": "https://www.mollie.com/external/icons/payment-methods/bancontact.svg"
+                },
+                "status": null,
+                "_links": {
+                    "self": {
+                        "href": "https://api.mollie.com/v2/methods/bancontact",
+                        "type": "application/hal+json"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "documentation": {
+            "href": "https://docs.mollie.com/reference/v2/methods-api/list-all-methods",
+            "type": "text/html"
+        },
+        "self": {
+            "href": "https://api.mollie.com/v2/methods/all",
+            "type": "application/hal+json"
+        }
+    }
+}

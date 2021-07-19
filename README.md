@@ -10,7 +10,7 @@
 > LOOKING FOR VERSION v3.1.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/v3.1.6)
 
 [![Gem Version](https://badge.fury.io/rb/mollie-api-ruby.svg)](https://badge.fury.io/rb/mollie-api-ruby)
-[![](https://travis-ci.org/mollie/mollie-api-ruby.png)](https://travis-ci.org/mollie/mollie-api-ruby)
+[![Build Status](https://github.com/mollie/mollie-api-ruby/actions/workflows/build.yml/badge.svg)](https://github.com/mollie/mollie-api-ruby/actions/workflows/build.yml)
 
 Accepting [iDEAL](https://www.mollie.com/en/payments/ideal), [Bancontact](https://www.mollie.com/en/payments/bancontact), [SOFORT Banking](https://www.mollie.com/en/payments/sofort), [Creditcard](https://www.mollie.com/en/payments/credit-card), [SEPA Bank transfer](https://www.mollie.com/en/payments/bank-transfer), [SEPA Direct debit](https://www.mollie.com/en/payments/direct-debit), [PayPal](https://www.mollie.com/en/payments/paypal), [KBC/CBC Payment Button](https://www.mollie.com/en/payments/kbc-cbc), [Belfius Direct Net](https://www.mollie.com/en/payments/belfius), [paysafecard](https://www.mollie.com/en/payments/paysafecard), [ING Home’Pay](https://www.mollie.com/en/payments/ing-homepay), [Gift cards](https://www.mollie.com/en/payments/gift-cards), [EPS](https://www.mollie.com/en/payments/eps), [Giropay](https://www.mollie.com/en/payments/giropay) and [Apple Pay](https://www.mollie.com/en/payments/apple-pay) online payments without fixed monthly costs or any punishing registration procedures. Just use the Mollie API to receive payments directly on your website or easily refund transactions to your customers.
 

@@ -167,7 +167,7 @@ module Mollie
       @settlement_amount = Mollie::Amount.new(settlement_amount)
     end
 
-    def amount_captured
+    def amount_captured=(amount_captured)
       @amount_captured = Mollie::Amount.new(amount_captured)
     end
 

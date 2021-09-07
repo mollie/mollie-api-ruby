@@ -25,6 +25,7 @@ module Mollie
                   :failed_at,
                   :amount,
                   :amount_captured,
+                  :amount_charged_back,
                   :amount_refunded,
                   :amount_remaining,
                   :description,
@@ -169,6 +170,10 @@ module Mollie
 
     def amount_captured=(amount_captured)
       @amount_captured = Mollie::Amount.new(amount_captured)
+    end
+
+    def amount_charged_back=(amount_charged_back)
+      @amount_charged_back = Mollie::Amount.new(amount_charged_back)
     end
 
     def amount_remaining=(amount_remaining)

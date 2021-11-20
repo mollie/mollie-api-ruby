@@ -4,6 +4,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.10.0 - 2021-11-20
+
+:warning: The `Profile#category_code` attribute is deprecated and will be removed in 2022. Please use the `business_category` parameter instead.
+
+  - (f0e695c) Order: add methods to retrieve embedded resources
+  - (e16864c) Order: add class to create order payments
+  - (5175cd3) Profile: add `business_category` attribute
+  - (3d2e370) Payment: add `amount_charged_back` attribute
+  - (3d6b403) Fix assignment method for `amount_captured`
+  - (37280c3) Migrate from Travis CI to GitHub Actions
+  - (33bb6bb) Add example to update orderlines
+  - (c70dbf6) fix: orderline update returns incorrect class
+  - (ca5935d) Add example to retrieve all available payment methods
+  - (457b853) Add "List all payment methods" API
+  - (9d8eebc) Method: add status attribute (#147)
+  - (506d52e) fix: Include parent resource in pagination calls
+  - (7e3b98d) Fix onboarding dashboard URL.
+
 ## 4.9.0 - 2020-05-17
 
   - Settlement: add `captures` helper method.

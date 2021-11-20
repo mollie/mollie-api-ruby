@@ -24,7 +24,9 @@ module Mollie
                   :website,
                   :email,
                   :phone,
-                  :category_code,
+                  :business_category,
+                  :category_code, # This parameter is deprecated and will be removed in 2022.
+                                  # Please use the businessCategory parameter instead.
                   :status,
                   :review,
                   :created_at,

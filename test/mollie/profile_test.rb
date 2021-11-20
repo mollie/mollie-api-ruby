@@ -10,6 +10,7 @@ module Mollie
         website:          'https://www.mywebsite.com',
         email:            'info@mywebsite.com',
         phone:            '+31208202070',
+        business_category: 'OTHER_MERCHANDISE',
         category_code:    5399,
         status:           'unverified',
         review: {
@@ -56,6 +57,7 @@ module Mollie
       assert_equal 'https://www.mywebsite.com', profile.website
       assert_equal 'info@mywebsite.com', profile.email
       assert_equal '+31208202070', profile.phone
+      assert_equal 'OTHER_MERCHANDISE', profile.business_category
       assert_equal 5399, profile.category_code
       assert_equal Profile::STATUS_UNVERIFIED, profile.status
       assert_equal Profile::REVIEW_STATUS_PENDING, profile.review.status

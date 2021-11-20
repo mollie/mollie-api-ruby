@@ -7,6 +7,9 @@ module Mollie
     UPDATE_ORDER = read_fixture('orders/update.json')
     LIST_ORDER   = read_fixture('orders/list.json')
 
+    GET_ORDER_WITH_EMBEDDED_RESOURCES =
+      read_fixture('orders/get_embedded_resources.json')
+
     # Refunds
     CREATE_ORDER_REFUND = read_fixture('orders/create_refund.json')
     REFUND_ALL_LINES    = read_fixture('orders/refund_all.json')
@@ -80,6 +83,36 @@ module Mollie
       assert_equal Time.parse('2018-08-25T09:29:56+00:00'), order.authorized_at
       assert_equal Time.parse('2018-08-27T09:29:56+00:00'), order.canceled_at
       assert_equal Time.parse('2018-08-28T09:29:56+00:00'), order.completed_at
+    end
+
+    def test_embedded_payments
+      stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
+        .to_return(status: 200, body: GET_ORDER_WITH_EMBEDDED_RESOURCES, headers: {})
+
+      order = Order.get('ord_kEn1PlbGa')
+
+      assert_equal 'tr_ncaPcAhuUV', order.payments.first.id
+      assert_equal 1, order.payments.size
+    end
+
+    def test_embedded_refunds
+      stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
+        .to_return(status: 200, body: GET_ORDER_WITH_EMBEDDED_RESOURCES, headers: {})
+
+      order = Order.get('ord_kEn1PlbGa')
+
+      assert_equal 're_vD3Jm32wQt', order.refunds.first.id
+      assert_equal 1, order.refunds.size
+    end
+
+    def test_embedded_shipments
+      stub_request(:get, 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa')
+        .to_return(status: 200, body: GET_ORDER_WITH_EMBEDDED_RESOURCES, headers: {})
+
+      order = Order.get('ord_kEn1PlbGa')
+
+      assert_equal 'shp_3wmsgCJN4U', order.shipments.first.id
+      assert_equal 1, order.shipments.size
     end
 
     def test_cancelable?

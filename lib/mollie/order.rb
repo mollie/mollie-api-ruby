@@ -130,8 +130,36 @@ module Mollie
       @completed_at = Time.parse(completed_at.to_s)
     end
 
+    def payments
+      resources = (attributes['_embedded']['payments'] if attributes['_embedded'])
+
+      if resources.nil?
+        List.new({}, Order::Payment)
+      else
+        List.new({ '_embedded' => { 'payments' => resources } }, Order::Payment)
+      end
+    end
+
     def refunds(options = {})
-      Order::Refund.all(options.merge(order_id: id))
+      resources = (attributes['_embedded']['refunds'] if attributes['_embedded'])
+
+      if resources.nil?
+        # To avoid breaking changes, fallback to /v2/order/*orderId*/refunds
+        # if the order was retrieved without embedded refunds.
+        Order::Refund.all(options.merge(order_id: id))
+      else
+        List.new({ '_embedded' => { 'refunds' => resources } }, Order::Refund)
+      end
+    end
+
+    def shipments
+      resources = (attributes['_embedded']['shipments'] if attributes['_embedded'])
+
+      if resources.nil?
+        List.new({}, Order::Shipment)
+      else
+        List.new({ '_embedded' => { 'shipments' => resources } }, Order::Shipment)
+      end
     end
 
     def refund!(options = {})

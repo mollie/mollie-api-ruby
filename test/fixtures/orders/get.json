@@ -171,44 +171,6 @@
             }
         }
     ],
-    "_embedded": {
-        "payments": [
-            {
-                "resource": "payment",
-                "id": "tr_ncaPcAhuUV",
-                "mode": "live",
-                "createdAt": "2018-09-07T12:00:05+00:00",
-                "amount": {
-                    "value": "1027.99",
-                    "currency": "EUR"
-                },
-                "description": "Order #1337 (Lego cars)",
-                "method": null,
-                "metadata": null,
-                "status": "open",
-                "isCancelable": false,
-                "locale": "nl_NL",
-                "profileId": "pfl_URR55HPMGx",
-                "orderId": "ord_kEn1PlbGa",
-                "sequenceType": "oneoff",
-                "redirectUrl": "https://example.org/redirect",
-                "_links": {
-                    "self": {
-                        "href": "https://api.mollie.com/v2/payments/tr_ncaPcAhuUV",
-                        "type": "application/hal+json"
-                    },
-                    "checkout": {
-                        "href": "https://www.mollie.com/payscreen/select-method/ncaPcAhuUV",
-                        "type": "text/html"
-                    },
-                    "order": {
-                        "href": "https://api.mollie.com/v2/orders/ord_kEn1PlbGa",
-                        "type": "application/hal+json"
-                    }
-                }
-            }
-        ]
-    },
     "_links": {
         "self": {
             "href": "https://api.mollie.com/v2/orders/ord_kEn1PlbGa",

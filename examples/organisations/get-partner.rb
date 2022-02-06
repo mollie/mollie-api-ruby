@@ -1,0 +1,1 @@
+partner = Mollie::Partner.current

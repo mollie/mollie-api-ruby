@@ -78,7 +78,7 @@ module Mollie
         path += "?#{build_nested_query(camelized_query)}"
       end
 
-      uri                 = URI.parse(api_endpoint)
+      uri                 = URI.parse([api_endpoint, path].join)
       client              = Net::HTTP.new(uri.host, uri.port)
       client.use_ssl      = true
       client.verify_mode  = OpenSSL::SSL::VERIFY_PEER
@@ -88,18 +88,18 @@ module Mollie
 
       case http_method
       when 'GET'
-        request = Net::HTTP::Get.new(path)
+        request = Net::HTTP::Get.new(uri)
       when 'POST'
         http_body.delete_if { |_k, v| v.nil? }
-        request      = Net::HTTP::Post.new(path)
+        request      = Net::HTTP::Post.new(uri)
         request.body = Util.camelize_keys(http_body).to_json
       when 'PATCH'
         http_body.delete_if { |_k, v| v.nil? }
-        request      = Net::HTTP::Patch.new(path)
+        request      = Net::HTTP::Patch.new(uri)
         request.body = Util.camelize_keys(http_body).to_json
       when 'DELETE'
         http_body.delete_if { |_k, v| v.nil? }
-        request      = Net::HTTP::Delete.new(path)
+        request      = Net::HTTP::Delete.new(uri)
         request.body = Util.camelize_keys(http_body).to_json
       else
         raise Mollie::Exception, "Invalid HTTP Method: #{http_method}"

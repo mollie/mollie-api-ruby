@@ -11,7 +11,7 @@ module Mollie
     end
 
     class Configuration
-      attr_accessor :api_key, :open_timeout, :read_timeout
+      attr_accessor :api_key, :open_timeout, :read_timeout, :response_handler
 
       def initialize
         @api_key = ''
@@ -112,6 +112,9 @@ module Mollie
 
       begin
         response = client.request(request)
+        if self.class.configuration.response_handler.present?
+          self.class.configuration.response_handler.call(request, response)
+        end
       rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
              Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
         raise Mollie::Exception, e.message

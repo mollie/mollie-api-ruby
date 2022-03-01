@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.11.0 - 2022-03-01
+
+  - (1ef339e) Add Partner API
+
 ## 4.10.0 - 2021-11-20
 
 :warning: The `Profile#category_code` attribute is deprecated and will be removed in 2022. Please use the `business_category` parameter instead.

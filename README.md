@@ -24,11 +24,11 @@ To use the Mollie API client, the following things are required:
 
 ## Installation
 
-By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/).
+By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/). Note: v4.8.0 and higher are not published on rubygems.org, see [GH-140](https://github.com/mollie/mollie-api-ruby/issues/140) for details.
 
 ```
 # Gemfile
-gem 'mollie-api-ruby'
+gem "mollie-api-ruby", github: "mollie/mollie-api-ruby", tag: "v4.11.0"
 
 $ gem install mollie-api-ruby
 ```

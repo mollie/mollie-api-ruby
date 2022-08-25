@@ -8,7 +8,7 @@ deploy:
   gem: mollie-api-ruby
   provider: rubygems
   api_key:
-    secure: "JdYKjK+AZNNviyAW92ta16Kk/u1gLTyvUVjoiSrGchsMmx8pN107MERpn5klFzOTKcnmMn+h3eA0RzhsuA+eFBfd5X58kNlXzXzKzKvOKmjrH69jiUWAJ5PmepacvsKMCAovOOtkskFzifKUUkrkPv87KO1J97wsZ4ASX6q3MRs="
+    secure: "OQobSXpfwELzuh5prnwADPGwt3LHyD/EMuKlJ7aJ6CNveGQzvgGOtK52Cn3X9X8yAkX/PNJVXnPeFaKSQopcAJB30ySJMnPYGjQvIoiUOglMB8lJDFxcLtZ/21NXDf2f3cxYPmZkBGtFQeb/EEYBg4/vwjgWlJ/mcwnesLpwj5A="
   on:
     tags: true
     repo: mollie/mollie-api-ruby

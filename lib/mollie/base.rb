@@ -30,6 +30,8 @@ module Mollie
       end
 
       def get(id, options = {})
+        raise ArgumentError, 'id cannot be blank' if !id || id.to_s.strip.empty?
+
         request('GET', id, {}, options) do |response|
           new(response)
         end

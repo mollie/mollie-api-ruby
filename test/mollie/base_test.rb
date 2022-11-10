@@ -45,6 +45,11 @@ module Mollie
       assert_equal 'object-id', resource.testobject_id
     end
 
+    def test_get_without_id
+      assert_raises(ArgumentError) { TestObject.get(nil) }
+      assert_raises(ArgumentError) { TestObject.get(' ') }
+    end
+
     def test_create
       stub_request(:post, 'https://api.mollie.com/v2/testobjects')
         .with(body: %({"foo":1.95}))

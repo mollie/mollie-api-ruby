@@ -30,7 +30,7 @@ module Mollie
       end
 
       def get(id, options = {})
-        raise ArgumentError, 'id cannot be blank' if !id || id.to_s.strip.empty?
+        raise Mollie::Exception, "Invalid resource ID: #{id.inspect}" if id.nil? || id.strip.empty?
 
         request('GET', id, {}, options) do |response|
           new(response)

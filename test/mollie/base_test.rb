@@ -44,6 +44,13 @@ module Mollie
       assert_equal 'my-id', resource.id
       assert_equal 'object-id', resource.testobject_id
     end
+    def test_get_with_invalid_identifiers
+      assert_raises(Mollie::Exception) { TestObject.get(nil) }
+      assert_raises(Mollie::Exception) { TestObject.get(" ") }
+      assert_raises(Mollie::Exception) { TestObject.get("   ") }
+      assert_raises(Mollie::Exception) { TestObject.get("\t") }
+      assert_raises(Mollie::Exception) { TestObject.get("\n") }
+    end
 
     def test_create
       stub_request(:post, 'https://api.mollie.com/v2/testobjects')

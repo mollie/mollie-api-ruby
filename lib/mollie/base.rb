@@ -30,6 +30,8 @@ module Mollie
       end
 
       def get(id, options = {})
+        raise Mollie::Exception, "Invalid resource ID: #{id.inspect}" if id.nil? || id.strip.empty?
+
         request('GET', id, {}, options) do |response|
           new(response)
         end

@@ -53,6 +53,18 @@ module Mollie
       assert_equal 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM', Mollie::Client.instance.api_key
     end
 
+    def test_post_with_idempotency_key
+      stub_request(:post, 'https://api.mollie.com/v2/payments')
+        .with(headers: { "Idempotency-Key" => '91d42bd5-e47f-4f4a-b38e-99333b264e78' })
+        .to_return(status: 200, body: '{}', headers: {})
+
+      payment = Mollie::Payment.create(
+        amount: { value: '10.00', currency: 'EUR' },
+        redirect_url: 'https://webshop.example.org/order/12345/',
+        idempotency_key: '91d42bd5-e47f-4f4a-b38e-99333b264e78'
+      )
+    end
+
     def test_get_request_convert_to_camel_case
       stub_request(:get, 'https://api.mollie.com/v2/my-method?myParam=ok')
         .to_return(status: 200, body: '{}', headers: {})

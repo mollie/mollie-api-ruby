@@ -46,6 +46,7 @@ module Mollie
                   :_links,
                   :details,
                   :redirect_url,
+                  :cancel_url,
                   :webhook_url
 
     alias links _links

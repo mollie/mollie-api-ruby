@@ -4,6 +4,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.12.0 - 2023-01-29
+
+  - (f180b47) Add support for idempotency keys
+  - (f0a47d1) Payment: add support for cancel_url
+  - (9db60b3) Order: add support for cancel_url
+  - (2f88990) Require non-empty ID when fetching a resource
+
 ## 4.11.0 - 2022-03-01
 
   - (1ef339e) Add Partner API

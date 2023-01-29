@@ -72,6 +72,7 @@ module Mollie
 
       api_key      = http_body.delete(:api_key) || query.delete(:api_key) || @api_key
       api_endpoint = http_body.delete(:api_endpoint) || query.delete(:api_endpoint) || @api_endpoint
+      idempotency_key = http_body.delete(:idempotency_key) || query.delete(:idempotency_key)
 
       unless query.empty?
         camelized_query = Util.camelize_keys(query)
@@ -109,6 +110,10 @@ module Mollie
       request['Content-Type']  = 'application/json'
       request['Authorization'] = "Bearer #{api_key}"
       request['User-Agent']    = @version_strings.join(' ')
+
+      if http_method == 'POST' && idempotency_key
+        request['Idempotency-Key'] = idempotency_key
+      end
 
       begin
         response = client.request(request)

@@ -49,6 +49,7 @@
         "email": "luke@skywalker.com"
     },
     "redirectUrl": "https://example.org/redirect",
+    "cancelUrl": "https://example.org/cancel",
     "webhookUrl": "https://example.org/webhook",
     "expiredAt": "2018-08-30T09:29:56+00:02",
     "paidAt": "2018-08-26T09:29:56+00:00",

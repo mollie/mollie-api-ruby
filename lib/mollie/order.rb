@@ -25,6 +25,7 @@ module Mollie
                   :locale,
                   :metadata,
                   :redirect_url,
+                  :cancel_url,
                   :webhook_url,
                   :created_at,
                   :expires_at,

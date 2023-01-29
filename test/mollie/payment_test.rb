@@ -32,6 +32,7 @@ module Mollie
         profile_id:    'pfl_QkEhN94Ba',
         sequence_type: 'oneoff',
         redirect_url:  'https://webshop.example.org/order/12345',
+        cancel_url:    'https://webshop.example.org/payments/cancel',
         webhook_url:   'https://webshop.example.org/payments/webhook',
         _links:        {
           'self' => {
@@ -72,8 +73,9 @@ module Mollie
       assert_equal 'nl_NL', payment.locale
       assert_equal 'NL', payment.country_code
       assert_equal 'pfl_QkEhN94Ba', payment.profile_id
-      assert_equal 'https://webshop.example.org/payments/webhook', payment.webhook_url
       assert_equal 'https://webshop.example.org/order/12345', payment.redirect_url
+      assert_equal 'https://webshop.example.org/payments/cancel', payment.cancel_url
+      assert_equal 'https://webshop.example.org/payments/webhook', payment.webhook_url
       assert_equal 'https://www.mollie.com/payscreen/select-method/7UhSN1zuXS', payment.checkout_url
       assert_equal false, payment.cancelable?
     end

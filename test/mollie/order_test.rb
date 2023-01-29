@@ -75,6 +75,7 @@ module Mollie
       assert_equal '1337', order.metadata.order_id
       assert_equal 'Lego cars', order.metadata.description
       assert_equal 'https://example.org/redirect', order.redirect_url
+      assert_equal 'https://example.org/cancel', order.cancel_url
       assert_equal 'https://example.org/webhook', order.webhook_url
       assert_equal Time.parse('2018-08-02T09:29:56+00:00'), order.created_at
       assert_equal Time.parse('2018-08-30T09:29:56+00:00'), order.expires_at

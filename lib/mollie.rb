@@ -28,6 +28,7 @@ require 'mollie/profile'
 require 'mollie/refund'
 require 'mollie/settlement'
 require 'mollie/subscription'
+require 'mollie/terminal'
 
 require 'mollie/customer/mandate'
 require 'mollie/customer/payment'

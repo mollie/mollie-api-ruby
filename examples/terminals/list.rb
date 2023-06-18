@@ -1,0 +1,1 @@
+terminals = Mollie::Terminal.all

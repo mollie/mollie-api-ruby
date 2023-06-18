@@ -1,0 +1,34 @@
+{
+    "count": 3,
+    "_embedded": {
+        "terminals": [
+            {
+                "resource": "terminal",
+                "id": "terminal_one"
+            },
+            {
+                "resource": "terminal",
+                "id": "terminal_two"
+            },
+            {
+                "resource": "terminal",
+                "id": "terminal_three"
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "https://api.mollie.com/v2/terminals",
+            "type": "application/hal+json"
+        },
+        "previous": null,
+        "next": {
+            "href": "https://api.mollie.com/v2/terminals?from=term_7MgL4wea46qkRcoTZjWEH",
+            "type": "application/hal+json"
+        },
+        "documentation": {
+            "href": "https://docs.mollie.com/reference/v2/terminals-api/list-terminals",
+            "type": "text/html"
+        }
+    }
+}

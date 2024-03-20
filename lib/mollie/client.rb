@@ -130,11 +130,11 @@ module Mollie
         {} # No Content
       when 404
         json = JSON.parse(response.body)
-        exception = ResourceNotFoundError.new(json)
+        exception = ResourceNotFoundError.new(json, response)
         raise exception
       else
         json = JSON.parse(response.body)
-        exception = Mollie::RequestError.new(json)
+        exception = Mollie::RequestError.new(json, response)
         raise exception
       end
     end

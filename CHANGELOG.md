@@ -4,6 +4,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.13.0 - 2023-05-22
+
+  - (09489be) Add HTTP response details to RequestError
+  - (fe5d114) Add Terminals API
+
 ## 4.12.0 - 2023-01-29
 
   - (f180b47) Add support for idempotency keys

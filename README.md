@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://info.mollie.com/hubfs/github/ruby/logo.png" width="128" height="128"/>
+  <img src="https://github.com/mollie/mollie-api-ruby/assets/39294/5d35df48-e5c0-4de6-8541-159d9d8aa6f6.png" width="128" height="128"/>
 </p>
 <h1 align="center">Mollie API client for Ruby</h1>
 
-<img src="https://info.mollie.com/hubfs/github/ruby/editor.png" />
+<img src="https://github.com/mollie/mollie-api-ruby/assets/39294/4838e149-4707-41c7-9aeb-bb86e68adc2c.png" />
 
 > LOOKING FOR VERSION v2.2.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/v2.2.1)
 

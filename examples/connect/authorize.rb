@@ -5,7 +5,7 @@ client = Rack::OAuth2::Client.new(
   secret:                 secret,
   state:                  'some_state',
   redirect_uri:           redirect_url,
-  authorization_endpoint: 'https://www.mollie.com/oauth2/authorize',
+  authorization_endpoint: 'https://my.mollie.com/oauth2/authorize',
   token_endpoint:         'https://api.mollie.com/oauth2/tokens'
 )
 

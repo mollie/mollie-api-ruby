@@ -16,10 +16,12 @@ Gem::Specification.new do |s|
   s.email = ['info@mollie.com']
   s.homepage = 'https://github.com/mollie/mollie-api-ruby'
   s.license = 'BSD'
-  s.required_ruby_version = '>= 2.3.8'
+  s.required_ruby_version = '>= 2.5'
 
   s.files = `git ls-files`.split("\n")
   s.test_files = Dir['test/**/*']
+
+  s.add_dependency('ostruct', '~> 0.6.0')
 
   s.add_development_dependency('rake')
   s.add_development_dependency('rubocop', '~> 0.57.2')

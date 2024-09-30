@@ -20,10 +20,13 @@ Gem::Specification.new do |s|
     'changelog_uri' => 'https://github.com/mollie/mollie-api-ruby/blob/master/CHANGELOG.md'
   }
 
-  s.required_ruby_version = '>= 2.3.8'
+  s.required_ruby_version = '>= 2.5'
 
   s.files = `git ls-files`.split("\n")
   s.test_files = Dir['test/**/*']
+
+  s.add_dependency('ostruct', '~> 0.6.0')
+  s.add_dependency('bigdecimal', '~> 3.1', '>= 3.1.8')
 
   s.add_development_dependency('rake')
   s.add_development_dependency('rubocop', '~> 0.57.2')

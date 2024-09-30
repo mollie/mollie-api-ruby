@@ -1,21 +1,33 @@
 module Mollie
   class Method < Base
+    ALMA           = 'alma'.freeze
     APPLEPAY       = 'applepay'.freeze
     BANCONTACT     = 'bancontact'.freeze
+    BANCOMAT_PAY   = 'bancomatpay'.freeze
     BANKTRANSFER   = 'banktransfer'.freeze
     BELFIUS        = 'belfius'.freeze
+    BILLIE         = 'billie'.freeze
+    BLIK           = 'bilk'.freeze
     CREDITCARD     = 'creditcard'.freeze
     DIRECTDEBIT    = 'directdebit'.freeze
     EPS            = 'eps'.freeze
     GIFTCARD       = 'giftcard'.freeze
     GIROPAY        = 'giropay'.freeze
     IDEAL          = 'ideal'.freeze
+    IN3            = 'in3'.freeze
     INGHOMEPAY     = 'inghomepay'.freeze
     KBC            = 'kbc'.freeze
+    MYBANK         = 'mybank'.freeze
     PAYPAL         = 'paypal'.freeze
     PAYSAFECARD    = 'paysafecard'.freeze
     PRZELEWY24     = 'przelewy24'.freeze
+    RIVERTY        = 'riverty'.freeze
     SOFORT         = 'sofort'.freeze
+    SATISPAY       = 'satispay'.freeze
+    TRUSTLY        = 'trustly'.freeze
+    TWINT          = 'twint'.freeze
+    VOUCHER        = 'voucher'.freeze
+    KLARNA         = 'klarna'.freeze
     KLARNASLICEIT  = 'klarnasliceit'.freeze
     KLARNAPAYLATER = 'klarnapaylater'.freeze
 

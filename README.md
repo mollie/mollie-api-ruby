@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://info.mollie.com/hubfs/github/ruby/logo.png" width="128" height="128"/>
+  <img src="https://github.com/mollie/mollie-api-ruby/assets/39294/5d35df48-e5c0-4de6-8541-159d9d8aa6f6.png" width="128" height="128"/>
 </p>
 <h1 align="center">Mollie API client for Ruby</h1>
 
-<img src="https://info.mollie.com/hubfs/github/ruby/editor.png" />
+<img src="https://github.com/mollie/mollie-api-ruby/assets/39294/4838e149-4707-41c7-9aeb-bb86e68adc2c.png" />
 
 > LOOKING FOR VERSION v2.2.X README? [CLICK HERE](https://github.com/mollie/mollie-api-ruby/tree/v2.2.1)
 
@@ -24,11 +24,11 @@ To use the Mollie API client, the following things are required:
 
 ## Installation
 
-By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/). Note: v4.8.0 and higher are not published on rubygems.org, see [GH-140](https://github.com/mollie/mollie-api-ruby/issues/140) for details.
+By far the easiest way to install the Mollie API client is to install it with [gem](http://rubygems.org/).
 
 ```
 # Gemfile
-gem "mollie-api-ruby", github: "mollie/mollie-api-ruby", tag: "v4.11.0"
+gem "mollie-api-ruby"
 
 $ gem install mollie-api-ruby
 ```

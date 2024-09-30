@@ -16,6 +16,10 @@ Gem::Specification.new do |s|
   s.email = ['info@mollie.com']
   s.homepage = 'https://github.com/mollie/mollie-api-ruby'
   s.license = 'BSD'
+  s.metadata = {
+    'changelog_uri' => 'https://github.com/mollie/mollie-api-ruby/blob/master/CHANGELOG.md'
+  }
+
   s.required_ruby_version = '>= 2.5'
 
   s.files = `git ls-files`.split("\n")

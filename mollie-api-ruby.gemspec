@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_dependency('ostruct', '~> 0.6.0')
+  s.add_dependency('bigdecimal', '~> 3.1', '>= 3.1.8')
 
   s.add_development_dependency('rake')
   s.add_development_dependency('rubocop', '~> 0.57.2')

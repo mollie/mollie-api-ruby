@@ -1,0 +1,31 @@
+{
+    "count": 3,
+    "_embedded": {
+        "payment_links": [
+            {
+                "resource": "payment-link",
+                "id": "pl_one"
+            },
+            {
+                "resource": "payment-link",
+                "id": "pl_two"
+            },
+            {
+                "resource": "payment-link",
+                "id": "pl_three"
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "https://api.mollie.com/v2/payment-links?limit=50",
+            "type": "application/hal+json"
+        },
+        "previous": null,
+        "next": null,
+        "documentation": {
+            "href": "https://docs.mollie.com/reference/v2/payment-links-api/list-payment-links",
+            "type": "text/html"
+        }
+    }
+}

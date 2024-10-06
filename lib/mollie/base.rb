@@ -71,6 +71,8 @@ module Mollie
           path.last
         end
       end
+
+      alias_method :embedded_resource_name, :resource_name
     end
 
     def update(data = {})

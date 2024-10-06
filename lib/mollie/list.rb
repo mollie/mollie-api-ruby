@@ -9,7 +9,7 @@ module Mollie
       @klass = klass
 
       list_attributes['items'] ||= if list_attributes['_embedded']
-                                     list_attributes['_embedded'].fetch(klass.resource_name, [])
+                                     list_attributes['_embedded'].fetch(klass.embedded_resource_name, [])
                                    else
                                      []
                                    end

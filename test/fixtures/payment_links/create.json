@@ -1,0 +1,7 @@
+{
+    "description": "Bicycle tires",
+    "amount": {
+        "currency": "EUR",
+        "value": "24.95"
+    }
+}

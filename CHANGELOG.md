@@ -4,7 +4,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## 4.13.0 - 2023-05-22
+## 4.14.0 - 2024-11-02
+
+  - (0876f2b) Add Payment Links API
+  - (9ab5e1b) Fix dependency warnings (#176)
+  - (87a6c9a) Update supported payment methods
+  - (afb6251) IMP-610: Use correct authorize URL
+  - (002708c) changelog_uri to gemspec
+
+## 4.13.0 - 2024-05-22
 
   - (09489be) Add HTTP response details to RequestError
   - (fe5d114) Add Terminals API

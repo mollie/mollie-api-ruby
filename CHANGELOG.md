@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.15.0 - 2024-12-01
+
+  - (f659c19) Add Balance API
+
 ## 4.14.0 - 2024-11-02
 
   - (0876f2b) Add Payment Links API

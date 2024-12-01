@@ -1,0 +1,34 @@
+{
+  "count": 1,
+  "_embedded": {
+    "balances": [
+      {
+        "resource": "balance",
+        "id": "bal_one"
+      },
+      {
+        "resource": "balance",
+        "id": "bal_two"
+      },
+      {
+        "resource": "balance",
+        "id": "bal_three"
+      }
+    ]
+  },
+  "_links": {
+    "documentation": {
+      "href": "https://docs.mollie.com/reference/v2/balances-api/list-balances",
+      "type": "text/html"
+    },
+    "self": {
+      "href": "https://api.mollie.com/v2/balances?limit=5",
+      "type": "application/hal+json"
+    },
+    "previous": null,
+    "next": {
+      "href": "https://api.mollie.com/v2/balances?from=bal_gVMhHKqSSRYJyPsuoPABC&limit=5",
+      "type": "application/hal+json"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+balances = Mollie::Balance.all

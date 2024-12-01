@@ -1,0 +1,65 @@
+{
+  "count": 2,
+  "_embedded": {
+    "balance_transactions": [
+      {
+        "resource": "balance_transaction",
+        "id": "baltr_QM24QwzUWR4ev4Xfgyt29A",
+        "type": "refund",
+        "resultAmount": {
+          "currency": "EUR",
+          "value": "-10.25"
+        },
+        "initialAmount": {
+          "currency": "EUR",
+          "value": "-10.00"
+        },
+        "deductions": {
+          "currency": "EUR",
+          "value": "-0.25"
+        },
+        "context": {
+          "paymentId": "tr_7UhSN1zuXS",
+          "refundId": "re_4qqhO89gsT"
+        },
+        "createdAt": "2021-01-10T12:06:28+00:00"
+      },
+      {
+        "resource": "balance_transaction",
+        "id": "baltr_WhmDwNYR87FPDbiwBhUXCh",
+        "type": "payment",
+        "resultAmount": {
+          "currency": "EUR",
+          "value": "9.71"
+        },
+        "initialAmount": {
+          "currency": "EUR",
+          "value": "10.00"
+        },
+        "deductions": {
+          "currency": "EUR",
+          "value": "-0.29"
+        },
+        "context": {
+          "paymentId": "tr_7UhSN1zuXS"
+        },
+        "createdAt": "2021-01-10T12:06:28+00:00"
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "...",
+      "type": "application/hal+json"
+    },
+    "previous": null,
+    "next": {
+      "href": "https://api.mollie.com/v2/balances/bal_gVMhHKqSSRYJyPsuoPNFH/transactions?from=baltr_rXeW2yPqqDUyfAqq8fS5Bg&limit=5",
+      "type": "application/hal+json"
+    },
+    "documentation": {
+      "href": "...",
+      "type": "text/html"
+    }
+  }
+}

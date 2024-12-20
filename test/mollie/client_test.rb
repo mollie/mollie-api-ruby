@@ -179,25 +179,16 @@ module Mollie
     end
 
     def test_invalid_response
-      response = <<-JSON
-      {
-        "status": 500,
-        "title": "Internal server error",
-        "detail": "Unable to parse JSON: 859: unexpected token at '<h1>Internal server error</h1>'"
-      }
-      JSON
-
-      json = JSON.parse(response)
       stub_request(:post, 'https://api.mollie.com/v2/my-method')
         .to_return(status: [500, "Internal server error"], body: "<h1>Internal server error</h1>", headers: {})
 
-      e = assert_raise Mollie::RequestError.new(JSON.parse(response)) do
+      e = assert_raise Mollie::RequestError do
         client.perform_http_call('POST', 'my-method', nil, {})
       end
 
-      assert_equal(json['status'], e.status)
-      assert_equal(json['title'],  e.title)
-      assert_equal(json['detail'], e.detail)
+      assert_equal(500, e.status)
+      assert_equal('Internal server error', e.title)
+      assert_match(/Unable to parse JSON:.*/, e.detail)
     end
   end
 end

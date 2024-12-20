@@ -133,7 +133,7 @@ module Mollie
         exception = ResourceNotFoundError.new(json, response)
         raise exception
       else
-        json = JSON.parse(response.body)
+        json = parse_body(response)
         exception = Mollie::RequestError.new(json, response)
         raise exception
       end
@@ -161,6 +161,16 @@ module Mollie
 
     def escape(s)
       URI.encode_www_form_component(s)
+    end
+
+    def parse_body(response)
+      JSON.parse(response.body)
+    rescue JSON::ParserError => e
+      {
+        "status" => response.code.to_i,
+        "title" => response.message,
+        "detail" => "Unable to parse JSON: #{e.message}"
+      }
     end
   end
 end

@@ -2,6 +2,8 @@ require 'helper'
 
 module Mollie
   class PaymentTest < Test::Unit::TestCase
+    GET_PAYMENT_WITH_EMBEDDED_RESOURCES = read_fixture('payments/get_embedded_resources.json')
+
     def test_setting_attributes
       attributes = {
         resource:   'payment',
@@ -231,6 +233,16 @@ module Mollie
 
       payment = Payment.get('tr_WDqYK6vllg')
       assert_equal 'NL', payment.restrict_payment_methods_to_country
+    end
+
+    def test_embedded_refunds
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: GET_PAYMENT_WITH_EMBEDDED_RESOURCES, headers: {})
+
+      payment = Payment.get('tr_WDqYK6vllg')
+
+      assert_equal 're_vD3Jm32wQt', payment.refunds.first.id
+      assert_equal 1, payment.refunds.size
     end
 
     def test_list_refunds

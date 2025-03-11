@@ -197,7 +197,13 @@ module Mollie
     end
 
     def refunds(options = {})
-      Payment::Refund.all(options.merge(payment_id: id))
+      resources = (attributes['_embedded']['refunds'] if attributes['_embedded'])
+
+      if resources.nil?
+        Payment::Refund.all(options.merge(payment_id: id))
+      else
+        List.new({ '_embedded' => { 'refunds' => resources } }, Payment::Refund)
+      end
     end
 
     def chargebacks(options = {})

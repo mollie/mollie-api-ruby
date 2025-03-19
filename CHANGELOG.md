@@ -4,6 +4,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.16.0 - 2025-03-19
+
+  - (9caf303) Support embedded payment captures and chargebacks
+  - (ed1916e) Add support for embedded refunds
+  - (c322aca) Avoid frozen string literals warnings with Ruby 3.4
+
 ## 4.15.0 - 2024-12-01
 
   - (f659c19) Add Balance API

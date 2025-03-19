@@ -207,11 +207,23 @@ module Mollie
     end
 
     def chargebacks(options = {})
-      Payment::Chargeback.all(options.merge(payment_id: id))
+      resources = (attributes['_embedded']['chargebacks'] if attributes['_embedded'])
+
+      if resources.nil?
+        Payment::Chargeback.all(options.merge(payment_id: id))
+      else
+        List.new({ '_embedded' => { 'chargebacks' => resources } }, Payment::Chargeback)
+      end
     end
 
     def captures(options = {})
-      Payment::Capture.all(options.merge(payment_id: id))
+      resources = (attributes['_embedded']['captures'] if attributes['_embedded'])
+
+      if resources.nil?
+        Payment::Capture.all(options.merge(payment_id: id))
+      else
+        List.new({ '_embedded' => { 'captures' => resources } }, Payment::Capture)
+      end
     end
 
     def customer(options = {})

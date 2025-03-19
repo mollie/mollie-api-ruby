@@ -23,10 +23,66 @@
   "redirectUrl": "https://webshop.example.org/order/12345/",
   "webhookUrl": "https://webshop.example.org/payments/webhook/",
   "_embedded": {
+    "captures": [
+      {
+        "resource": "capture",
+        "id": "cpt_mNepDkEtco6ah3QNPUGYH",
+        "mode": "test",
+        "amount": {
+          "value": "10.00",
+          "currency": "EUR"
+        },
+        "status": "succeeded",
+        "createdAt": "2025-03-19T15:03:34+00:00",
+        "description": "Capture for order #12345",
+        "settlementAmount": {
+          "value": "10.00",
+          "currency": "EUR"
+        },
+        "paymentId": "tr_WDqYK6vllg",
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/captures/cpt_mNepDkEtco6ah3QNPUGYH",
+            "type": "application/hal+json"
+          },
+          "payment": {
+            "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg",
+            "type": "application/hal+json"
+          }
+        }
+      }
+    ],
+    "chargebacks": [
+      {
+        "resource": "chargeback",
+        "id": "chb_ls7ahg",
+        "amount": {
+          "value": "10.00",
+          "currency": "EUR"
+        },
+        "created_at": "2022-01-03T13:20:37+00:00",
+        "payment_id": "tr_WDqYK6vllg",
+        "settlement_amount": {
+          "value": "-10.00",
+          "currency": "EUR"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/chargebacks/chb_ls7ahg",
+            "type": "application/hal+json"
+          },
+          "payment": {
+            "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg",
+            "type": "application/hal+json"
+          }
+        }
+      }
+    ],
     "refunds": [
       {
         "resource": "refund",
         "id": "re_vD3Jm32wQt",
+        "mode": "test",
         "amount": {
           "value": "329.99",
           "currency": "EUR"
@@ -34,7 +90,7 @@
         "status": "pending",
         "createdAt": "2019-01-15T15:41:21+00:00",
         "description": "Required quantity not in stock, refunding one photo book.",
-        "orderId": "ord_kEn1PlbGa",
+        "metadata": null,
         "paymentId": "tr_WDqYK6vllg",
         "settlementAmount": {
           "value": "-329.99",
@@ -47,10 +103,6 @@
           },
           "payment": {
             "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg",
-            "type": "application/hal+json"
-          },
-          "order": {
-            "href": "https://api.mollie.com/v2/orders/ord_kEn1PlbGa",
             "type": "application/hal+json"
           }
         }

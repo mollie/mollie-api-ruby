@@ -235,11 +235,31 @@ module Mollie
       assert_equal 'NL', payment.restrict_payment_methods_to_country
     end
 
-    def test_embedded_refunds
-      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+    def test_embedded_captures
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg?embed=captures')
         .to_return(status: 200, body: GET_PAYMENT_WITH_EMBEDDED_RESOURCES, headers: {})
 
-      payment = Payment.get('tr_WDqYK6vllg')
+      payment = Payment.get('tr_WDqYK6vllg', embed: 'captures')
+
+      assert_equal 'cpt_mNepDkEtco6ah3QNPUGYH', payment.captures.first.id
+      assert_equal 1, payment.captures.size
+    end
+
+    def test_embedded_chargebacks
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg?embed=chargebacks')
+        .to_return(status: 200, body: GET_PAYMENT_WITH_EMBEDDED_RESOURCES, headers: {})
+
+      payment = Payment.get('tr_WDqYK6vllg', embed: 'chargebacks')
+
+      assert_equal 'chb_ls7ahg', payment.chargebacks.first.id
+      assert_equal 1, payment.chargebacks.size
+    end
+
+    def test_embedded_refunds
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg?embed=refunds')
+        .to_return(status: 200, body: GET_PAYMENT_WITH_EMBEDDED_RESOURCES, headers: {})
+
+      payment = Payment.get('tr_WDqYK6vllg', embed: 'refunds')
 
       assert_equal 're_vD3Jm32wQt', payment.refunds.first.id
       assert_equal 1, payment.refunds.size

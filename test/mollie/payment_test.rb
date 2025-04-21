@@ -151,6 +151,22 @@ module Mollie
       assert_equal 'cst_8wmqcHMN4U', payment.customer_id
     end
 
+    def test_release_authorization
+      stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
+        .to_return(status: 200, body: %(
+          {
+              "resource": "payment",
+              "id": "tr_WDqYK6vllg"
+          }
+        ), headers: {})
+
+      stub_request(:post, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg/release-authorization')
+        .to_return(status: 202, body: %({}), headers: {})
+
+      payment = Payment.get('tr_WDqYK6vllg')
+      assert payment.release_authorization
+    end
+
     def test_refund!
       stub_request(:get, 'https://api.mollie.com/v2/payments/tr_WDqYK6vllg')
         .to_return(status: 200, body: %(

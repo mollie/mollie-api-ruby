@@ -196,6 +196,10 @@ module Mollie
       Payment::Refund.create(options)
     end
 
+    def release_authorization(options = {})
+      Client.instance.perform_http_call("POST", "payments/#{id}", "release-authorization", {}, options) == {}
+    end
+
     def refunds(options = {})
       resources = (attributes['_embedded']['refunds'] if attributes['_embedded'])
 

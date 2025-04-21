@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.17.0 - 2025-04-21
+
+  - (bc414d0) Payment: add release payment authorization API
+
 ## 4.16.0 - 2025-03-19
 
   - (9caf303) Support embedded payment captures and chargebacks

@@ -126,6 +126,8 @@ module Mollie
       case http_code
       when 200, 201
         Util.nested_underscore_keys(JSON.parse(response.body))
+      when 202
+        JSON.parse(response.body)
       when 204
         {} # No Content
       when 404

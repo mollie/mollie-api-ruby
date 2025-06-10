@@ -49,6 +49,10 @@ module Mollie
                   :cancel_url,
                   :webhook_url
 
+    attr_reader :lines,
+                :billing_address,
+                :shipping_address
+
     alias links _links
 
     def open?
@@ -183,6 +187,18 @@ module Mollie
 
     def amount_refunded=(amount_refunded)
       @amount_refunded = Mollie::Amount.new(amount_refunded)
+    end
+
+    def lines=(lines)
+      @lines = lines.map { |line| Payment::Line.new(line) }
+    end
+
+    def billing_address=(address)
+      @billing_address = OpenStruct.new(address) if address.is_a?(Hash)
+    end
+
+    def shipping_address=(address)
+      @shipping_address = OpenStruct.new(address) if address.is_a?(Hash)
     end
 
     def checkout_url

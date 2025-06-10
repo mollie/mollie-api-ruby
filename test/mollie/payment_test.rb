@@ -124,6 +124,135 @@ module Mollie
       assert_false Payment.new([]).refunded?
     end
 
+    def test_payment_lines_attributes
+      attributes = {
+        resource: "payment",
+        id: "tr_7UhSN1zuXS",
+        lines: [{
+          type: "physical",
+          description: "LEGO 4440 Forest Police Station",
+          quantity: 1,
+          quantity_unit: "pcs",
+          unit_price: { value: "89.00", currency: "EUR" },
+          discount_amount: { value: "10.00", currency: "EUR" },
+          recurring: {
+            description: "A description of the recurring item.",
+            interval: "3 months",
+            amount: { value: "29.00", currency: "EUR" },
+            times: 4,
+            start_date: "2025-05-04"
+          },
+          total_amount: { value: "95.59", currency: "EUR" },
+          vat_rate: "21.00",
+          vat_amount: { value: "16.59", currency: "EUR" },
+          sku: "SKU-12345",
+          categories: ["eco", "meal", "gift", "sport_culture"],
+          image_url: "https://example.org/lego-4440-forest-police-station.jpg",
+          product_url: "https://example.org/lego-4440-forest-police-station"
+        }]
+      }
+
+      payment = Payment.new(attributes)
+      line = payment.lines.first
+
+      assert_equal Payment::Line, line.class
+      assert_equal "physical", line.type
+      assert_equal "LEGO 4440 Forest Police Station", line.description
+      assert_equal 1, line.quantity
+      assert_equal "pcs", line.quantity_unit
+      assert_equal 89.00, line.unit_price.value
+      assert_equal "EUR", line.unit_price.currency
+      assert_equal 10.00, line.discount_amount.value
+      assert_equal "EUR", line.discount_amount.currency
+      assert_equal 95.59, line.total_amount.value
+      assert_equal "EUR", line.total_amount.currency
+      assert_equal "21.00", line.vat_rate
+      assert_equal 16.59, line.vat_amount.value
+      assert_equal "EUR", line.vat_amount.currency
+      assert_equal "SKU-12345", line.sku
+      assert_equal ["eco", "meal", "gift", "sport_culture"], line.categories
+      assert_equal "https://example.org/lego-4440-forest-police-station.jpg", line.image_url
+      assert_equal "https://example.org/lego-4440-forest-police-station", line.product_url
+
+      # Recurring object
+      assert_equal "A description of the recurring item.", line.recurring.description
+      assert_equal "3 months", line.recurring.interval
+      assert_equal 29.00, line.recurring.amount.value
+      assert_equal "EUR", line.recurring.amount.currency
+      assert_equal 4, line.recurring.times
+      assert_equal Date.parse("2025-05-04"), line.recurring.start_date
+    end
+
+    def test_billing_address
+      attributes = {
+        resource: "payment",
+        id: "tr_7UhSN1zuXS",
+        billing_address: {
+          title: "Dhr",
+          given_name: "Piet",
+          family_name: "Mondriaan",
+          organization_name: "Mollie B.V.",
+          street_and_number: "Keizersgracht 313",
+          street_additional: "apt",
+          postal_code: "1234AB",
+          email: "piet@mondriaan.com",
+          phone: "+31208202070",
+          city: "Amsterdam",
+          region: "Noord-Holland",
+          country: "NL"
+        }
+      }
+
+      payment = Payment.new(attributes)
+      assert_equal "Dhr", payment.billing_address.title
+      assert_equal "Piet", payment.billing_address.given_name
+      assert_equal "Mondriaan", payment.billing_address.family_name
+      assert_equal "Mollie B.V.", payment.billing_address.organization_name
+      assert_equal "Keizersgracht 313", payment.billing_address.street_and_number
+      assert_equal "apt", payment.billing_address.street_additional
+      assert_equal "1234AB", payment.billing_address.postal_code
+      assert_equal "piet@mondriaan.com", payment.billing_address.email
+      assert_equal "+31208202070", payment.billing_address.phone
+      assert_equal "Amsterdam", payment.billing_address.city
+      assert_equal "Noord-Holland", payment.billing_address.region
+      assert_equal "NL", payment.billing_address.country
+    end
+
+    def test_shipping_address
+      attributes = {
+        resource: "payment",
+        id: "tr_7UhSN1zuXS",
+        shipping_address: {
+          title: "Dhr",
+          given_name: "Piet",
+          family_name: "Mondriaan",
+          organization_name: "Mollie B.V.",
+          street_and_number: "Keizersgracht 313",
+          street_additional: "apt",
+          postal_code: "1234AB",
+          email: "piet@mondriaan.com",
+          phone: "+31208202070",
+          city: "Amsterdam",
+          region: "Noord-Holland",
+          country: "NL"
+        }
+      }
+
+      payment = Payment.new(attributes)
+      assert_equal "Dhr", payment.shipping_address.title
+      assert_equal "Piet", payment.shipping_address.given_name
+      assert_equal "Mondriaan", payment.shipping_address.family_name
+      assert_equal "Mollie B.V.", payment.shipping_address.organization_name
+      assert_equal "Keizersgracht 313", payment.shipping_address.street_and_number
+      assert_equal "apt", payment.shipping_address.street_additional
+      assert_equal "1234AB", payment.shipping_address.postal_code
+      assert_equal "piet@mondriaan.com", payment.shipping_address.email
+      assert_equal "+31208202070", payment.shipping_address.phone
+      assert_equal "Amsterdam", payment.shipping_address.city
+      assert_equal "Noord-Holland", payment.shipping_address.region
+      assert_equal "NL", payment.shipping_address.country
+    end
+
     def test_create_payment
       stub_request(:post, 'https://api.mollie.com/v2/payments')
         .with(body: %({"amount":{"value":1.95,"currency":"EUR"}}))

@@ -14,9 +14,31 @@ module Mollie
       end
     end
 
-    def camelize_keys(hash)
-      hash.each_with_object({}) do |(key, value), camelized|
-        camelized[camelize(key)] = value
+    CAMELIZE_NESTED = [
+      :lines,
+      "lines",
+      :recurring,
+      "recurring",
+      :billing_address,
+      "billing_address",
+      :shipping_address,
+      "shipping_address"
+    ].freeze
+
+    def camelize_keys(object)
+      case object
+      when Hash
+        object.each_with_object({}) do |(key, value), camelized|
+          camelized[camelize(key)] = if CAMELIZE_NESTED.include?(key)
+            camelize_keys(value)
+          else
+            value
+          end
+        end
+      when Array
+        object.map { |value| camelize_keys(value) }
+      else
+        object
       end
     end
 

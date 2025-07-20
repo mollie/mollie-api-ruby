@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.18.0 - 2025-07-20
+
+  - (0ab3a06) Add order attributes to Payment API
+
 ## 4.17.0 - 2025-04-21
 
   - (bc414d0) Payment: add release payment authorization API

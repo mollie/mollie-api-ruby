@@ -4,6 +4,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.19.0 - 2026-02-03
+
+  - (c61808e) Allow bigdecimal 4.x
+
 ## 4.18.0 - 2025-07-20
 
   - (0ab3a06) Add order attributes to Payment API

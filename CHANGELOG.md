@@ -4,6 +4,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.19.1 - 2026-10-22
+
+  - (465b147) Remove vendored CA bundle in favour of the system trust store
+
+    Both roots affected by the eMudhra intermediate CA compromise were
+    trusted by the stale bundle. TLS verification is unchanged; hosts
+    must now provide the trust store.
+
 ## 4.19.0 - 2026-02-03
 
   - (c61808e) Allow bigdecimal 4.x

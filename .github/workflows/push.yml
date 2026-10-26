@@ -24,4 +24,4 @@ jobs:
           ruby-version: ruby
 
       # Release
-      - uses: rubygems/release-gem@v1
+      - uses: rubygems/release-gem@e9a6361a0b14562539327c2a02373edc56dd3169

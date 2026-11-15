@@ -53,6 +53,40 @@ module Mollie
       assert_equal 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM', Mollie::Client.instance.api_key
     end
 
+    def test_nested_with_api_key_restores_each_key
+      original_key = Mollie::Client.instance.api_key
+
+      Mollie::Client.with_api_key('outer_key') do
+        Mollie::Client.with_api_key('inner_key') do
+          assert_equal 'inner_key', Mollie::Client.instance.api_key
+        end
+        assert_equal 'outer_key', Mollie::Client.instance.api_key
+      end
+      assert_equal original_key, Mollie::Client.instance.api_key
+    ensure
+      Mollie::Client.instance.api_key = original_key
+    end
+
+    def test_nested_with_api_key_restores_each_key_after_exception
+      original_key = Mollie::Client.instance.api_key
+
+      assert_raise RuntimeError do
+        Mollie::Client.with_api_key('outer_key') do
+          begin
+            Mollie::Client.with_api_key('inner_key') do
+              assert_equal 'inner_key', Mollie::Client.instance.api_key
+              raise 'nested failure'
+            end
+          ensure
+            assert_equal 'outer_key', Mollie::Client.instance.api_key
+          end
+        end
+      end
+      assert_equal original_key, Mollie::Client.instance.api_key
+    ensure
+      Mollie::Client.instance.api_key = original_key
+    end
+
     def test_post_with_idempotency_key
       stub_request(:post, 'https://api.mollie.com/v2/payments')
         .with(headers: { "Idempotency-Key" => '91d42bd5-e47f-4f4a-b38e-99333b264e78' })

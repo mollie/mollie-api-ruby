@@ -34,12 +34,11 @@ module Mollie
     end
 
     def self.with_api_key(api_key)
-      Thread.current['MOLLIE_API_KEY'] = instance.api_key
-      instance.api_key                 = api_key
+      original_api_key = instance.api_key
+      instance.api_key = api_key
       yield
     ensure
-      instance.api_key                 = Thread.current['MOLLIE_API_KEY']
-      Thread.current['MOLLIE_API_KEY'] = nil
+      instance.api_key = original_api_key
     end
 
     attr_accessor :api_key,
